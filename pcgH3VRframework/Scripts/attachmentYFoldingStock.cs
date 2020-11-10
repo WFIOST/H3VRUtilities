@@ -1,7 +1,8 @@
 ﻿using System;
 using UnityEngine;
+using FistVR;
 
-namespace FistVR
+namespace pcgH3VRframework
 {
 	// Token: 0x020003CD RID: 973
 	public class attachmentYFoldingStock : FVRInteractiveObject
@@ -9,17 +10,6 @@ namespace FistVR
 		// Token: 0x0600141B RID: 5147 RVA: 0x00089ED0 File Offset: 0x000882D0
 		public override void UpdateInteraction(FVRViveHand hand)
 		{
-			if (this.attachment.curMount = null)
-			{
-				this.FireArm = null;
-			}
-			else if (this.FireArm != null)
-			{
-				GameObject _firearm = this.attachment.curMount.Parent.GetComponent<GameObject>();
-				this.FireArm = _firearm.GetComponent<FVRFireArm>();
-			}
-
-			if (this.FireArm != null) {
 			base.UpdateInteraction(hand);
 			Vector3 vector = hand.transform.position - this.Root.position;
 			vector = Vector3.ProjectOnPlane(vector, this.Root.up).normalized;
@@ -37,6 +27,8 @@ namespace FistVR
 				{
 					this.Stock.localEulerAngles = new Vector3(0f, this.rotAngle, 0f);
 					float num = Mathf.InverseLerp(this.MinRot, this.MaxRot, this.rotAngle);
+				if (FireArm != null)
+				{
 					if (this.isMinClosed)
 					{
 						if (num < 0.02f)
@@ -79,9 +71,9 @@ namespace FistVR
 						this.FireArm.PlayAudioEvent(FirearmAudioEventType.StockClosed, 1f);
 					}
 					this.m_lastPos = this.m_curPos;
+				}
 					return;
 				}
-			}
 		}
 
 		// Token: 0x0400276C RID: 10092

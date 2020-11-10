@@ -25,5 +25,9 @@ namespace pcgH3VRframework
 			Open
 		}
 
+		public void byeworld()
+		{
+			Destroy(this);
+		}
 	}
 }
