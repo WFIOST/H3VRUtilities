@@ -51,4 +51,3 @@ namespace pcgH3VRframework.Scripts.ProxyCode.ProxyLoader
 		}
 	}
 }
-}
