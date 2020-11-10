@@ -55,11 +55,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Scripts\attachmentYFoldingStock.cs" />
+    <Compile Include="Scripts\NadeCupLauncher.cs" />
+    <Compile Include="Scripts\ProxyCode\attachmentYFoldingStockProxy.cs" />
     <Compile Include="Scripts\ProxyCode\fuckUnityHingeJoints.cs" />
     <Compile Include="Scripts\ProxyCode\HGETProxy.cs" />
     <Compile Include="Scripts\ProxyCode\cullOnZLoc.cs" />
     <Compile Include="Scripts\HandgunEjectionTrigger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\ProxyCode\NadeCupLauncherProxy.cs" />
+    <Compile Include="Scripts\ProxyCode\ProxyLoader\attachmentYFoldingStockProxyLoader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
