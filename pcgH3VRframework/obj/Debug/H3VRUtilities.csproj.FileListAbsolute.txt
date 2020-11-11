@@ -1,0 +1,10 @@
+D:\h3mods\H3VR Utilities\pcgH3VRframework\bin\Debug\Assembly-CSharp.dll
+D:\h3mods\H3VR Utilities\pcgH3VRframework\bin\Debug\BepInEx.dll
+D:\h3mods\H3VR Utilities\pcgH3VRframework\bin\Debug\UnityEngine.dll
+D:\h3mods\H3VR Utilities\pcgH3VRframework\obj\Debug\H3VRUtilities.csprojAssemblyReference.cache
+D:\h3mods\H3VR Utilities\pcgH3VRframework\obj\Debug\H3VRUtilities.csproj.CoreCompileInputs.cache
+D:\h3mods\H3VR Utilities\pcgH3VRframework\obj\Debug\H3VRUtilities.csproj.CopyComplete
+D:\h3mods\H3VR Utilities\pcgH3VRframework\bin\Debug\H3VRUtilities.mm.dll
+D:\h3mods\H3VR Utilities\pcgH3VRframework\bin\Debug\H3VRUtilities.mm.pdb
+D:\h3mods\H3VR Utilities\pcgH3VRframework\obj\Debug\H3VRUtilities.mm.dll
+D:\h3mods\H3VR Utilities\pcgH3VRframework\obj\Debug\H3VRUtilities.mm.pdb

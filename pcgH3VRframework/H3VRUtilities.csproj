@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>H3VRUtilities</RootNamespace>
-    <AssemblyName>pcgH3VRframework.mm</AssemblyName>
+    <AssemblyName>H3VRUtilities.mm</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

@@ -4,3 +4,5 @@ pcgH3VRframework/Libraries/0Harmony.dll
 pcgH3VRframework/Libraries/Assembly-CSharp.dll
 pcgH3VRframework/Libraries/BepInEx.dll
 pcgH3VRframework/Libraries/UnityEngine.dll
+pcgH3VRframework/Libraries/BepInEx.Harmony.dll
+*.dll
