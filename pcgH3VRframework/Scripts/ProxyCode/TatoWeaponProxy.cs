@@ -5,7 +5,7 @@ using System.Text;
 using FistVR;
 using UnityEngine;
 
-namespace pcgH3VRframework.Scripts.ProxyCode
+namespace H3VRUtils.Weapons.Proxy
 {
 	class TatoWeaponProxy : FVRFireArm
 	{

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FistVR;
 
-namespace pcgH3VRframework
+namespace H3VRUtils.Weapons
 {
 	public class TatoWeapon : FVRFireArm
 	{
