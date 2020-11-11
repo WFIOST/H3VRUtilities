@@ -6,7 +6,7 @@ using System;
 
 namespace H3VRUtils.Proxy
 {
-	public class attachmentYFoldingStockProxy : FVRInteractiveObject
+	public class attachmentYFoldingStockProxy : FVRInteractableObjectProxy
 	{
 
 		public Transform Root;
