@@ -19,3 +19,9 @@ C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\o
 C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\obj\Debug\H3VRUtilities.csproj.CopyComplete
 C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\obj\Debug\H3VRUtilities.mm.dll
 C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\obj\Debug\H3VRUtilities.mm.pdb
+F:\GitHub\PotatoesH3VRLib\pcgH3VRframework\bin\Debug\H3VRUtilities.mm.dll
+F:\GitHub\PotatoesH3VRLib\pcgH3VRframework\bin\Debug\H3VRUtilities.mm.pdb
+F:\GitHub\PotatoesH3VRLib\pcgH3VRframework\obj\Debug\H3VRUtilities.csprojAssemblyReference.cache
+F:\GitHub\PotatoesH3VRLib\pcgH3VRframework\obj\Debug\H3VRUtilities.csproj.CopyComplete
+F:\GitHub\PotatoesH3VRLib\pcgH3VRframework\obj\Debug\H3VRUtilities.mm.dll
+F:\GitHub\PotatoesH3VRLib\pcgH3VRframework\obj\Debug\H3VRUtilities.mm.pdb
