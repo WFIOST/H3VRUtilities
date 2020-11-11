@@ -1,16 +1,12 @@
-# PotatoesH3VRLib
-A library for Potatoes' shtuff in H3VR.
+# H3VR Custom Guns Utils
+Library for custom scripts/utilities for making custom guns in H3VR.
 
-This is a small repository that I've used in my H3VR mods.
+DLLs required for building:
 
-DLLs required:
+`Assembly-CSharp.dll` (from h3vr)
 
-Assembly-CSharp.dll (from h3vr)
+`UnityEngine.dll`
 
-Assembly-CSharp-firstpass.dll (from h3vr)
+`BepInEx.dll`
 
-UnityEngine.dll
-
-BepInEx.dll
-
-The only mod that currently use this is Potatoes' Compiled Custom Guns.
+[Find full releases on Bonetome](https://bonetome.com/h3vr/mods/160/)
