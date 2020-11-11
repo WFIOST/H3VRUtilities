@@ -1,105 +1,107 @@
 ﻿using System;
 using UnityEngine;
 using FistVR;
+using UnityEngine.Serialization;
 
-namespace pcgH3VRframework
+namespace H3VRUtils
 {
 	// Token: 0x020003CD RID: 973
-	public class attachmentYFoldingStock : FVRInteractiveObject
+	public class AttachmentYFoldingStock : FVRInteractiveObject
 	{
 		// Token: 0x0600141B RID: 5147 RVA: 0x00089ED0 File Offset: 0x000882D0
 		public override void UpdateInteraction(FVRViveHand hand)
 		{
 			base.UpdateInteraction(hand);
-			Vector3 vector = hand.transform.position - this.Root.position;
-			vector = Vector3.ProjectOnPlane(vector, this.Root.up).normalized;
-			Vector3 lhs = -this.Root.transform.forward;
-			this.rotAngle = Mathf.Atan2(Vector3.Dot(this.Root.up, Vector3.Cross(lhs, vector)), Vector3.Dot(lhs, vector)) * 57.29578f;
-			if (Mathf.Abs(this.rotAngle - this.MinRot) < 5f)
+			Vector3 vector = hand.transform.position - this.root.position;
+			var up = this.root.up;
+			vector = Vector3.ProjectOnPlane(vector, up).normalized;
+			Vector3 lhs = -this.root.transform.forward;
+			this._rotAngle = Mathf.Atan2(Vector3.Dot(up, Vector3.Cross(lhs, vector)), Vector3.Dot(lhs, vector)) * 57.29578f;
+			if (Mathf.Abs(this._rotAngle - this.minRot) < 5f)
 			{
-				this.rotAngle = this.MinRot;
+				this._rotAngle = this.minRot;
 			}
-			if (Mathf.Abs(this.rotAngle - this.MaxRot) < 5f)
+			if (Mathf.Abs(this._rotAngle - this.maxRot) < 5f)
 			{
-				this.rotAngle = this.MaxRot;
+				this._rotAngle = this.maxRot;
 			}
-				if (this.rotAngle >= this.MinRot && this.rotAngle <= this.MaxRot)
+				if (this._rotAngle >= this.minRot && this._rotAngle <= this.maxRot)
 				{
-					this.Stock.localEulerAngles = new Vector3(0f, this.rotAngle, 0f);
-					float num = Mathf.InverseLerp(this.MinRot, this.MaxRot, this.rotAngle);
-				if (FireArm != null)
+					this.stock.localEulerAngles = new Vector3(0f, this._rotAngle, 0f);
+					float num = Mathf.InverseLerp(this.minRot, this.maxRot, this._rotAngle);
+				if (fireArm != null)
 				{
 					if (this.isMinClosed)
 					{
 						if (num < 0.02f)
 						{
-							this.m_curPos = FVRFoldingStockYAxis.StockPos.Closed;
-							this.FireArm.HasActiveShoulderStock = false;
+							this.mCurPos = FVRFoldingStockYAxis.StockPos.Closed;
+							this.fireArm.HasActiveShoulderStock = false;
 						}
 						else if (num > 0.9f)
 						{
-							this.m_curPos = FVRFoldingStockYAxis.StockPos.Open;
-							this.FireArm.HasActiveShoulderStock = true;
+							this.mCurPos = FVRFoldingStockYAxis.StockPos.Open;
+							this.fireArm.HasActiveShoulderStock = true;
 						}
 						else
 						{
-							this.m_curPos = FVRFoldingStockYAxis.StockPos.Mid;
-							this.FireArm.HasActiveShoulderStock = false;
+							this.mCurPos = FVRFoldingStockYAxis.StockPos.Mid;
+							this.fireArm.HasActiveShoulderStock = false;
 						}
 					}
 					else if (num < 0.1f)
 					{
-						this.m_curPos = FVRFoldingStockYAxis.StockPos.Open;
-						this.FireArm.HasActiveShoulderStock = true;
+						this.mCurPos = FVRFoldingStockYAxis.StockPos.Open;
+						this.fireArm.HasActiveShoulderStock = true;
 					}
 					else if (num > 0.98f)
 					{
-						this.m_curPos = FVRFoldingStockYAxis.StockPos.Closed;
-						this.FireArm.HasActiveShoulderStock = false;
+						this.mCurPos = FVRFoldingStockYAxis.StockPos.Closed;
+						this.fireArm.HasActiveShoulderStock = false;
 					}
 					else
 					{
-						this.m_curPos = FVRFoldingStockYAxis.StockPos.Mid;
-						this.FireArm.HasActiveShoulderStock = false;
+						this.mCurPos = FVRFoldingStockYAxis.StockPos.Mid;
+						this.fireArm.HasActiveShoulderStock = false;
 					}
-					if (this.m_curPos == FVRFoldingStockYAxis.StockPos.Open && this.m_lastPos != FVRFoldingStockYAxis.StockPos.Open)
+					if (this.mCurPos == FVRFoldingStockYAxis.StockPos.Open && this.mLastPos != FVRFoldingStockYAxis.StockPos.Open)
 					{
-						this.FireArm.PlayAudioEvent(FirearmAudioEventType.StockOpen, 1f);
+						this.fireArm.PlayAudioEvent(FirearmAudioEventType.StockOpen, 1f);
 					}
-					if (this.m_curPos == FVRFoldingStockYAxis.StockPos.Closed && this.m_lastPos != FVRFoldingStockYAxis.StockPos.Closed)
+					if (this.mCurPos == FVRFoldingStockYAxis.StockPos.Closed && this.mLastPos != FVRFoldingStockYAxis.StockPos.Closed)
 					{
-						this.FireArm.PlayAudioEvent(FirearmAudioEventType.StockClosed, 1f);
+						this.fireArm.PlayAudioEvent(FirearmAudioEventType.StockClosed, 1f);
 					}
-					this.m_lastPos = this.m_curPos;
+					this.mLastPos = this.mCurPos;
 				}
 					return;
 				}
 		}
 
 		// Token: 0x0400276C RID: 10092
-		public Transform Root;
+		[FormerlySerializedAs("Root")] public Transform root;
 
 		// Token: 0x0400276D RID: 10093
-		public Transform Stock;
+		[FormerlySerializedAs("Stock")] public Transform stock;
 
 		// Token: 0x0400276E RID: 10094
-		private float rotAngle;
+		private float _rotAngle;
 
 		// Token: 0x0400276F RID: 10095
-		public float MinRot;
+		public float minRot;
 
 		// Token: 0x04002770 RID: 10096
-		public float MaxRot;
+		public float maxRot;
 
 		// Token: 0x04002771 RID: 10097
-		public FVRFoldingStockYAxis.StockPos m_curPos;
+		[FormerlySerializedAs("m_curPos")] public FVRFoldingStockYAxis.StockPos mCurPos;
 
 		// Token: 0x04002772 RID: 10098
-		public FVRFoldingStockYAxis.StockPos m_lastPos;
+		[FormerlySerializedAs("m_lastPos")] public FVRFoldingStockYAxis.StockPos mLastPos;
 
 		public bool isMinClosed = true;
 
-		public FVRFireArm FireArm;
+		[FormerlySerializedAs("FireArm")] public FVRFireArm fireArm;
 
 		public FVRFireArmAttachment attachment;
 

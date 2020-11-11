@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
+using UnityEngine.Serialization;
 
-namespace pcgH3VRframework
+namespace H3VRUtils.NadeCup
 {
 	class NadeCupLauncher : MonoBehaviour
 	{
 		public FVRFireArmChamber mainChamber;
-		public FVRFireArmChamber NadeCup;
+		public FVRFireArmChamber nadeCup;
 		public bool alreadyFired;
 
 		void FixedUpdate()
 		{
 			 if (mainChamber.IsSpent && alreadyFired == false){
-				NadeCup.Fire();
+				nadeCup.Fire();
 				alreadyFired = true;
 			}
 			else if (mainChamber.IsSpent == false && alreadyFired == true){

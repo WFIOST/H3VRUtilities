@@ -4,29 +4,43 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
+using H3VRUtils;
+using H3VRUtils.Proxy;
 
-namespace pcgH3VRframework.Scripts.ProxyCode.ProxyLoader
+namespace H3VRUtils.ProxyLoader
 {
 	public class attachmentYFoldingStockProxyLoader : MonoBehaviour
 	{
 		attachmentYFoldingStockProxy transferfrom;
-		attachmentYFoldingStock transferto;
+		AttachmentYFoldingStock transferto;
+		private bool _isFireArmNull;
+		private bool _iscurMountNotNull;
+		private FVRFireArm _firearm;
+		private bool _isFirearmNotNull;
+		private bool _isFireArmNotNull;
+		private bool _iscurMountNull;
 
 		void Start()
 		{
+			_iscurMountNull = transferto.attachment.curMount == null;
+			_isFireArmNotNull = transferto.fireArm != null;
+			_isFirearmNotNull = _firearm != null;
+			_firearm = transform.root.GetComponent<FVRFireArm>();
+			_iscurMountNotNull = transferto.attachment.curMount != null;
+			_isFireArmNull = transferto.fireArm == null;
 			Console.WriteLine("HELLO WORLD! attachmentYFoldingStockProxyLoader doing it's job.");
 			transferfrom = gameObject.GetComponent<attachmentYFoldingStockProxy>();
-			transferto = gameObject.AddComponent<attachmentYFoldingStock>();
+			transferto = gameObject.AddComponent<AttachmentYFoldingStock>();
 
 			//attachmentYFoldingStockProxy vars
-			transferto.Root = transferfrom.Root;
-			transferto.Stock = transferfrom.Stock;
-			transferto.MinRot = transferfrom.MinRot;
-			transferto.MaxRot = transferfrom.MaxRot;
-			transferto.m_curPos = transferfrom.m_curPos;
-			transferto.m_lastPos = transferfrom.m_lastPos;
+			transferto.root = transferfrom.Root;
+			transferto.stock = transferfrom.Stock;
+			transferto.minRot = transferfrom.MinRot;
+			transferto.maxRot = transferfrom.MaxRot;
+			transferto.mCurPos = transferfrom.m_curPos;
+			transferto.mLastPos = transferfrom.m_lastPos;
 			transferto.isMinClosed = transferfrom.isMinClosed;
-			transferto.FireArm = transferfrom.FireArm;
+			transferto.fireArm = transferfrom.FireArm;
 			transferto.attachment = transferfrom.attachment;
 
 			//FVRInteractiveObject vars
@@ -56,16 +70,15 @@ namespace pcgH3VRframework.Scripts.ProxyCode.ProxyLoader
 
 		void Update()
 		{
-			if (transferto.FireArm == null && transferto.attachment.curMount != null)
+			if (_isFireArmNull && _iscurMountNotNull)
 			{
-				var _firearm = transform.root.GetComponent<FVRFireArm>();
-				if (_firearm != null)
+				if (_isFirearmNotNull)
 				{
-					transferto.FireArm = _firearm;
-					Console.WriteLine("attachmentYFoldingStock has connected itself to " + transferto.FireArm);
+					transferto.fireArm = _firearm;
+					Console.WriteLine("attachmentYFoldingStock has connected itself to " + transferto.fireArm);
 				}
 			}
-			else if (transferto.FireArm != null && transferto.attachment.curMount == null){ transferto.FireArm = null; }
+			else if (_isFireArmNotNull && _iscurMountNull){ transferto.fireArm = null; }
 		}
 	}
 }

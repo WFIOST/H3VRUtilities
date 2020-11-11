@@ -34,11 +34,20 @@
     <Reference Include="0Harmony">
       <HintPath>..\..\PotatoesH3VRframework\PotatoesH3VRframework\Libs\0Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="0Harmony, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>libs\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\PotatoesH3VRframework\PotatoesH3VRframework\Libs\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-CSharp, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>libs\Assembly-CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="BepInEx">
       <HintPath>..\..\PotatoesH3VRframework\PotatoesH3VRframework\Libs\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx, Version=5.3.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>libs\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx.Harmony">
       <HintPath>..\..\PotatoesH3VRframework\PotatoesH3VRframework\Libs\BepInEx.Harmony.dll</HintPath>
@@ -51,6 +60,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
       <HintPath>..\..\PotatoesH3VRframework\PotatoesH3VRframework\Libs\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>libs\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
