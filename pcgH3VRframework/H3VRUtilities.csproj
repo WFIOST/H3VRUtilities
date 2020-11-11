@@ -59,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxies\NadeCupLauncherProxy.cs" />
     <Compile Include="Proxies\attachmentYFoldingStockProxyLoader.cs" />
+    <Compile Include="FVRInteractiveObjects\FVRFirearms\TatoWeapon.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
