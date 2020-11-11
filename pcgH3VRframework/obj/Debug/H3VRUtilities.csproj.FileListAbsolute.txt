@@ -8,3 +8,14 @@ D:\h3mods\H3VR Utilities\pcgH3VRframework\bin\Debug\H3VRUtilities.mm.dll
 D:\h3mods\H3VR Utilities\pcgH3VRframework\bin\Debug\H3VRUtilities.mm.pdb
 D:\h3mods\H3VR Utilities\pcgH3VRframework\obj\Debug\H3VRUtilities.mm.dll
 D:\h3mods\H3VR Utilities\pcgH3VRframework\obj\Debug\H3VRUtilities.mm.pdb
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\bin\Debug\H3VRUtilities.mm.dll
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\bin\Debug\H3VRUtilities.mm.pdb
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\bin\Debug\Assembly-CSharp.dll
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\bin\Debug\BepInEx.dll
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\bin\Debug\UnityEngine.dll
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\bin\Debug\0Harmony.dll
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\obj\Debug\H3VRUtilities.csprojAssemblyReference.cache
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\obj\Debug\H3VRUtilities.csproj.CoreCompileInputs.cache
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\obj\Debug\H3VRUtilities.csproj.CopyComplete
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\obj\Debug\H3VRUtilities.mm.dll
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\pcgH3VRframework\obj\Debug\H3VRUtilities.mm.pdb
