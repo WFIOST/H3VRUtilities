@@ -10,10 +10,17 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="FVRInteractiveObjects" t="Include">
           <e p="attachmentYFoldingStock.cs" t="Include" />
+          <e p="FVRFirearms" t="Include">
+            <e p="TatoWeapon.cs" t="Include" />
+          </e>
           <e p="HandgunEjectionTrigger.cs" t="Include" />
           <e p="NadeCupLauncher.cs" t="Include" />
         </e>
         <e p="H3VRUtilities.csproj" t="IncludeRecursive" />
+        <e p="MonoScripts" t="Include">
+          <e p="compressingSpring.cs" t="Include" />
+          <e p="cullOnZLoc.cs" t="Include" />
+        </e>
         <e p="obj" t="ExcludeRecursive" />
         <e p="Properties" t="Include">
           <e p="AssemblyInfo.cs" t="Include" />
@@ -21,9 +28,8 @@
         <e p="Proxies" t="Include">
           <e p="attachmentYFoldingStockProxy.cs" t="Include" />
           <e p="attachmentYFoldingStockProxyLoader.cs" t="Include" />
-          <e p="cullOnZLoc.cs" t="Include" />
-          <e p="fuckUnityHingeJoints.cs" t="Include" />
-          <e p="HGETProxy.cs" t="Include" />
+          <e p="FVRInteractableObjectProxy.cs" t="Include" />
+          <e p="HandgunEjectionTriggerProxy.cs" t="Include" />
           <e p="NadeCupLauncherProxy.cs" t="Include" />
         </e>
       </e>
