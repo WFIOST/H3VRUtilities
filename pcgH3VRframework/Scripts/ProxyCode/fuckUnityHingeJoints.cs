@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿
 using UnityEngine;
 
 namespace H3VRUtils
 {
 	class fuckUnityHingeJoints : MonoBehaviour
 	{
-
+		
 		public Transform ConnectedRigidbody;
 		public bool DetermineDistanceOnStart = true;
 		public float Distance;

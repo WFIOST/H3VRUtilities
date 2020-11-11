@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pcgH3VRframework", "pcgH3VRframework\pcgH3VRframework.csproj", "{BF4A38D2-D4B8-49D0-AA4B-0BD428E5E406}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3VRUtilities", "pcgH3VRframework\H3VRUtilities.csproj", "{BF4A38D2-D4B8-49D0-AA4B-0BD428E5E406}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -19,7 +19,20 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="07ff6661-07ba-42e6-9867-9d9a680fa3c0" name="Default Changelist" comment="Fixed a fuck ton of &quot;inefficient&quot; shit according to rider and also changed the namespaces so they wouldnt be so fucking bad" />
+    <list default="true" id="07ff6661-07ba-42e6-9867-9d9a680fa3c0" name="Default Changelist" comment="Fixed a fuck ton of &quot;inefficient&quot; shit according to rider and also changed the namespaces so they wouldnt be so fucking bad">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework.sln" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Properties/AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/Properties/AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/fuckUnityHingeJoints.cs" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/fuckUnityHingeJoints.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/bin/Debug/pcgH3VRframework.mm.dll" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/bin/Debug/pcgH3VRframework.mm.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/bin/Debug/pcgH3VRframework.mm.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/bin/Debug/pcgH3VRframework.mm.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/pcgH3VRframework.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/pcgH3VRframework.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/pcgH3VRframework.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/pcgH3VRframework.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/pcgH3VRframework.mm.dll" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/pcgH3VRframework.mm.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/pcgH3VRframework.mm.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/pcgH3VRframework.mm.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/pcgH3VRframework.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/H3VRUtilities.csproj" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,12 +52,13 @@
         <option value="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/NadeCupLauncherProxy.cs" />
         <option value="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/HGETProxy.cs" />
         <option value="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/cullOnZLoc.cs" />
-        <option value="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/fuckUnityHingeJoints.cs" />
         <option value="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/attachmentYFoldingStockProxy.cs" />
         <option value="$PROJECT_DIR$/pcgH3VRframework/Scripts/NadeCupLauncher.cs" />
         <option value="$PROJECT_DIR$/pcgH3VRframework/Scripts/HandgunEjectionTrigger.cs" />
         <option value="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/ProxyLoader/attachmentYFoldingStockProxyLoader.cs" />
         <option value="$PROJECT_DIR$/pcgH3VRframework/Scripts/attachmentYFoldingStock.cs" />
+        <option value="$PROJECT_DIR$/pcgH3VRframework/Properties/AssemblyInfo.cs" />
+        <option value="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/fuckUnityHingeJoints.cs" />
       </list>
     </option>
   </component>
@@ -55,6 +69,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -89,6 +104,7 @@
       <option name="presentableId" value="Default" />
       <updated>1605061162693</updated>
       <workItem from="1605061169043" duration="1535000" />
+      <workItem from="1605064553237" duration="417000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed a fuck ton of &quot;inefficient&quot; shit according to rider and also changed the namespaces so they wouldnt be so fucking bad">
       <created>1605062487481</created>
@@ -103,7 +119,7 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -115,6 +131,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

@@ -15,3 +15,13 @@ C:\Users\rafae\source\repos\pcgH3VRframework\pcgH3VRframework\bin\Debug\0Harmony
 C:\Users\rafae\source\repos\pcgH3VRframework\pcgH3VRframework\bin\Debug\BepInEx.dll
 C:\Users\rafae\source\repos\pcgH3VRframework\pcgH3VRframework\bin\Debug\BepInEx.Harmony.dll
 C:\Users\rafae\source\repos\pcgH3VRframework\pcgH3VRframework\bin\Debug\Mono.Cecil.dll
+D:\h3mods\H3VR Utilities\pcgH3VRframework\bin\Debug\pcgH3VRframework.mm.dll
+D:\h3mods\H3VR Utilities\pcgH3VRframework\bin\Debug\pcgH3VRframework.mm.pdb
+D:\h3mods\H3VR Utilities\pcgH3VRframework\bin\Debug\Assembly-CSharp.dll
+D:\h3mods\H3VR Utilities\pcgH3VRframework\bin\Debug\BepInEx.dll
+D:\h3mods\H3VR Utilities\pcgH3VRframework\bin\Debug\UnityEngine.dll
+D:\h3mods\H3VR Utilities\pcgH3VRframework\obj\Debug\pcgH3VRframework.csprojAssemblyReference.cache
+D:\h3mods\H3VR Utilities\pcgH3VRframework\obj\Debug\pcgH3VRframework.csproj.CoreCompileInputs.cache
+D:\h3mods\H3VR Utilities\pcgH3VRframework\obj\Debug\pcgH3VRframework.csproj.CopyComplete
+D:\h3mods\H3VR Utilities\pcgH3VRframework\obj\Debug\pcgH3VRframework.mm.dll
+D:\h3mods\H3VR Utilities\pcgH3VRframework\obj\Debug\pcgH3VRframework.mm.pdb
