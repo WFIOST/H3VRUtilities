@@ -27,39 +27,6 @@
   <component name="ChangeListManager">
     <list default="true" id="07ff6661-07ba-42e6-9867-9d9a680fa3c0" name="Default Changelist" comment="Fixed a fuck ton of &quot;inefficient&quot; shit according to rider and also changed the namespaces so they wouldnt be so fucking bad">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/HandgunEjectionTrigger.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/HandgunEjectionTrigger.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/NadeCupLauncher.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/.old/attachmentYFoldingStockProxy.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/.old/attachmentYFoldingStockProxyLoader.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/Class1.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/Class1.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/HGETProxy.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/HGETProxy.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/NadeCupLauncherProxy.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/NadeCupLauncherProxy.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/ProxyLoader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/ProxyLoader/attachmentYFoldingStockProxyLoader.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/ProxyLoader/attachmentYFoldingStockProxyLoader.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/TatoWeaponProxy.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/TatoWeaponProxy.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/attachmentYFoldingStockProxy.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/attachmentYFoldingStockProxy.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/cullOnZLoc.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/cullOnZLoc.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/fuckUnityHingeJoints.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/fuckUnityHingeJoints.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/shrug.zip.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/TatoWeapon.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/attachmentYFoldingStock.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Scripts/cullOnZLoc.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/bin/Debug/H3VRUtilities.mm.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/bin/Debug/H3VRUtilities.mm.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/H3VRUtilities.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/H3VRUtilities.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/H3VRUtilities.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/H3VRUtilities.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/H3VRUtilities.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/H3VRUtilities.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/H3VRUtilities.mm.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/H3VRUtilities.mm.pdb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,6 +106,7 @@
       <workItem from="1605120826093" duration="1423000" />
       <workItem from="1605122387764" duration="9000" />
       <workItem from="1605122535936" duration="1000" />
+      <workItem from="1605123110972" duration="70000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed a fuck ton of &quot;inefficient&quot; shit according to rider and also changed the namespaces so they wouldnt be so fucking bad">
       <created>1605062487481</created>
