@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 namespace H3VRUtils
 {
 	// Token: 0x020003CD RID: 973
-	public class AttachmentYFoldingStock : FVRInteractiveObject
+	public class attachmentYFoldingStock : FVRInteractiveObject
 	{
 		// Token: 0x0600141B RID: 5147 RVA: 0x00089ED0 File Offset: 0x000882D0
 		public override void UpdateInteraction(FVRViveHand hand)

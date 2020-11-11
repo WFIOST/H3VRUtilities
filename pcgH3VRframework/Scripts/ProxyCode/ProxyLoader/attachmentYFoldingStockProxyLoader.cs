@@ -12,7 +12,7 @@ namespace H3VRUtils.ProxyLoader
 	public class attachmentYFoldingStockProxyLoader : MonoBehaviour
 	{
 		attachmentYFoldingStockProxy transferfrom;
-		AttachmentYFoldingStock transferto;
+		attachmentYFoldingStock transferto;
 		private bool _isFireArmNull;
 		private bool _iscurMountNotNull;
 		private FVRFireArm _firearm;
@@ -30,7 +30,7 @@ namespace H3VRUtils.ProxyLoader
 			_isFireArmNull = transferto.fireArm == null;
 			Console.WriteLine("HELLO WORLD! attachmentYFoldingStockProxyLoader doing it's job.");
 			transferfrom = gameObject.GetComponent<attachmentYFoldingStockProxy>();
-			transferto = gameObject.AddComponent<AttachmentYFoldingStock>();
+			transferto = gameObject.AddComponent<attachmentYFoldingStock>();
 
 			//attachmentYFoldingStockProxy vars
 			transferto.root = transferfrom.Root;
