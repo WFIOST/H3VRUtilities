@@ -4,7 +4,7 @@ using UnityEngine;
 using FistVR;
 using System;
 
-namespace pcgH3VRframework
+namespace H3VRUtils.Proxy
 {
 	public class attachmentYFoldingStockProxy : FVRInteractiveObject
 	{

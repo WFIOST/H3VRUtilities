@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using FistVR;
 
-namespace pcgH3VRframework
+namespace H3VRUtils
 {
 	public class HandgunEjectionTrigger : FVRInteractiveObject
 	{

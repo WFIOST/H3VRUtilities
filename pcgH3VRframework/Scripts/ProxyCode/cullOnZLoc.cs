@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace pcgH3VRframework
+namespace H3VRUtils
 {
 
 	public class cullOnZLoc : MonoBehaviour
