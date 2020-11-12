@@ -13,21 +13,10 @@ namespace H3VRUtils.ProxyLoader
 	{
 		attachmentYFoldingStockProxy transferfrom;
 		attachmentYFoldingStock transferto;
-		private bool _isFireArmNull;
-		private bool _iscurMountNotNull;
-		private FVRFireArm _firearm;
-		private bool _isFirearmNotNull;
-		private bool _isFireArmNotNull;
-		private bool _iscurMountNull;
 
 		void Start()
 		{
-			_iscurMountNull = transferto.attachment.curMount == null;
-			_isFireArmNotNull = transferto.fireArm != null;
-			_isFirearmNotNull = _firearm != null;
-			_firearm = transform.root.GetComponent<FVRFireArm>();
-			_iscurMountNotNull = transferto.attachment.curMount != null;
-			_isFireArmNull = transferto.fireArm == null;
+			
 			Console.WriteLine("HELLO WORLD! attachmentYFoldingStockProxyLoader doing it's job.");
 			transferfrom = gameObject.GetComponent<attachmentYFoldingStockProxy>();
 			transferto = gameObject.AddComponent<attachmentYFoldingStock>();
@@ -70,15 +59,16 @@ namespace H3VRUtils.ProxyLoader
 
 		void Update()
 		{
-			if (_isFireArmNull && _iscurMountNotNull)
+			if (transferto.attachment.curMount != null)
 			{
-				if (_isFirearmNotNull)
+				if (transferto.fireArm == null)
 				{
+					var _firearm = transferto.attachment.curMount.Parent.GetComponent<FVRFireArm>();
 					transferto.fireArm = _firearm;
 					Console.WriteLine("attachmentYFoldingStock has connected itself to " + transferto.fireArm);
 				}
 			}
-			else if (_isFireArmNotNull && _iscurMountNull){ transferto.fireArm = null; }
+			else if (transferto.fireArm != null){ transferto.fireArm = null; }
 		}
 	}
 }
