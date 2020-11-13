@@ -12,12 +12,18 @@ namespace H3VRUtils
 		public FVRFireArm FireArm;
 		public HingeJoint Joint;
 		private float timeSinceLastCollision = 6f;
-		public float jointReleaseSensitivity = -35f;
+		public float jointReleaseSensitivity = 35f;
+		[HideInInspector]
 		public float jointAngle;
+		[HideInInspector]
+		public float _jointReleaseSensitivityAbove;
+		[HideInInspector]
+		public float _jointReleaseSensitivityBelow;
 
 		private void Start()
 		{
-			jointReleaseSensitivity = Joint.angle - jointReleaseSensitivity;
+			_jointReleaseSensitivityAbove = this.transform.localEulerAngles.x + jointReleaseSensitivity;
+			_jointReleaseSensitivityBelow = this.transform.localEulerAngles.x - jointReleaseSensitivity;
 		}
 		private void FixedUpdate()
 		{
@@ -25,9 +31,11 @@ namespace H3VRUtils
 			{
 				this.timeSinceLastCollision += Time.deltaTime;
 			}
-			if (this.FireArm.Magazine != null && this.timeSinceLastCollision < 0.03f && this.Joint.angle < jointReleaseSensitivity)
+			if (this.FireArm.Magazine != null && this.timeSinceLastCollision < 0.03f)
 			{
-				this.FireArm.EjectMag();
+				if (this.transform.localEulerAngles.x > _jointReleaseSensitivityAbove || this.transform.localEulerAngles.x > _jointReleaseSensitivityBelow){
+					this.FireArm.EjectMag();
+				}
 			}
 			jointAngle = Joint.angle;
 		}
