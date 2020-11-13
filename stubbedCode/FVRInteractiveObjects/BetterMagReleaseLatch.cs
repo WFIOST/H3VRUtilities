@@ -11,6 +11,8 @@ namespace H3VRUtils
 	{
 		public FVRFireArm FireArm;
 		public HingeJoint Joint;
-		public float jointAngle = -35f;
+		private float timeSinceLastCollision = 6f;
+		public float jointAngleToRelease = -35f;
+		public float jointAngle;
 	}
 }

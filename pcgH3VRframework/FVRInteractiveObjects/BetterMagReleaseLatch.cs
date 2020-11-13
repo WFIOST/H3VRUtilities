@@ -9,6 +9,11 @@ namespace H3VRUtils
 {
 	class BetterMagReleaseLatch : MonoBehaviour
 	{
+		public FVRFireArm FireArm;
+		public HingeJoint Joint;
+		private float timeSinceLastCollision = 6f;
+		public float jointAngleToRelease = -35f;
+		public float jointAngle;
 		private void FixedUpdate()
 		{
 			if (this.timeSinceLastCollision < 5f)
@@ -29,11 +34,5 @@ namespace H3VRUtils
 				this.timeSinceLastCollision = 0f;
 			}
 		}
-
-		public FVRFireArm FireArm;
-		public HingeJoint Joint;
-		private float timeSinceLastCollision = 6f;
-		public float jointAngleToRelease = -35f;
-		public float jointAngle;
 	}
 }
