@@ -7,6 +7,7 @@ using FistVR;
 
 namespace H3VRUtils
 {
+	
 	public class FVRInteractableObjectProxy : MonoBehaviour
 	{
 		[NonSerialized]
