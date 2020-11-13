@@ -33,7 +33,7 @@ namespace H3VRUtils
 			}
 			if (this.FireArm.Magazine != null && this.timeSinceLastCollision < 0.03f)
 			{
-				if (this.transform.localEulerAngles.x > _jointReleaseSensitivityAbove || this.transform.localEulerAngles.x > _jointReleaseSensitivityBelow){
+				if (this.transform.localEulerAngles.x > _jointReleaseSensitivityAbove || this.transform.localEulerAngles.x < _jointReleaseSensitivityBelow){
 					this.FireArm.EjectMag();
 				}
 			}
