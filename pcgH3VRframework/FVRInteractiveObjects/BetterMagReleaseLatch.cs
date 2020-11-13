@@ -15,7 +15,7 @@ namespace H3VRUtils
 			{
 				this.timeSinceLastCollision += Time.deltaTime;
 			}
-			if (this.FireArm.Magazine != null && this.timeSinceLastCollision < 0.03f && this.transform.localRotation.x < jointAngle)
+			if (this.FireArm.Magazine != null && this.timeSinceLastCollision < 0.03f && this.Joint.angle < jointAngle)
 			{
 				this.FireArm.EjectMag();
 			}
