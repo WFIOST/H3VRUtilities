@@ -15,10 +15,11 @@ namespace H3VRUtils
 			{
 				this.timeSinceLastCollision += Time.deltaTime;
 			}
-			if (this.FireArm.Magazine != null && this.timeSinceLastCollision < 0.03f && this.Joint.angle < jointAngle)
+			if (this.FireArm.Magazine != null && this.timeSinceLastCollision < 0.03f && this.Joint.angle < jointAngleToRelease)
 			{
 				this.FireArm.EjectMag();
 			}
+			jointAngle = Joint.angle;
 		}
 
 		private void OnCollisionEnter(Collision col)
@@ -32,6 +33,7 @@ namespace H3VRUtils
 		public FVRFireArm FireArm;
 		public HingeJoint Joint;
 		private float timeSinceLastCollision = 6f;
-		public float jointAngle = -35f;
+		public float jointAngleToRelease = -35f;
+		public float jointAngle;
 	}
 }
