@@ -12,7 +12,8 @@ namespace H3VRUtils
 		public FVRFireArm FireArm;
 		public HingeJoint Joint;
 		private float timeSinceLastCollision = 6f;
-		public float jointReleaseSensitivity = 35f;
+		[Tooltip("Greatly reduce what you think it may be. I reccommend 2 for Sensitivity.")]
+		public float jointReleaseSensitivity = 2f;
 		[HideInInspector]
 		public float jointAngle;
 		[HideInInspector]
