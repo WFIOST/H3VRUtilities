@@ -9,16 +9,36 @@ namespace H3VRUtils
 {
 	class BetterMagReleaseLatch : MonoBehaviour
 	{
+		public FVRFireArm FireArm;
+		public HingeJoint Joint;
+		private float timeSinceLastCollision = 6f;
+		[Tooltip("Greatly reduce what you think it may be. I reccommend 2 for Sensitivity.")]
+		public float jointReleaseSensitivity = 2f;
+		[HideInInspector]
+		public float jointAngle;
+		[HideInInspector]
+		public float _jointReleaseSensitivityAbove;
+		[HideInInspector]
+		public float _jointReleaseSensitivityBelow;
+
+		private void Start()
+		{
+			_jointReleaseSensitivityAbove = this.transform.localEulerAngles.x + jointReleaseSensitivity;
+			_jointReleaseSensitivityBelow = this.transform.localEulerAngles.x - jointReleaseSensitivity;
+		}
 		private void FixedUpdate()
 		{
 			if (this.timeSinceLastCollision < 5f)
 			{
 				this.timeSinceLastCollision += Time.deltaTime;
 			}
-			if (this.FireArm.Magazine != null && this.timeSinceLastCollision < 0.03f && this.Joint.angle < jointAngle)
+			if (this.FireArm.Magazine != null && this.timeSinceLastCollision < 0.03f)
 			{
-				this.FireArm.EjectMag();
+				if (this.transform.localEulerAngles.x > _jointReleaseSensitivityAbove || this.transform.localEulerAngles.x < _jointReleaseSensitivityBelow){
+					this.FireArm.EjectMag();
+				}
 			}
+			jointAngle = Joint.angle;
 		}
 
 		private void OnCollisionEnter(Collision col)
@@ -28,10 +48,5 @@ namespace H3VRUtils
 				this.timeSinceLastCollision = 0f;
 			}
 		}
-
-		public FVRFireArm FireArm;
-		public HingeJoint Joint;
-		private float timeSinceLastCollision = 6f;
-		public float jointAngle = -35f;
 	}
 }
