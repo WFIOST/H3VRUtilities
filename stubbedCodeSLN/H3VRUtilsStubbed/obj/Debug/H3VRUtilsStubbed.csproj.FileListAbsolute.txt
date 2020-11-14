@@ -1,0 +1,11 @@
+C:\Users\rafae\source\repos\H3VRUtilsStubbed\H3VRUtilsStubbed\bin\Debug\H3VRUtilsStubbed.dll
+C:\Users\rafae\source\repos\H3VRUtilsStubbed\H3VRUtilsStubbed\bin\Debug\H3VRUtilsStubbed.pdb
+C:\Users\rafae\source\repos\H3VRUtilsStubbed\H3VRUtilsStubbed\bin\Debug\Assembly-CSharp.dll
+C:\Users\rafae\source\repos\H3VRUtilsStubbed\H3VRUtilsStubbed\bin\Debug\BepInEx.dll
+C:\Users\rafae\source\repos\H3VRUtilsStubbed\H3VRUtilsStubbed\bin\Debug\UnityEngine.dll
+C:\Users\rafae\source\repos\H3VRUtilsStubbed\H3VRUtilsStubbed\bin\Debug\Mono.Cecil.dll
+C:\Users\rafae\source\repos\H3VRUtilsStubbed\H3VRUtilsStubbed\bin\Debug\0Harmony.dll
+C:\Users\rafae\source\repos\H3VRUtilsStubbed\H3VRUtilsStubbed\obj\Debug\H3VRUtilsStubbed.csprojAssemblyReference.cache
+C:\Users\rafae\source\repos\H3VRUtilsStubbed\H3VRUtilsStubbed\obj\Debug\H3VRUtilsStubbed.csproj.CopyComplete
+C:\Users\rafae\source\repos\H3VRUtilsStubbed\H3VRUtilsStubbed\obj\Debug\H3VRUtilsStubbed.dll
+C:\Users\rafae\source\repos\H3VRUtilsStubbed\H3VRUtilsStubbed\obj\Debug\H3VRUtilsStubbed.pdb
