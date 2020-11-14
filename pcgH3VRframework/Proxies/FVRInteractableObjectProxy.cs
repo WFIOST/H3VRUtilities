@@ -7,7 +7,7 @@ using FistVR;
 
 namespace H3VRUtils
 {
-	
+	//Proxies are bad lmao dont use them
 	public class FVRInteractableObjectProxy : MonoBehaviour
 	{
 		[NonSerialized]

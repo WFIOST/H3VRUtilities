@@ -4,48 +4,53 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
 	class BetterMagReleaseLatch : MonoBehaviour
 	{
-		public FVRFireArm FireArm;
-		public HingeJoint Joint;
-		private float timeSinceLastCollision = 6f;
-		[Tooltip("Greatly reduce what you think it may be. I reccommend 2 for Sensitivity.")]
+		[FormerlySerializedAs("FireArm")] public FVRFireArm fireArm;
+		[FormerlySerializedAs("Joint")] public HingeJoint joint;
+		private float _timeSinceLastCollision = 6f;
+		[Tooltip("Greatly reduce what you think it may be. I recommend 2 for Sensitivity.")]
 		public float jointReleaseSensitivity = 2f;
 		[HideInInspector]
 		public float jointAngle;
-		[HideInInspector]
-		public float _jointReleaseSensitivityAbove;
-		[HideInInspector]
-		public float _jointReleaseSensitivityBelow;
+		[FormerlySerializedAs("_jointReleaseSensitivityAbove")] [HideInInspector]
+		public float jointReleaseSensitivityAbove;
+		[FormerlySerializedAs("_jointReleaseSensitivityBelow")] [HideInInspector]
+		public float jointReleaseSensitivityBelow;
+
+		private bool _isMagazineNotNull;
 
 		private void Start()
 		{
-			_jointReleaseSensitivityAbove = this.transform.localEulerAngles.x + jointReleaseSensitivity;
-			_jointReleaseSensitivityBelow = this.transform.localEulerAngles.x - jointReleaseSensitivity;
+			_isMagazineNotNull = this.fireArm.Magazine != null;
+			var localEulerAngles = this.transform.localEulerAngles;
+			jointReleaseSensitivityAbove = localEulerAngles.x + jointReleaseSensitivity;
+			jointReleaseSensitivityBelow = localEulerAngles.x - jointReleaseSensitivity;
 		}
 		private void FixedUpdate()
 		{
-			if (this.timeSinceLastCollision < 5f)
+			if (this._timeSinceLastCollision < 5f)
 			{
-				this.timeSinceLastCollision += Time.deltaTime;
+				this._timeSinceLastCollision += Time.deltaTime;
 			}
-			if (this.FireArm.Magazine != null && this.timeSinceLastCollision < 0.03f)
+			if (_isMagazineNotNull && this._timeSinceLastCollision < 0.03f)
 			{
-				if (this.transform.localEulerAngles.x > _jointReleaseSensitivityAbove || this.transform.localEulerAngles.x < _jointReleaseSensitivityBelow){
-					this.FireArm.EjectMag();
+				if (this.transform.localEulerAngles.x > jointReleaseSensitivityAbove || this.transform.localEulerAngles.x < jointReleaseSensitivityBelow){
+					this.fireArm.EjectMag();
 				}
 			}
-			jointAngle = Joint.angle;
+			jointAngle = joint.angle;
 		}
 
 		private void OnCollisionEnter(Collision col)
 		{
-			if (col.collider.attachedRigidbody != null && col.collider.attachedRigidbody != this.FireArm.RootRigidbody && col.collider.attachedRigidbody.gameObject.GetComponent<FVRPhysicalObject>() != null && col.collider.attachedRigidbody.gameObject.GetComponent<FVRPhysicalObject>().IsHeld)
+			if (col.collider.attachedRigidbody != null && col.collider.attachedRigidbody != this.fireArm.RootRigidbody && col.collider.attachedRigidbody.gameObject.GetComponent<FVRPhysicalObject>() != null && col.collider.attachedRigidbody.gameObject.GetComponent<FVRPhysicalObject>().IsHeld)
 			{
-				this.timeSinceLastCollision = 0f;
+				this._timeSinceLastCollision = 0f;
 			}
 		}
 	}
