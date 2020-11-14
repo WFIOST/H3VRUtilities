@@ -25,14 +25,9 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="07ff6661-07ba-42e6-9867-9d9a680fa3c0" name="Default Changelist" comment="Fixed a fuck ton of &quot;inefficient&quot; shit according to rider and also changed the namespaces so they wouldnt be so fucking bad">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/shelf/Uncommitted_changes_before_Update_at_11_11_2020_11_51_AM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/shelf/Uncommitted_changes_before_Update_at_11_11_2020_11_51_AM__Default_Changelist_.xml" afterDir="false" />
+    <list default="true" id="07ff6661-07ba-42e6-9867-9d9a680fa3c0" name="Default Changelist" comment="fixed your fucking code">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/H3VRUtilities.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/H3VRUtilities.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/Proxies/FVRInteractableObjectProxy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/Proxies/FVRInteractableObjectProxy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/H3VRUtilities.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/H3VRUtilities.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/MonoScripts/compressingSpring.cs" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/MonoScripts/compressingSpring.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +35,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Frityet" />
+      </list>
+    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
@@ -48,7 +48,11 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/stubbedCode/FVRInteractiveObjects/HandgunEjectionTrigger.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/stubbedCode/FVRInteractiveObjects/NadeCupLauncher.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/stubbedCode/FVRInteractiveObjects/BetterMagReleaseLatch.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/pcgH3VRframework/Properties/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/stubbedCode/FVRInteractiveObjects/FVRFirearms/TatoWeapon.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -64,7 +68,9 @@
         <option value="$PROJECT_DIR$/pcgH3VRframework/Properties/AssemblyInfo.cs" />
         <option value="$PROJECT_DIR$/pcgH3VRframework/Scripts/ProxyCode/fuckUnityHingeJoints.cs" />
         <option value="$PROJECT_DIR$/pcgH3VRframework/Proxies/FVRInteractableObjectProxy.cs" />
+        <option value="$PROJECT_DIR$/pcgH3VRframework/FVRInteractiveObjects/BetterMagReleaseLatch.cs" />
         <option value="$PROJECT_DIR$/pcgH3VRframework/MonoScripts/compressingSpring.cs" />
+        <option value="$PROJECT_DIR$/pcgH3VRframework/FVRInteractiveObjects/FVRFirearms/TatoWeapon.cs" />
       </list>
     </option>
   </component>
@@ -125,6 +131,7 @@
       <workItem from="1605123110972" duration="70000" />
       <workItem from="1605123244018" duration="1186000" />
       <workItem from="1605301335490" duration="1451000" />
+      <workItem from="1605393673081" duration="817000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed a fuck ton of &quot;inefficient&quot; shit according to rider and also changed the namespaces so they wouldnt be so fucking bad">
       <created>1605062487481</created>
@@ -133,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605062487481</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fixed your fucking code">
+      <created>1605393881232</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1605393881232</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,9 +170,14 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Fixed a fuck ton of &quot;inefficient&quot; shit according to rider and also changed the namespaces so they wouldnt be so fucking bad" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed a fuck ton of &quot;inefficient&quot; shit according to rider and also changed the namespaces so they wouldnt be so fucking bad" />
+    <MESSAGE value="fixed your fucking code" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed your fucking code" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="583" y="273" key="Vcs.Push.Dialog.v2" timestamp="1605394023614">
+      <screen x="62" y="0" width="1858" height="1080" />
+    </state>
+    <state x="583" y="273" key="Vcs.Push.Dialog.v2/62.0.1858.1080/1920.0.1858.1080@62.0.1858.1080" timestamp="1605394023614" />
     <state x="684" y="445" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605124296327">
       <screen x="62" y="0" width="1858" height="1200" />
     </state>

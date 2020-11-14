@@ -60,13 +60,13 @@
     <Compile Include="FVRInteractiveObjects\attachmentYFoldingStock.cs" />
     <Compile Include="FVRInteractiveObjects\BetterMagReleaseLatch.cs" />
     <Compile Include="FVRInteractiveObjects\NadeCupLauncher.cs" />
-    <Compile Include="Proxies\attachmentYFoldingStockProxy.cs" />
-    <Compile Include="Proxies\FVRInteractableObjectProxy.cs" />
+    <Compile Include="DEPRECIATED\attachmentYFoldingStockProxy.cs" />
+    <Compile Include="DEPRECIATED\FVRInteractableObjectProxy.cs" />
     <Compile Include="FVRInteractiveObjects\HandgunEjectionTrigger.cs" />
     <Compile Include="MonoScripts\compressingSpring.cs" />
     <Compile Include="MonoScripts\CullOnZLoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Proxies\proxyLoaders\attachmentYFoldingStockProxyLoader.cs" />
+    <Compile Include="DEPRECIATED\proxyLoaders\attachmentYFoldingStockProxyLoader.cs" />
     <Compile Include="FVRInteractiveObjects\FVRFirearms\TatoWeapon.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

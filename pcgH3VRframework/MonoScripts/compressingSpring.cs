@@ -22,7 +22,9 @@ namespace H3VRUtils
 		//		public dirType directionofcompression;
 		void Update()
 		{
-			spring.transform.localScale = new Vector3(spring.transform.localScale.x, spring.transform.localScale.y, (compressor.transform.localPosition.z - fullcompress) * (1 / (fullextend - fullcompress)));
+			var localScale = spring.transform.localScale;
+			localScale = new Vector3(localScale.x, localScale.y, (compressor.transform.localPosition.z - fullcompress) * (1 / (fullextend - fullcompress)));
+			spring.transform.localScale = localScale;
 		}
 	}
 }
