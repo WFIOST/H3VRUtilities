@@ -13,3 +13,17 @@ pcgH3VRframework/Libraries/UnityEngine.dll
 pcgH3VRframework/obj/Debug/H3VRUtilities.mm.dll
 
 Libraries/
+H3VRUtilites.Weapons.Stubs/bin/Debug/BepInEx.Harmony.dll
+H3VRUtilites.Weapons.Stubs/bin/Debug/Assembly-CSharp-firstpass.dll
+H3VRUtilites.Weapons.Stubs/bin/Debug/Assembly-CSharp.dll
+H3VRUtilites.Weapons.Stubs/bin/Debug/BepInEx.dll
+H3VRUtilities.Weapons/bin/Debug/Assembly-CSharp.dll
+H3VRUtilities.Weapons/bin/Debug/Assembly-CSharp-firstpass.dll
+H3VRUtilities.Weapons/bin/Debug/BepInEx.dll
+H3VRUtilities.Weapons/bin/Debug/BepInEx.Harmony.dll
+.vs/pcgH3VRframework/v16/.suo
+.vs/pcgH3VRframework/v16/Server/sqlite3/db.lock
+.vs/pcgH3VRframework/v16/Server/sqlite3/storage.ide
+.vs/pcgH3VRframework/v16/Server/sqlite3/storage.ide-shm
+.vs/pcgH3VRframework/v16/Server/sqlite3/storage.ide-wal
+H3VRUtilites.Weapons.Stubs/bin/Debug/UnityEngine.dll

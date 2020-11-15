@@ -1,0 +1,5 @@
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Mapping\bin\Debug\H3VRUtilites.Mapping.dll
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Mapping\bin\Debug\H3VRUtilites.Mapping.pdb
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Mapping\obj\Debug\H3VRUtilites.Mapping.csprojAssemblyReference.cache
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Mapping\obj\Debug\H3VRUtilites.Mapping.dll
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Mapping\obj\Debug\H3VRUtilites.Mapping.pdb

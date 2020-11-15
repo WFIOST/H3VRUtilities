@@ -1,0 +1,11 @@
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Weapons.Stubs\bin\Debug\H3VRUtilites.Weapons.Stubs.dll
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Weapons.Stubs\bin\Debug\H3VRUtilites.Weapons.Stubs.pdb
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Weapons.Stubs\bin\Debug\Assembly-CSharp-firstpass.dll
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Weapons.Stubs\bin\Debug\Assembly-CSharp.dll
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Weapons.Stubs\bin\Debug\BepInEx.dll
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Weapons.Stubs\bin\Debug\BepInEx.Harmony.dll
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Weapons.Stubs\bin\Debug\UnityEngine.dll
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Weapons.Stubs\obj\Debug\H3VRUtilites.Weapons.Stubs.csprojAssemblyReference.cache
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Weapons.Stubs\obj\Debug\H3VRUtilites.Weapons.Stubs.csproj.CopyComplete
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Weapons.Stubs\obj\Debug\H3VRUtilites.Weapons.Stubs.dll
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Weapons.Stubs\obj\Debug\H3VRUtilites.Weapons.Stubs.pdb
