@@ -40,10 +40,10 @@ namespace H3VRUtils.Weapons
 					//prevents master mag from being loaded
 					masterMag.DoesDisplayXOscillate = false;
 					//unparents slave mag
-					slaveMagGameObject.transform.parent = null;
+//					slaveMagGameObject.transform.parent = null;
 					//sets the parent of master mag to slave mag
-					masterMagGameObject.transform.parent = slaveMagGameObject.transform;
-					parentMag = slaveMagGameObject;
+//					masterMagGameObject.transform.parent = slaveMagGameObject.transform;
+//					parentMag = slaveMagGameObject;
 				}
 			}
 			else
@@ -51,9 +51,9 @@ namespace H3VRUtils.Weapons
 				if (_isMasterMagNotNull)
 				{
 					slaveMag.DoesDisplayXOscillate = false;
-					masterMagGameObject.transform.parent = null;
-					slaveMagGameObject.transform.parent = masterMagGameObject.transform;
-					parentMag = masterMagGameObject;
+//					masterMagGameObject.transform.parent = null;
+//					slaveMagGameObject.transform.parent = masterMagGameObject.transform;
+//					parentMag = masterMagGameObject;
 				}
 			}
 
