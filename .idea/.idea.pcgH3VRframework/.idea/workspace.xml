@@ -26,7 +26,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07ff6661-07ba-42e6-9867-9d9a680fa3c0" name="Default Changelist" comment="H3VRUTILITIES IS DELETED *CRABRAVE*">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/BetterMagReleaseLatch.cs" beforeDir="false" afterPath="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/BetterMagReleaseLatch.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/FVRFirearms/TatoWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/FVRFirearms/TatoWeapon.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/HandgunEjectionTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/HandgunEjectionTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/NadeCupLauncher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/NadeCupLauncher.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/attachmentYFoldingStock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/attachmentYFoldingStock.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/MonoScripts/compressingSpring.cs" beforeDir="false" afterPath="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/MonoScripts/compressingSpring.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/MonoScripts/cullOnZLoc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/MonoScripts/cullOnZLoc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/H3VRUtilities.Weapons/FVRInteractiveObjects/attachmentYFoldingStock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/H3VRUtilities.Weapons/FVRInteractiveObjects/attachmentYFoldingStock.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,10 +53,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/pcgH3VRframework/FVRInteractiveObjects/attachmentYFoldingStock.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/pcgH3VRframework/Properties/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -84,6 +88,14 @@
         <option value="$PROJECT_DIR$/H3VRUtilities.Weapons/Class1.cs" />
         <option value="$PROJECT_DIR$/H3VRUtilites.Mapping/Class1.cs" />
         <option value="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/Class1.cs" />
+        <option value="$PROJECT_DIR$/H3VRUtilities.Weapons/FVRInteractiveObjects/attachmentYFoldingStock.cs" />
+        <option value="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/attachmentYFoldingStock.cs" />
+        <option value="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/NadeCupLauncher.cs" />
+        <option value="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/HandgunEjectionTrigger.cs" />
+        <option value="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/BetterMagReleaseLatch.cs" />
+        <option value="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/FVRInteractiveObjects/FVRFirearms/TatoWeapon.cs" />
+        <option value="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/MonoScripts/compressingSpring.cs" />
+        <option value="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/MonoScripts/cullOnZLoc.cs" />
       </list>
     </option>
   </component>
@@ -145,7 +157,7 @@
       <workItem from="1605123244018" duration="1186000" />
       <workItem from="1605301335490" duration="1451000" />
       <workItem from="1605393673081" duration="817000" />
-      <workItem from="1605394649191" duration="4445000" />
+      <workItem from="1605394649191" duration="6212000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed a fuck ton of &quot;inefficient&quot; shit according to rider and also changed the namespaces so they wouldnt be so fucking bad">
       <created>1605062487481</created>
@@ -228,10 +240,10 @@
       <screen x="62" y="0" width="1858" height="1080" />
     </state>
     <state x="583" y="272" key="Rider.ProjectTemplateDialog.Size/62.0.1858.1080/1920.0.1858.1080@62.0.1858.1080" timestamp="1605398362562" />
-    <state x="583" y="273" key="Vcs.Push.Dialog.v2" timestamp="1605399159433">
+    <state x="583" y="273" key="Vcs.Push.Dialog.v2" timestamp="1605401391739">
       <screen x="62" y="0" width="1858" height="1080" />
     </state>
-    <state x="583" y="273" key="Vcs.Push.Dialog.v2/62.0.1858.1080/1920.0.1858.1080@62.0.1858.1080" timestamp="1605399159433" />
+    <state x="583" y="273" key="Vcs.Push.Dialog.v2/62.0.1858.1080/1920.0.1858.1080@62.0.1858.1080" timestamp="1605401391739" />
     <state x="684" y="445" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605124296327">
       <screen x="62" y="0" width="1858" height="1200" />
     </state>

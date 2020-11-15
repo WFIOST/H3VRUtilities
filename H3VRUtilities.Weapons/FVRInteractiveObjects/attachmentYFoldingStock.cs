@@ -78,10 +78,10 @@ namespace H3VRUtils
 				}
 		}
 
-		// Token: 0x0400276C RID: 10092
+
 		[FormerlySerializedAs("Root")] public Transform root;
 
-		// Token: 0x0400276D RID: 10093
+
 		[FormerlySerializedAs("Stock")] public Transform stock;
 
 		// Token: 0x0400276E RID: 10094
