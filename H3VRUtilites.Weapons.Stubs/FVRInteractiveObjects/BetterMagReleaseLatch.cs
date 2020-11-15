@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using FistVR;
 
-namespace H3VRUtils
+namespace H3VRUtils.stub
 {
 	class BetterMagReleaseLatch : MonoBehaviour
 	{

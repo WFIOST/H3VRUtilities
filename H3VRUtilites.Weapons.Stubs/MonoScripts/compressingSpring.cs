@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace H3VRUtils
+namespace H3VRUtils.stub
 {
 	class compressingSpring : MonoBehaviour
 	{
