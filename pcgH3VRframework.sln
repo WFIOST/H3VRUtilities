@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3VRUtilities", "pcgH3VRframework\H3VRUtilities.csproj", "{BF4A38D2-D4B8-49D0-AA4B-0BD428E5E406}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3VRUtilities.Weapons", "H3VRUtilities.Weapons\H3VRUtilities.Weapons.csproj", "{6A125FD9-0F5B-4294-9243-1B328C416E9C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3VRUtilites.Mapping", "H3VRUtilites.Mapping\H3VRUtilites.Mapping.csproj", "{432CAE43-22D4-4042-AF8C-011AD9525C57}"
@@ -17,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BF4A38D2-D4B8-49D0-AA4B-0BD428E5E406}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF4A38D2-D4B8-49D0-AA4B-0BD428E5E406}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF4A38D2-D4B8-49D0-AA4B-0BD428E5E406}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF4A38D2-D4B8-49D0-AA4B-0BD428E5E406}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6A125FD9-0F5B-4294-9243-1B328C416E9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6A125FD9-0F5B-4294-9243-1B328C416E9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A125FD9-0F5B-4294-9243-1B328C416E9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
