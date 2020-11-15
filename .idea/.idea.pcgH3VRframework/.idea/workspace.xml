@@ -25,9 +25,41 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="07ff6661-07ba-42e6-9867-9d9a680fa3c0" name="Default Changelist" comment="fixed your fucking code">
+    <list default="true" id="07ff6661-07ba-42e6-9867-9d9a680fa3c0" name="Default Changelist" comment="more stuff">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/MonoScripts/compressingSpring.cs" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/MonoScripts/compressingSpring.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework.sln" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/H3VRUtilities.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/H3VRUtilities.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/H3VRUtilities.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/pcgH3VRframework/obj/Debug/H3VRUtilities.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCode/FVRInteractiveObjects/BetterMagReleaseLatch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCode/FVRInteractiveObjects/FVRFirearms/TatoWeapon.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCode/FVRInteractiveObjects/HandgunEjectionTrigger.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCode/FVRInteractiveObjects/NadeCupLauncher.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCode/FVRInteractiveObjects/attachmentYFoldingStock.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCode/MonoScripts/compressingSpring.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCode/MonoScripts/cullOnZLoc.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/FVRInteractiveObjects/BetterMagReleaseLatch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/FVRInteractiveObjects/FVRFirearms/TatoWeapon.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/FVRInteractiveObjects/HandgunEjectionTrigger.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/FVRInteractiveObjects/NadeCupLauncher.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/FVRInteractiveObjects/attachmentYFoldingStock.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/H3VRUtilsStubbed.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/Properties/AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/bin/Debug/0Harmony.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/bin/Debug/Assembly-CSharp.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/bin/Debug/BepInEx.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/bin/Debug/H3VRUtilsStubbed.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/bin/Debug/H3VRUtilsStubbed.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/bin/Debug/Mono.Cecil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/bin/Debug/UnityEngine.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/obj/Debug/H3VRUtilsStubbed.csproj.CopyComplete" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/obj/Debug/H3VRUtilsStubbed.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/obj/Debug/H3VRUtilsStubbed.csprojAssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/obj/Debug/H3VRUtilsStubbed.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stubbedCodeSLN/H3VRUtilsStubbed/obj/Debug/H3VRUtilsStubbed.pdb" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,11 +80,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/stubbedCode/FVRInteractiveObjects/HandgunEjectionTrigger.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/stubbedCode/FVRInteractiveObjects/NadeCupLauncher.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/stubbedCode/FVRInteractiveObjects/BetterMagReleaseLatch.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/pcgH3VRframework/FVRInteractiveObjects/attachmentYFoldingStock.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/pcgH3VRframework/Properties/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/stubbedCode/FVRInteractiveObjects/FVRFirearms/TatoWeapon.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -71,6 +100,23 @@
         <option value="$PROJECT_DIR$/pcgH3VRframework/FVRInteractiveObjects/BetterMagReleaseLatch.cs" />
         <option value="$PROJECT_DIR$/pcgH3VRframework/MonoScripts/compressingSpring.cs" />
         <option value="$PROJECT_DIR$/pcgH3VRframework/FVRInteractiveObjects/FVRFirearms/TatoWeapon.cs" />
+        <option value="$PROJECT_DIR$/stubbedCode/H3VRUtilities.csproj" />
+        <option value="$PROJECT_DIR$/pcgH3VRframework/H3VRUtilities.csproj" />
+        <option value="$PROJECT_DIR$/pcgH3VRframework/stubbedCode/FVRInteractiveObjects/FVRFirearms/TatoWeapon.cs" />
+        <option value="$PROJECT_DIR$/pcgH3VRframework/stubbedCode/FVRInteractiveObjects/BetterMagReleaseLatch.cs" />
+        <option value="$PROJECT_DIR$/pcgH3VRframework/stubbedCode/FVRInteractiveObjects/HandgunEjectionTrigger.cs" />
+        <option value="$PROJECT_DIR$/pcgH3VRframework/stubbedCode/FVRInteractiveObjects/attachmentYFoldingStock.cs" />
+        <option value="$PROJECT_DIR$/pcgH3VRframework/stubbedCode/FVRInteractiveObjects/NadeCupLauncher.cs" />
+        <option value="$PROJECT_DIR$/pcgH3VRframework/stubbedCode/MonoScripts/compressingSpring.cs" />
+        <option value="$PROJECT_DIR$/pcgH3VRframework/stubbedCode/MonoScripts/cullOnZLoc.cs" />
+        <option value="$PROJECT_DIR$/Stubs/Class1.cs" />
+        <option value="$PROJECT_DIR$/Stubs/Stubs.csproj" />
+        <option value="$PROJECT_DIR$/Stubs/FVRInteractiveObjects/FVRFirearms/TatoWeapon.cs" />
+        <option value="$PROJECT_DIR$/H3VRUtils.Mapping/Class1.cs" />
+        <option value="$PROJECT_DIR$/H3VRUtilities.Mapping/Class1.cs" />
+        <option value="$PROJECT_DIR$/H3VRUtilities.Weapons/Class1.cs" />
+        <option value="$PROJECT_DIR$/H3VRUtilites.Mapping/Class1.cs" />
+        <option value="$PROJECT_DIR$/H3VRUtilites.Weapons.Stubs/Class1.cs" />
       </list>
     </option>
   </component>
@@ -132,6 +178,7 @@
       <workItem from="1605123244018" duration="1186000" />
       <workItem from="1605301335490" duration="1451000" />
       <workItem from="1605393673081" duration="817000" />
+      <workItem from="1605394649191" duration="3791000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed a fuck ton of &quot;inefficient&quot; shit according to rider and also changed the namespaces so they wouldnt be so fucking bad">
       <created>1605062487481</created>
@@ -147,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605393881232</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="more stuff">
+      <created>1605394875852</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1605394875852</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,16 +225,25 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Fixed a fuck ton of &quot;inefficient&quot; shit according to rider and also changed the namespaces so they wouldnt be so fucking bad" />
     <MESSAGE value="fixed your fucking code" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed your fucking code" />
+    <MESSAGE value="more stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="more stuff" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="583" y="273" key="Vcs.Push.Dialog.v2" timestamp="1605394023614">
+    <state x="583" y="272" key="Rider.ProjectTemplateDialog.Size" timestamp="1605398362562">
       <screen x="62" y="0" width="1858" height="1080" />
     </state>
-    <state x="583" y="273" key="Vcs.Push.Dialog.v2/62.0.1858.1080/1920.0.1858.1080@62.0.1858.1080" timestamp="1605394023614" />
+    <state x="583" y="272" key="Rider.ProjectTemplateDialog.Size/62.0.1858.1080/1920.0.1858.1080@62.0.1858.1080" timestamp="1605398362562" />
+    <state x="583" y="273" key="Vcs.Push.Dialog.v2" timestamp="1605394864372">
+      <screen x="62" y="0" width="1858" height="1080" />
+    </state>
+    <state x="583" y="273" key="Vcs.Push.Dialog.v2/62.0.1858.1080/1920.0.1858.1080@62.0.1858.1080" timestamp="1605394864372" />
     <state x="684" y="445" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605124296327">
       <screen x="62" y="0" width="1858" height="1200" />
     </state>
     <state x="684" y="445" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/62.0.1858.1200@62.0.1858.1200" timestamp="1605124296327" />
+    <state x="552" y="277" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1605394954614">
+      <screen x="62" y="0" width="1858" height="1080" />
+    </state>
+    <state x="552" y="277" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/62.0.1858.1080/1920.0.1858.1080@62.0.1858.1080" timestamp="1605394954614" />
   </component>
 </project>
