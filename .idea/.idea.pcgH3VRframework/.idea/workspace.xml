@@ -25,7 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="07ff6661-07ba-42e6-9867-9d9a680fa3c0" name="Default Changelist" comment="Reorganised libraries, and FINALLY found out how to make new csprojects (holy shit I am stupid)">
+    <list default="true" id="07ff6661-07ba-42e6-9867-9d9a680fa3c0" name="Default Changelist" comment="H3VRUTILITIES IS DELETED *CRABRAVE*">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.pcgH3VRframework/.idea/contentModel.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,7 +47,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/pcgH3VRframework/FVRInteractiveObjects/attachmentYFoldingStock.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/pcgH3VRframework/FVRInteractiveObjects/attachmentYFoldingStock.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/pcgH3VRframework/Properties/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -145,7 +145,7 @@
       <workItem from="1605123244018" duration="1186000" />
       <workItem from="1605301335490" duration="1451000" />
       <workItem from="1605393673081" duration="817000" />
-      <workItem from="1605394649191" duration="4122000" />
+      <workItem from="1605394649191" duration="4445000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed a fuck ton of &quot;inefficient&quot; shit according to rider and also changed the namespaces so they wouldnt be so fucking bad">
       <created>1605062487481</created>
@@ -175,7 +175,21 @@
       <option name="project" value="LOCAL" />
       <updated>1605398579573</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="More fixes">
+      <created>1605398926618</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1605398926618</updated>
+    </task>
+    <task id="LOCAL-00006" summary="H3VRUTILITIES IS DELETED *CRABRAVE*">
+      <created>1605399154496</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1605399154496</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -201,7 +215,9 @@
     <MESSAGE value="fixed your fucking code" />
     <MESSAGE value="more stuff" />
     <MESSAGE value="Reorganised libraries, and FINALLY found out how to make new csprojects (holy shit I am stupid)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reorganised libraries, and FINALLY found out how to make new csprojects (holy shit I am stupid)" />
+    <MESSAGE value="More fixes" />
+    <MESSAGE value="H3VRUTILITIES IS DELETED *CRABRAVE*" />
+    <option name="LAST_COMMIT_MESSAGE" value="H3VRUTILITIES IS DELETED *CRABRAVE*" />
   </component>
   <component name="WindowStateProjectService">
     <state x="629" y="301" key="MultipleFileMergeDialog" timestamp="1605398620115">
@@ -212,10 +228,10 @@
       <screen x="62" y="0" width="1858" height="1080" />
     </state>
     <state x="583" y="272" key="Rider.ProjectTemplateDialog.Size/62.0.1858.1080/1920.0.1858.1080@62.0.1858.1080" timestamp="1605398362562" />
-    <state x="583" y="273" key="Vcs.Push.Dialog.v2" timestamp="1605398630570">
+    <state x="583" y="273" key="Vcs.Push.Dialog.v2" timestamp="1605399159433">
       <screen x="62" y="0" width="1858" height="1080" />
     </state>
-    <state x="583" y="273" key="Vcs.Push.Dialog.v2/62.0.1858.1080/1920.0.1858.1080@62.0.1858.1080" timestamp="1605398630570" />
+    <state x="583" y="273" key="Vcs.Push.Dialog.v2/62.0.1858.1080/1920.0.1858.1080@62.0.1858.1080" timestamp="1605399159433" />
     <state x="684" y="445" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605124296327">
       <screen x="62" y="0" width="1858" height="1200" />
     </state>
