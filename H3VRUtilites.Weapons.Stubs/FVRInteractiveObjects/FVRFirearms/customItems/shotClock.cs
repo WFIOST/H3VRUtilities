@@ -11,12 +11,11 @@ namespace H3VRUtilities.customItems.shotClock
 {
 	class shotClock : MonoBehaviour
 	{
-		public Vector2 startingTimeWindow = new Vector2(2,5);
+		public string stopclocktextstring;
+
+		public Vector2 startingTimeWindow = new Vector2(2, 5);
 		public float stopclock;
 		public int shotsfired;
-
-		public int minTime = 2;
-		public int maxTime = 5;
 
 		public GameObject startbutton;
 		public GameObject stopbutton;
@@ -34,7 +33,7 @@ namespace H3VRUtilities.customItems.shotClock
 
 		void New()
 		{
-			
+
 		}
 
 		void Update()
@@ -42,8 +41,7 @@ namespace H3VRUtilities.customItems.shotClock
 			if (isClockOn)
 			{
 				stopclock += Time.deltaTime;
-				var ts = TimeSpan.FromSeconds(stopclock);
-				stopclocktext.text = string.Format("{0:00}:{0:00}:{0:00}", ts.TotalMinutes, ts.Seconds, ts.Milliseconds);
+				stopclocktext.text = updateStopClockTextString();
 			}
 			if (isInDelayProcess)
 			{
@@ -66,9 +64,35 @@ namespace H3VRUtilities.customItems.shotClock
 			}
 		}
 
+		public string updateStopClockTextString()
+		{
+			stopclocktextstring = "";
+			var ts = TimeSpan.FromSeconds(stopclock);
+			if (ts.Minutes < 10)
+			{
+				stopclocktextstring += "0";
+			}
+			stopclocktextstring += ts.Minutes.ToString() + ":";
+			if (ts.Seconds < 10)
+			{
+				stopclocktextstring += "0";
+			}
+			stopclocktextstring += ts.Seconds.ToString() + ":";
+			if (ts.Milliseconds < 100)
+			{
+				stopclocktextstring += "0";
+				if (ts.Milliseconds < 10)
+				{
+					stopclocktextstring += "0";
+				}
+			}
+			stopclocktextstring += Math.Round((double)ts.Milliseconds, 3).ToString();
+			return stopclocktextstring;
+		}
+
 		public void startClockProcess()
 		{
-			waittime = UnityEngine.Random.Range((float)minTime, (float)maxTime);
+			waittime = UnityEngine.Random.Range(startingTimeWindow.x, startingTimeWindow.y);
 			isInDelayProcess = true;
 		}
 
@@ -88,7 +112,7 @@ namespace H3VRUtilities.customItems.shotClock
 			if (isClockOn)
 			{
 				var ts = TimeSpan.FromSeconds(stopclock);
-				lastshottext.text = string.Format("{0:00}:{0:00}:{0:00}", ts.TotalMinutes, ts.Seconds, ts.Milliseconds);
+				lastshottext.text = updateStopClockTextString();
 			}
 		}
 	}

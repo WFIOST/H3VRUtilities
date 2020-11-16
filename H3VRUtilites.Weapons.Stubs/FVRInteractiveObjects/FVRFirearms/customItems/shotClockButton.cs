@@ -28,7 +28,7 @@ namespace H3VRUtilities.customItems.shotClock
 				SimpleInteraction(null);
 			}
 		}
-		public override void SimpleInteraction(FVRViveHand hand)
+		public void SimpleInteraction(FVRViveHand hand)
 		{
 			switch (button)
 			{
