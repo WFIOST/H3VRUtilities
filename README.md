@@ -7,6 +7,8 @@ DLLs required for building:
 
 `UnityEngine.dll`
 
+`UnityEngine.UI.dll`
+
 `BepInEx.dll`
 
 
