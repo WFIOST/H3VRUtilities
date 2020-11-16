@@ -31,9 +31,36 @@ namespace H3VRUtilities.customItems.shotClock
 
 		private float waittime;
 
-		void New()
-		{
+		public FVRFireArmChamber[] registery;
+		private bool[] registerySpent;
 
+		public Text[] weptext;
+
+		private BoxCollider registertrigger;
+
+		private bool alreadyInRegisteryFlag;
+
+		public enum screen
+		{
+			shot,
+			register,
+			delay
+		}
+
+		public screen currentScreen;
+
+		public void Awake()
+		{
+			registery = new FVRFireArmChamber[11];
+			registerySpent = new bool[11];
+			weptext = new Text[11];
+			registertrigger = this.GetComponent<BoxCollider>();
+		}
+
+		public void startClockProcess()
+		{
+			waittime = UnityEngine.Random.Range(startingTimeWindow.x, startingTimeWindow.y);
+			isInDelayProcess = true;
 		}
 
 		void Update()
@@ -61,6 +88,60 @@ namespace H3VRUtilities.customItems.shotClock
 			{
 				startbutton.SetActive(true);
 				stopbutton.SetActive(false);
+			}
+
+			for (int i = 0; i <= registery.Length; i++)
+			{
+				if (registery[i].IsSpent)
+				{
+					if (!registerySpent[i])
+					{
+						registerySpent[i] = true;
+						ShotDetected();
+					}
+				}
+				else
+				{
+					registerySpent[i] = false;
+				}
+			}
+
+			if (currentScreen == screen.register)
+			{
+				updateRegistery();
+			}
+		}
+
+		void updateRegistery()
+		{
+			//get all firearmchambers
+			GameObject[] list = GameObject.FindGameObjectsWithTag("FVRFireArmChamber");
+			for (int i = 0; i <= list.Length; i++)
+			{
+				//for every chamber, check if it's inside registertrigger bounds
+				if (registertrigger.bounds.Contains(list[i].transform.position))
+				{
+					//check if the chamber is already loaded into the registery
+					for (int io = 0; io <= registery.Length; i++)
+					{
+						if (registery[io].GameObject = list[i])
+						{
+							alreadyInRegisteryFlag = true;
+						}
+					}
+					//if it isn't, load it in
+					if (!alreadyInRegisteryFlag)
+					{
+						for (int ip = 0; ip <= registery.Length; i++)
+						{
+							//get the first null in registery
+							if (registery[i] == null)
+							{
+								registery[i] = list[i].GetComponent<FVRFireArmChamber>();
+							}
+						}
+					}
+				}
 			}
 		}
 
@@ -90,12 +171,6 @@ namespace H3VRUtilities.customItems.shotClock
 			return stopclocktextstring;
 		}
 
-		public void startClockProcess()
-		{
-			waittime = UnityEngine.Random.Range(startingTimeWindow.x, startingTimeWindow.y);
-			isInDelayProcess = true;
-		}
-
 		public void StartClock()
 		{
 			isClockOn = true;
@@ -105,6 +180,7 @@ namespace H3VRUtilities.customItems.shotClock
 		public void StopClock()
 		{
 			isClockOn = false;
+			stopclock = 0;
 		}
 
 		public void ShotDetected()
