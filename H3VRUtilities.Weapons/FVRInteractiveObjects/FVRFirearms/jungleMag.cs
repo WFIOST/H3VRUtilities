@@ -22,17 +22,21 @@ namespace H3VRUtils.Weapons
 		[HideInInspector]
 		public bool _isSlaveMagNotNull;
 
+		private bool _isFireArmNotNull;
+		private bool _fireArmNotNull;
+
 		void Start()
 		{
+			_fireArmNotNull = slaveMag.FireArm != null;
+			_isFireArmNotNull = masterMag.FireArm != null;
 			parentMag = masterMagGameObject;
-
 		}
 
 
 		void Update()
 		{
-			_isMasterMagNotNull = masterMag.FireArm != null;
-			_isSlaveMagNotNull = slaveMag.FireArm != null;
+			_isMasterMagNotNull = _isFireArmNotNull;
+			_isSlaveMagNotNull = _fireArmNotNull;
 			if (parentMag == masterMagGameObject)
 			{
 				if (_isSlaveMagNotNull)
@@ -40,7 +44,9 @@ namespace H3VRUtils.Weapons
 					//prevents master mag from being loaded
 					masterMag.DoesDisplayXOscillate = false;
 					//unparents slave mag
+					
 //					slaveMagGameObject.transform.parent = null;
+
 					//sets the parent of master mag to slave mag
 //					masterMagGameObject.transform.parent = slaveMagGameObject.transform;
 //					parentMag = slaveMagGameObject;
@@ -57,11 +63,9 @@ namespace H3VRUtils.Weapons
 				}
 			}
 
-			if (!_isMasterMagNotNull && !_isSlaveMagNotNull)
-			{
-				masterMag.DoesDisplayXOscillate = true;
-				slaveMag.DoesDisplayXOscillate = true;
-			}
+			if (_isMasterMagNotNull || _isSlaveMagNotNull) return;
+			masterMag.DoesDisplayXOscillate = true;
+			slaveMag.DoesDisplayXOscillate = true;
 		}
 	}
 }

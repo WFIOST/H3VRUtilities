@@ -12,21 +12,9 @@ namespace H3VRUtils.Weapons
 			return this.m_proxy.IsFull;
 		}
 
-		public bool IsHammerCocked
-		{
-			get
-			{
-				return this.m_isHammerCocked;
-			}
-		}
+		public bool IsHammerCocked => this.m_isHammerCocked;
 
-		public int FireSelectorModeIndex
-		{
-			get
-			{
-				return this.m_fireSelectorMode;
-			}
-		}
+		public int FireSelectorModeIndex => this.m_fireSelectorMode;
 
 		protected override void Awake()
 		{
@@ -55,11 +43,7 @@ namespace H3VRUtils.Weapons
 			{
 				return 2;
 			}
-			if (base.AltGrip == null)
-			{
-				return 3;
-			}
-			return 4;
+			return base.AltGrip == null ? 3 : 4;
 		}
 
 		public void SecondaryFireSelectorClicked()
@@ -69,21 +53,17 @@ namespace H3VRUtils.Weapons
 
 		public void CockHammer()
 		{
-			if (!this.m_isHammerCocked)
-			{
-				this.m_isHammerCocked = true;
-				base.PlayAudioEvent(FirearmAudioEventType.Prefire, 1f);
-			}
+			if (this.m_isHammerCocked) return;
+			this.m_isHammerCocked = true;
+			base.PlayAudioEvent(FirearmAudioEventType.Prefire, 1f);
 		}
 
 		public void DropHammer()
 		{
-			if (this.m_isHammerCocked)
-			{
-				this.m_isHammerCocked = false;
-				base.PlayAudioEvent(FirearmAudioEventType.HammerHit, 1f);
-				this.Fire();
-			}
+			if (!this.m_isHammerCocked) return;
+			this.m_isHammerCocked = false;
+			base.PlayAudioEvent(FirearmAudioEventType.HammerHit, 1f);
+			this.Fire();
 		}
 
 		// Token: 0x060016E9 RID: 5865 RVA: 0x000A6191 File Offset: 0x000A4591
@@ -102,40 +82,38 @@ namespace H3VRUtils.Weapons
 		// Token: 0x060016EB RID: 5867 RVA: 0x000A61E4 File Offset: 0x000A45E4
 		protected virtual void ToggleFireSelector()
 		{
-			if (this.FireSelector_Modes.Length > 1)
+			if (this.FireSelector_Modes.Length <= 1) return;
+			if (this.Bolt.UsesAKSafetyLock && !this.Bolt.IsBoltForwardOfSafetyLock())
 			{
-				if (this.Bolt.UsesAKSafetyLock && !this.Bolt.IsBoltForwardOfSafetyLock())
+				int num = this.m_fireSelectorMode + 1;
+				if (num >= this.FireSelector_Modes.Length)
 				{
-					int num = this.m_fireSelectorMode + 1;
-					if (num >= this.FireSelector_Modes.Length)
-					{
-						num -= this.FireSelector_Modes.Length;
-					}
-					if (this.FireSelector_Modes[num].ModeType == TatoWeapon.FireSelectorModeType.Safe)
-					{
-						return;
-					}
+					num -= this.FireSelector_Modes.Length;
 				}
-				this.m_fireSelectorMode++;
-				if (this.m_fireSelectorMode >= this.FireSelector_Modes.Length)
+				if (this.FireSelector_Modes[num].ModeType == TatoWeapon.FireSelectorModeType.Safe)
 				{
-					this.m_fireSelectorMode -= this.FireSelector_Modes.Length;
+					return;
 				}
-				TatoWeapon.FireSelectorMode fireSelectorMode = this.FireSelector_Modes[this.m_fireSelectorMode];
-				if (this.m_triggerFloat < 0.1f)
-				{
-					this.m_CamBurst = fireSelectorMode.BurstAmount;
-				}
-				base.PlayAudioEvent(FirearmAudioEventType.FireSelector, 1f);
-				if (this.FireSelectorSwitch != null)
-				{
-					base.SetAnimatedComponent(this.FireSelectorSwitch, fireSelectorMode.SelectorPosition, this.FireSelector_InterpStyle, this.FireSelector_Axis);
-				}
-				if (this.FireSelectorSwitch2 != null)
-				{
-					TatoWeapon.FireSelectorMode fireSelectorMode2 = this.FireSelector_Modes2[this.m_fireSelectorMode];
-					base.SetAnimatedComponent(this.FireSelectorSwitch2, fireSelectorMode2.SelectorPosition, this.FireSelector_InterpStyle2, this.FireSelector_Axis2);
-				}
+			}
+			this.m_fireSelectorMode++;
+			if (this.m_fireSelectorMode >= this.FireSelector_Modes.Length)
+			{
+				this.m_fireSelectorMode -= this.FireSelector_Modes.Length;
+			}
+			TatoWeapon.FireSelectorMode fireSelectorMode = this.FireSelector_Modes[this.m_fireSelectorMode];
+			if (this.m_triggerFloat < 0.1f)
+			{
+				this.m_CamBurst = fireSelectorMode.BurstAmount;
+			}
+			base.PlayAudioEvent(FirearmAudioEventType.FireSelector, 1f);
+			if (this.FireSelectorSwitch != null)
+			{
+				base.SetAnimatedComponent(this.FireSelectorSwitch, fireSelectorMode.SelectorPosition, this.FireSelector_InterpStyle, this.FireSelector_Axis);
+			}
+			if (this.FireSelectorSwitch2 != null)
+			{
+				TatoWeapon.FireSelectorMode fireSelectorMode2 = this.FireSelector_Modes2[this.m_fireSelectorMode];
+				base.SetAnimatedComponent(this.FireSelectorSwitch2, fireSelectorMode2.SelectorPosition, this.FireSelector_InterpStyle2, this.FireSelector_Axis2);
 			}
 		}
 
@@ -179,34 +157,25 @@ namespace H3VRUtils.Weapons
 		// Token: 0x060016EE RID: 5870 RVA: 0x000A64D8 File Offset: 0x000A48D8
 		public bool ChamberRound()
 		{
-			if (this.m_proxy.IsFull && !this.Chamber.IsFull)
-			{
-				this.Chamber.SetRound(this.m_proxy.Round);
-				this.m_proxy.ClearProxy();
-				return true;
-			}
-			return false;
+			if (!this.m_proxy.IsFull || this.Chamber.IsFull) return false;
+			this.Chamber.SetRound(this.m_proxy.Round);
+			this.m_proxy.ClearProxy();
+			return true;
 		}
 
 		// Token: 0x060016EF RID: 5871 RVA: 0x000A6529 File Offset: 0x000A4929
 		public override Transform GetMagMountingTransform()
 		{
-			if (this.UsesMagMountTransformOverride)
-			{
-				return this.MagMountTransformOverride;
-			}
-			return base.GetMagMountingTransform();
+			return this.UsesMagMountTransformOverride ? this.MagMountTransformOverride : base.GetMagMountingTransform();
 		}
 
 		// Token: 0x060016F0 RID: 5872 RVA: 0x000A6544 File Offset: 0x000A4944
 		protected override void FVRFixedUpdate()
 		{
 			base.FVRFixedUpdate();
-			if (this.UsesStickyDetonation && this.m_stickyChargeUp > 0f)
-			{
-				base.RootRigidbody.velocity += UnityEngine.Random.onUnitSphere * 0.2f * this.m_stickyChargeUp;
-				base.RootRigidbody.angularVelocity += UnityEngine.Random.onUnitSphere * 1f * this.m_stickyChargeUp;
-			}
+			if (!this.UsesStickyDetonation || !(this.m_stickyChargeUp > 0f)) return;
+			base.RootRigidbody.velocity += UnityEngine.Random.onUnitSphere * 0.2f * this.m_stickyChargeUp;
+			base.RootRigidbody.angularVelocity += UnityEngine.Random.onUnitSphere * 1f * this.m_stickyChargeUp;
 		}
 
 		// Token: 0x060016F1 RID: 5873 RVA: 0x000A65D4 File Offset: 0x000A49D4
@@ -233,13 +202,11 @@ namespace H3VRUtils.Weapons
 			{
 				for (int i = 0; i < fireSelectorMode.BurstAmount - 1; i++)
 				{
-					if (this.Magazine.HasARound())
-					{
-						this.Magazine.RemoveRound();
-						base.Fire(this.Chamber, this.GetMuzzle(), false, 1f);
-						flag = true;
-						this.Recoil(twoHandStabilized, foregripStabilized, shoulderStabilized, null, 1f);
-					}
+					if (!this.Magazine.HasARound()) continue;
+					this.Magazine.RemoveRound();
+					base.Fire(this.Chamber, this.GetMuzzle(), false, 1f);
+					flag = true;
+					this.Recoil(twoHandStabilized, foregripStabilized, shoulderStabilized, null, 1f);
 				}
 			}
 			this.FireMuzzleSmoke();
