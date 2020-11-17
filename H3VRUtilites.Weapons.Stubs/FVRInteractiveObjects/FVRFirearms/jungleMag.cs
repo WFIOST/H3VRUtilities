@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using FistVR;
 
-namespace H3VRUtils.Weapons
+namespace H3VRUtils.Weapons.stub
 {
 	class jungleMag : MonoBehaviour
 	{
@@ -22,17 +22,21 @@ namespace H3VRUtils.Weapons
 		[HideInInspector]
 		public bool _isSlaveMagNotNull;
 
+		private bool _isFireArmNotNull;
+		private bool _fireArmNotNull;
+
 		void Start()
 		{
+			_fireArmNotNull = slaveMag.FireArm != null;
+			_isFireArmNotNull = masterMag.FireArm != null;
 			parentMag = masterMagGameObject;
-
 		}
 
 
 		void Update()
 		{
-			_isMasterMagNotNull = masterMag.FireArm != null;
-			_isSlaveMagNotNull = slaveMag.FireArm != null;
+			_isMasterMagNotNull = _isFireArmNotNull;
+			_isSlaveMagNotNull = _fireArmNotNull;
 			if (parentMag == masterMagGameObject)
 			{
 				if (_isSlaveMagNotNull)
