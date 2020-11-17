@@ -32,11 +32,14 @@ namespace H3VRUtilities.customItems.shotClock
 		private float waittime;
 
 		public FVRFireArmChamber[] registery;
+
 		private bool[] registerySpent;
 
 		public Text[] weptext;
 
-		private BoxCollider registertrigger;
+		public BoxCollider registertrigger;
+
+		public GameObject[] chambersInScene;
 
 		private bool alreadyInRegisteryFlag;
 
@@ -51,10 +54,8 @@ namespace H3VRUtilities.customItems.shotClock
 
 		public void Awake()
 		{
-			registery = new FVRFireArmChamber[11];
 			registerySpent = new bool[11];
-			weptext = new Text[11];
-			registertrigger = this.GetComponent<BoxCollider>();
+
 		}
 
 		public void startClockProcess()
@@ -90,19 +91,22 @@ namespace H3VRUtilities.customItems.shotClock
 				stopbutton.SetActive(false);
 			}
 
-			for (int i = 0; i <= registery.Length; i++)
+			for (int i = 0; i < registery.Length; i++)
 			{
-				if (registery[i].IsSpent)
+				if (registery[i] != null)
 				{
-					if (!registerySpent[i])
+					if (registery[i].IsSpent)
 					{
-						registerySpent[i] = true;
-						ShotDetected();
+						if (!registerySpent[i])
+						{
+							registerySpent[i] = true;
+							ShotDetected();
+						}
 					}
-				}
-				else
-				{
-					registerySpent[i] = false;
+					else
+					{
+						registerySpent[i] = false;
+					}
 				}
 			}
 
@@ -115,32 +119,53 @@ namespace H3VRUtilities.customItems.shotClock
 		void updateRegistery()
 		{
 			//get all firearmchambers
-			GameObject[] list = GameObject.FindGameObjectsWithTag("FVRFireArmChamber");
-			for (int i = 0; i <= list.Length; i++)
+			chambersInScene = GameObject.FindGameObjectsWithTag("FVRFireArmChamber");
+			for (int i = 0; i < chambersInScene.Length; i++)
 			{
 				//for every chamber, check if it's inside registertrigger bounds
-				if (registertrigger.bounds.Contains(list[i].transform.position))
+				if (registertrigger.bounds.Contains(chambersInScene[i].transform.position))
 				{
+					var cischamber = chambersInScene[i].GetComponent<FVRFireArmChamber>();
 					//check if the chamber is already loaded into the registery
-					for (int io = 0; io <= registery.Length; i++)
+					for (int io = 0; io < registery.Length; io++)
 					{
-						if (registery[io].GameObject = list[i])
+						if (registery[io] != null)
 						{
-							alreadyInRegisteryFlag = true;
+							if (registery[io] == cischamber)
+							{
+								alreadyInRegisteryFlag = true;
+							}
 						}
 					}
 					//if it isn't, load it in
 					if (!alreadyInRegisteryFlag)
 					{
-						for (int ip = 0; ip <= registery.Length; i++)
+						for (int ip = 0; ip < registery.Length; ip++)
 						{
 							//get the first null in registery
 							if (registery[i] == null)
 							{
-								registery[i] = list[i].GetComponent<FVRFireArmChamber>();
+								registery[i] = chambersInScene[i].GetComponent<FVRFireArmChamber>();
+								break;
 							}
 						}
+						updateRegisteryText();
 					}
+				}
+			}
+		}
+
+		public void updateRegisteryText()
+		{
+			for(int i = 0; i < registery.Length; i++)
+			{
+				if (registery[i] != null)
+				{
+					weptext[i].text = registery[i].transform.root.ToString();
+				}
+				else
+				{
+					weptext[i].text = "EMPTY";
 				}
 			}
 		}
