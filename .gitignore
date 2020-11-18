@@ -6,13 +6,7 @@ pcgH3VRframework/bin/Debug/Assembly-CSharp.dll
 pcgH3VRframework/bin/Debug/BepInEx.dll
 pcgH3VRframework/bin/Debug/H3VRUtilities.mm.dll
 pcgH3VRframework/bin/Debug/UnityEngine.dll
-pcgH3VRframework/Libraries/0Harmony.dll
-pcgH3VRframework/Libraries/Assembly-CSharp.dll
-pcgH3VRframework/Libraries/BepInEx.dll
-pcgH3VRframework/Libraries/UnityEngine.dll
 pcgH3VRframework/obj/Debug/H3VRUtilities.mm.dll
-
-Libraries/
 H3VRUtilites.Weapons.Stubs/bin/Debug/BepInEx.Harmony.dll
 H3VRUtilites.Weapons.Stubs/bin/Debug/Assembly-CSharp-firstpass.dll
 H3VRUtilites.Weapons.Stubs/bin/Debug/Assembly-CSharp.dll
@@ -27,3 +21,12 @@ H3VRUtilities.Weapons/bin/Debug/BepInEx.Harmony.dll
 .vs/pcgH3VRframework/v16/Server/sqlite3/storage.ide-shm
 .vs/pcgH3VRframework/v16/Server/sqlite3/storage.ide-wal
 H3VRUtilites.Weapons.Stubs/bin/Debug/UnityEngine.dll
+H3VRUtilites.Mapping/bin/Debug/Assembly-CSharp-firstpass.dll
+H3VRUtilites.Mapping/bin/Debug/Assembly-CSharp.dll
+H3VRUtilites.Mapping/bin/Debug/BepInEx.dll
+H3VRUtilites.Mapping/bin/Debug/BepInEx.Harmony.dll
+H3VRUtilites.Mapping/bin/Debug/H3VRUtilites.Mapping.dll
+H3VRUtilites.Mapping/bin/Debug/H3VRUtilites.Mapping.pdb
+H3VRUtilites.Mapping/bin/Debug/UnityEngine.dll
+H3VRUtilites.Mapping/bin/Debug/WurstMod.dll
+H3VRUtilites.Mapping/obj/Debug/H3VRUtilites.Mapping.dll

@@ -9,3 +9,7 @@ F:\GitHub\PotatoesH3VRLib\H3VRUtilities.Weapons\obj\Debug\H3VRUtilities.Weapons.
 F:\GitHub\PotatoesH3VRLib\H3VRUtilities.Weapons\obj\Debug\H3VRUtilities.Weapons.csproj.CopyComplete
 F:\GitHub\PotatoesH3VRLib\H3VRUtilities.Weapons\obj\Debug\H3VRUtilities.Weapons.dll
 F:\GitHub\PotatoesH3VRLib\H3VRUtilities.Weapons\obj\Debug\H3VRUtilities.Weapons.pdb
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\H3VRUtilities.Weapons\obj\Debug\H3VRUtilities.Weapons.csprojAssemblyReference.cache
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\H3VRUtilities.Weapons\obj\Debug\H3VRUtilities.Weapons.csproj.CoreCompileInputs.cache
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\H3VRUtilities.Weapons\obj\Debug\H3VRUtilities.Weapons.dll
+C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\H3VRUtilities.Weapons\obj\Debug\H3VRUtilities.Weapons.pdb

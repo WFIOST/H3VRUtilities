@@ -53,11 +53,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DEPRECIATED\attachmentYFoldingStockProxy.cs" />
-    <Compile Include="DEPRECIATED\Class1.cs" />
-    <Compile Include="DEPRECIATED\FVRInteractableObjectProxy.cs" />
-    <Compile Include="DEPRECIATED\proxyLoaders\attachmentYFoldingStockProxyLoader.cs" />
-    <Compile Include="DEPRECIATED\TatoWeaponProxy.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentYFoldingStock.cs" />
     <Compile Include="FVRInteractiveObjects\BetterMagReleaseLatch.cs" />
     <Compile Include="FVRInteractiveObjects\FVRFirearms\jungleMag.cs" />
