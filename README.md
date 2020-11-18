@@ -1,7 +1,7 @@
 # H3VR Custom Guns Utils
 Library for custom scripts/utilities for making custom guns in H3VR.
 
-DLLs required for building:
+Dependencies required for building:
 
 `Assembly-CSharp.dll` (from h3vr)
 
