@@ -25,10 +25,10 @@ namespace H3VRUtils
 			{
 				this._rotAngle = this.maxRot;
 			}
-				if (this._rotAngle >= this.minRot && this._rotAngle <= this.maxRot)
-				{
-					this.stock.localEulerAngles = new Vector3(0f, this._rotAngle, 0f);
-					float num = Mathf.InverseLerp(this.minRot, this.maxRot, this._rotAngle);
+			if (this._rotAngle >= this.minRot && this._rotAngle <= this.maxRot)
+			{
+				this.stock.localEulerAngles = new Vector3(0f, this._rotAngle, 0f);
+				float num = Mathf.InverseLerp(this.minRot, this.maxRot, this._rotAngle);
 				if (fireArm != null)
 				{
 					if (this.isMinClosed)
@@ -74,10 +74,23 @@ namespace H3VRUtils
 					}
 					this.mLastPos = this.mCurPos;
 				}
-					return;
-				}
+				return;
+			}
 		}
 
+		public void FixedUpdate()
+		{
+			if (attachment.curMount != null)
+			{
+				if (fireArm == null)
+				{
+					var _firearm = attachment.curMount.Parent.GetComponent<FVRFireArm>();
+					fireArm = _firearm;
+					Console.WriteLine("attachmentYFoldingStock has connected itself to " + fireArm);
+				}
+			}
+			else if (fireArm != null) { fireArm = null; }
+		}
 
 		[FormerlySerializedAs("Root")] public Transform root;
 

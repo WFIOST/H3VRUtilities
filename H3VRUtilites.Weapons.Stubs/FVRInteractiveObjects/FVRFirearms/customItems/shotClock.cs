@@ -17,6 +17,8 @@ namespace H3VRUtilities.customItems.shotClock
 		public float stopclock;
 		public int shotsfired;
 
+		public float regmaxdist = 0.5f;
+
 		public GameObject startbutton;
 		public GameObject stopbutton;
 
@@ -42,6 +44,8 @@ namespace H3VRUtilities.customItems.shotClock
 		public GameObject[] chambersInScene;
 
 		private bool alreadyInRegisteryFlag;
+
+		public float[] distfromshotclock;
 
 		public enum screen
 		{
@@ -120,10 +124,13 @@ namespace H3VRUtilities.customItems.shotClock
 		{
 			//get all firearmchambers
 			chambersInScene = GameObject.FindGameObjectsWithTag("FVRFireArmChamber");
-			for (int i = 0; i < chambersInScene.Length; i++)
+			distfromshotclock = new float[chambersInScene.Length];
+			for (int i = 0; i < chambersInScene.Length; i++) // i means now which chamber
 			{
 				//for every chamber, check if it's inside registertrigger bounds
-				if (registertrigger.bounds.Contains(chambersInScene[i].transform.position))
+				//				if (registertrigger.bounds.Contains(chambersInScene[i].transform.position))
+				distfromshotclock[i] = Vector3.Distance(transform.position, chambersInScene[i].transform.position);
+				if (distfromshotclock[i] < regmaxdist)
 				{
 					var cischamber = chambersInScene[i].GetComponent<FVRFireArmChamber>();
 					//check if the chamber is already loaded into the registery
@@ -140,12 +147,14 @@ namespace H3VRUtilities.customItems.shotClock
 					//if it isn't, load it in
 					if (!alreadyInRegisteryFlag)
 					{
+						UnityEngine.Debug.Log("Ready to load " + chambersInScene[i]);
 						for (int ip = 0; ip < registery.Length; ip++)
 						{
 							//get the first null in registery
-							if (registery[i] == null)
+							if (registery[ip] == null)
 							{
-								registery[i] = chambersInScene[i].GetComponent<FVRFireArmChamber>();
+								registery[ip] = chambersInScene[i].GetComponent<FVRFireArmChamber>();
+								UnityEngine.Debug.Log(registery[ip] + " loaded successfully from " + distfromshotclock[i] + " units away!");
 								break;
 							}
 						}

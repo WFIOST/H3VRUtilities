@@ -51,10 +51,15 @@
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:\Users\rafae\source\repos\PotatoesH3VRframework\PotatoesH3VRframework\Libs\UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FVRInteractiveObjects\attachmentYFoldingStock.cs" />
     <Compile Include="FVRInteractiveObjects\BetterMagReleaseLatch.cs" />
+    <Compile Include="FVRInteractiveObjects\FVRFirearms\customItems\shotClock.cs" />
+    <Compile Include="FVRInteractiveObjects\FVRFirearms\customItems\shotClockButton.cs" />
     <Compile Include="FVRInteractiveObjects\FVRFirearms\jungleMag.cs" />
     <Compile Include="FVRInteractiveObjects\FVRFirearms\TatoWeapon.cs" />
     <Compile Include="FVRInteractiveObjects\HandgunEjectionTrigger.cs" />
