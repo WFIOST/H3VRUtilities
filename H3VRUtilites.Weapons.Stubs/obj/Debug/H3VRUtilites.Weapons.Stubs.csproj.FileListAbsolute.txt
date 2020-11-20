@@ -21,3 +21,4 @@ C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\H3VRUtilites.Weapo
 C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\H3VRUtilites.Weapons.Stubs\obj\Debug\H3VRUtilites.Weapons.Stubs.csproj.CopyComplete
 C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\H3VRUtilites.Weapons.Stubs\obj\Debug\H3VRUtilites.Weapons.Stubs.dll
 C:\Users\Frityet\Documents\Programming\CS\H3VR Mods\H3VRUtils\H3VRUtilites.Weapons.Stubs\obj\Debug\H3VRUtilites.Weapons.Stubs.pdb
+F:\GitHub\PotatoesH3VRLib\H3VRUtilites.Weapons.Stubs\bin\Debug\UnityEngine.UI.dll

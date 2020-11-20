@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>H3VRUtilities.Weapons</RootNamespace>
-    <AssemblyName>H3VRUtilities.Weapons</AssemblyName>
+    <AssemblyName>H3VRUtilities.Weapons.mm</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
