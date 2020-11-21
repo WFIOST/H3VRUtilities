@@ -59,7 +59,6 @@ namespace H3VRUtilities.customItems.shotClock
 		public void Awake()
 		{
 			registerySpent = new bool[11];
-
 		}
 
 		public void startClockProcess()
@@ -113,19 +112,16 @@ namespace H3VRUtilities.customItems.shotClock
 					}
 				}
 			}
-
-			if (currentScreen == screen.register)
-			{
-				updateRegistery();
-			}
+			
 		}
 
+		
 		void updateRegistery()
 		{
 			//get all firearmchambers
 			chambersInScene = GameObject.FindGameObjectsWithTag("FVRFireArmChamber");
 			distfromshotclock = new float[chambersInScene.Length];
-			for (int i = 0; i < chambersInScene.Length; i++) // i means now which chamber
+			for (var i = 0; i < chambersInScene.Length; i++) // i means now which chamber
 			{
 				//for every chamber, check if it's inside registertrigger bounds
 				//				if (registertrigger.bounds.Contains(chambersInScene[i].transform.position))
@@ -134,11 +130,11 @@ namespace H3VRUtilities.customItems.shotClock
 				{
 					var cischamber = chambersInScene[i].GetComponent<FVRFireArmChamber>();
 					//check if the chamber is already loaded into the registery
-					for (int io = 0; io < registery.Length; io++)
+					foreach (var t in registery)
 					{
-						if (registery[io] != null)
+						if (t != null)
 						{
-							if (registery[io] == cischamber)
+							if (t == cischamber)
 							{
 								alreadyInRegisteryFlag = true;
 							}

@@ -10,8 +10,9 @@ namespace H3VRUtils.Mapping
         [Header("Choose Sosig Type")]
         public SosigEnemyID listOfSosigs;
         
+        //private ScriptableObject[] sosigTemplates;
         
-        
+
         private void Awake()
         {
             sosigSpawnLocation = this.transform;
