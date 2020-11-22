@@ -56,7 +56,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Deprecated\attachmentYFoldingStockProxyLoader.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentYFoldingStock.cs" />
+    <Compile Include="Deprecated\attachmentYFoldingStockProxy.cs" />
     <Compile Include="FVRInteractiveObjects\BetterMagReleaseLatch.cs" />
     <Compile Include="FVRInteractiveObjects\FVRFirearms\customItems\shotClock.cs" />
     <Compile Include="FVRInteractiveObjects\FVRFirearms\customItems\shotClockButton.cs" />

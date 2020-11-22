@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace H3VRUtils.Proxy
+namespace H3VRUtils.stub.Deprecated
 {
-	class Class1
+	class attachmentYFoldingStockProxy : attachmentYFoldingStock
 	{
+
 	}
 }

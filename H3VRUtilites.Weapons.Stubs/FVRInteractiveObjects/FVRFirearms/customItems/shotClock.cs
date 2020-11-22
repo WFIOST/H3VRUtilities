@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using System.Diagnostics;
 using FistVR;
 
-namespace H3VRUtilities.customItems.shotClock
+namespace H3VRUtils.customItems.shotClock
 {
 	class shotClock : MonoBehaviour
 	{

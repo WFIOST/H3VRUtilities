@@ -5,7 +5,7 @@ using System.Text;
 using FistVR;
 using UnityEngine;
 
-namespace H3VRUtilities.customItems.shotClock
+namespace H3VRUtils.customItems.shotClock
 {
 	class shotClockButton : FVRPhysicalObject
 	{

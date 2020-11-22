@@ -6,7 +6,7 @@ using UnityEngine;
 using FistVR;
 using UnityEngine.Serialization;
 
-namespace H3VRUtils.Weapons.NadeCup.stub
+namespace H3VRUtils.stub
 {
 	class NadeCupLauncher : MonoBehaviour
 	{
