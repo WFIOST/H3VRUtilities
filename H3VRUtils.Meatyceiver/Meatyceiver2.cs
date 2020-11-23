@@ -70,7 +70,7 @@ namespace Meatyceiver2
 			failureToLockSlide = Config.Bind("Failures - Broken Firearm", "Failure to Lock Slide Rate", 0.3f, "Valid numbers are 0-100");
 			SlamfireRate = Config.Bind("Failures - Broken Firearm", "Slam Fire Rate", 0.05f, "Valid numbers are 0-100");
 
-			//			var harmoney = new Harmony(Info.Metadata.GUID);
+			//			var harmony = new Harmony(Info.Metadata.GUID);
 			Harmony.CreateAndPatchAll(typeof(Meatyceiver));
 			rnd = new System.Random();
 		}
