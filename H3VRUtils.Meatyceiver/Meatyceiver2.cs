@@ -10,7 +10,7 @@ using BepInEx.Configuration;
 
 namespace Meatyceiver2
 {
-	[BepInPlugin("dll.potatoes.meatyceiver2", "Meatyceiver2", "0.2")]
+	[BepInPlugin("dll.potatoes.meatyceiver2", "Meatyceiver2", "0.2.3")]
 	public class Meatyceiver : BaseUnityPlugin
 	{
 		private static ConfigEntry<bool> enableFirearmFailures;
@@ -39,6 +39,8 @@ namespace Meatyceiver2
 		private static ConfigEntry<float> failureToLockSlide;
 		private static ConfigEntry<float> SlamfireRate;
 
+		private static ConfigEntry<float> BespokeFailureBreakActionShotgunFTE;
+
 		public static float prevSlideZLock = -999f;
 
 		public static System.Random rnd;
@@ -48,7 +50,7 @@ namespace Meatyceiver2
 			UnityEngine.Debug.Log("Meatyceiver2 here!");
 			enableAmmunitionFailures = Config.Bind("_General Settings", "Enable Ammunition Failures", true, "Enables ammunition related failures.");
 			enableFirearmFailures = Config.Bind("_General Settings", "Enable Firearm Failures", true, "Enables firearm related failures.");
-			enableBrokenFirearmFailures = Config.Bind("_General Settings", "Enable Broken Firearm Failures", false, "Enables failures related to permanent firearm damage.");
+			enableBrokenFirearmFailures = Config.Bind("_General Settings", "Enable Broken Firearm Failures", true, "Enables failures related to permanent firearm damage.");
 			enableSecondaryMultipliers = Config.Bind("_General Settings", "Enable Secondary Failure Multipliers", true, "Enables secondary jam chance multipliers.");
 			enableConsoleDebugging = Config.Bind("_General Settings", "Enable Console Debugging", false, "Exports values and failures to console.");
 
@@ -70,18 +72,23 @@ namespace Meatyceiver2
 			failureToLockSlide = Config.Bind("Failures - Broken Firearm", "Failure to Lock Slide Rate", 0.3f, "Valid numbers are 0-100");
 			SlamfireRate = Config.Bind("Failures - Broken Firearm", "Slam Fire Rate", 0.05f, "Valid numbers are 0-100");
 
+			BespokeFailureBreakActionShotgunFTE = Config.Bind("Bespoke Failures", "Break Action Failure To Eject", 1.5f, "Valid numbers are 0-100");
+
 			//			var harmoney = new Harmony(Info.Metadata.GUID);
 			Harmony.CreateAndPatchAll(typeof(Meatyceiver));
 			rnd = new System.Random();
 		}
 
+		//BEGIN AMMO FAILURES
+
 		[HarmonyPatch(typeof(FVRFireArmChamber), "Fire")]
 		[HarmonyPrefix]
 		static bool LightPrimerStrikePatch(ref bool __result, FVRFireArmChamber __instance, FVRFireArmRound ___m_round)
 		{
-			var rand = (float)rnd.Next(0, 10001) / 100;
 			if (!enableAmmunitionFailures.Value) { return true; }
-			if (enableConsoleDebugging.Value) { Debug.Log("Random number generated for LightPrimerStrike: " + rand); }
+			if (__instance.Firearm is Revolver || __instance.Firearm is RevolvingShotgun) { return true; }
+			var rand = (float)rnd.Next(0, 10001) / 100;
+			if (enableConsoleDebugging.Value) { Debug.Log("LPS RNG: " + rand + " to " + lightPrimerStrikeFailureRate.Value * generalMult.Value); }
 			if (rand >= lightPrimerStrikeFailureRate.Value * generalMult.Value)
 			{
 				if (__instance.IsFull && ___m_round != null && !__instance.IsSpent)
@@ -94,20 +101,48 @@ namespace Meatyceiver2
 			}
 			else
 			{
-				/*				if (rand >= (100 - FailureToExtractRate.Value))
-								{
-									__instance.IsSpent = true;
-									__instance.UpdateProxyDisplay();
-									__result = false;
-									return false;
-								}*/
-
-
 				if (enableConsoleDebugging.Value) { Debug.Log("Light primer strike!"); };
 			}
 			__result = false;
 			return false;
 		}
+
+		[HarmonyPatch(typeof(Revolver), "Fire")]
+		[HarmonyPrefix]
+		static bool LightPrimerStrikeRevolverPatch(Revolver __instance)
+		{
+			if (!enableAmmunitionFailures.Value) { return true; }
+			var rand = (float)rnd.Next(0, 10001) / 100;
+			if (enableConsoleDebugging.Value) { Debug.Log("LPS RNG: " + rand + " to " + lightPrimerStrikeFailureRate.Value * generalMult.Value); }
+			if (rand <= lightPrimerStrikeFailureRate.Value * generalMult.Value)
+			{
+				if (enableConsoleDebugging.Value) { Debug.Log("Light primer strike!"); };
+				__instance.Chambers[__instance.CurChamber].IsSpent = false;
+				__instance.Chambers[__instance.CurChamber].UpdateProxyDisplay();
+				return false;
+			}
+			return true;
+		}
+
+		[HarmonyPatch(typeof(RevolvingShotgun), "Fire")]
+		[HarmonyPrefix]
+		static bool LightPrimerStrikeRevolvingShotgunPatch(RevolvingShotgun __instance)
+		{
+			if (!enableAmmunitionFailures.Value) { return true; }
+			var rand = (float)rnd.Next(0, 10001) / 100;
+			if (enableConsoleDebugging.Value) { Debug.Log("LPS RNG: " + rand + " to " + lightPrimerStrikeFailureRate.Value * generalMult.Value); }
+			if (rand <= lightPrimerStrikeFailureRate.Value * generalMult.Value)
+			{
+				if (enableConsoleDebugging.Value) { Debug.Log("Light primer strike!"); };
+				__instance.Chambers[__instance.CurChamber].IsSpent = false;
+				__instance.Chambers[__instance.CurChamber].UpdateProxyDisplay();
+				return false;
+			}
+			return true;
+		}
+
+
+		//BEGIN FIREARM FAILURES
 
 		[HarmonyPatch(typeof(ClosedBoltWeapon), "BeginChamberingRound")]
 		[HarmonyPatch(typeof(OpenBoltReceiver), "BeginChamberingRound")]
@@ -118,18 +153,44 @@ namespace Meatyceiver2
 			float failureinc = 0;
 			if (!enableFirearmFailures.Value) { return true; }
 			var rand = (float)rnd.Next(0, 10001) / 100;
-			if (enableConsoleDebugging.Value) { Debug.Log("Random number generated for FTF: " + rand); };
-
 			if (__instance.Magazine != null && enableSecondaryMultipliers.Value)
 			{
-				failureinc = (float)(__instance.Magazine.m_capacity - minRoundCount.Value) * failureIncPerRound.Value;
+				if (!__instance.Magazine.IsBeltBox)
+				{
+					failureinc = (float)(__instance.Magazine.m_capacity - minRoundCount.Value) * failureIncPerRound.Value;
+				}
 			}
+			if (enableConsoleDebugging.Value) { Debug.Log("FTF RNG: " + rand + " to " + (HammerFollowRate.Value + failureinc) * generalMult.Value); };
 			if (rand <= (failureToFeedRate.Value + failureinc) * generalMult.Value)
 			{
 				if (enableConsoleDebugging.Value) { Debug.Log("Failure to feed!"); };
 				return false;
 			}
 			return true;
+		}
+
+		[HarmonyPatch(typeof(BreakActionWeapon), "PopOutRound")]
+		[HarmonyPrefix]
+		static bool FailtoPopEmptyBreakActionPatch(BreakActionWeapon __instance, FVRFireArm chamber)
+		{
+			if (!enableFirearmFailures.Value) { return true; }
+			if (chamber.RotationInterpSpeed == 2) { return false; };
+			var rand = (float)rnd.Next(0, 10001) / 100;
+			if (enableConsoleDebugging.Value) { Debug.Log("FTE RNG: " + rand + " to " + BespokeFailureBreakActionShotgunFTE.Value * generalMult.Value); }
+			if (rand <= BespokeFailureBreakActionShotgunFTE.Value * generalMult.Value)
+			{
+				if (enableConsoleDebugging.Value) { Debug.Log("Failure to eject!"); }
+				chamber.RotationInterpSpeed = 2;
+				return false;
+			}
+			return true;
+		}
+
+		[HarmonyPatch(typeof(FVRFireArmChamber), "BeginInteraction")]
+		[HarmonyPostfix]
+		static void fixBreakActionFTEPatch(FVRFireArmChamber __instance)
+		{
+			__instance.RotationInterpSpeed = 1;
 		}
 
 		/*		[HarmonyPatch(typeof(Handgun), "CockHammer")]
@@ -151,16 +212,18 @@ namespace Meatyceiver2
 		[HarmonyPrefix]
 		static bool FTEPatch(FVRInteractiveObject __instance)
 		{
+			if (__instance is BoltActionRifle) { return false; }
+			if (__instance is LeverActionFirearm) { return false; }
 			if (!enableFirearmFailures.Value) { return true; }
 			var rand = (float)rnd.Next(0, 10001) / 100;
-			if (enableConsoleDebugging.Value) { Debug.Log("Random number generated for Stovepipe: " + rand); }
+			if (enableConsoleDebugging.Value) { Debug.Log("Stovepipe RNG: " + rand + " to " + StovepipeRate.Value * generalMult.Value); }
 			if (rand >= 100 - StovepipeRate.Value * generalMult.Value)
 			{
 				if (enableConsoleDebugging.Value) { Debug.Log("Stovepipe!"); }
 				__instance.RotationInterpSpeed = 2;
 				return false;
 			}
-			if (enableConsoleDebugging.Value) { Debug.Log("Random number generated for FTE: " + rand); }
+			if (enableConsoleDebugging.Value) { Debug.Log("FTE RNG: " + rand + " to " + FailureToExtractRate.Value * generalMult.Value); }
 			if (rand <= FailureToExtractRate.Value * generalMult.Value)
 			{
 				if (enableConsoleDebugging.Value) { Debug.Log("Failure to eject!"); }
@@ -168,6 +231,8 @@ namespace Meatyceiver2
 			}
 			return true;
 		}
+
+		//BEGIN BROKEN FIREARM FAILURES
 
 		/*		[HarmonyPatch(typeof(HandgunSlide), "UpdateSlide")]
 				[HarmonyPrefix]
@@ -214,23 +279,36 @@ namespace Meatyceiver2
 					}
 					return true;
 				}*/
-		[HarmonyPatch(typeof(HandgunSlide), "UpdateSlide")]
-		[HarmonyPrefix]
-		static bool FailureToLockBackPatch(HandgunSlide __instance)
+		[HarmonyPatch(typeof(HandgunSlide), "SlideEvent_ArriveAtFore")]
+		[HarmonyPostfix]
+		static void SlamFireHandgunPatch(HandgunSlide __instance)
 		{
-			if (!enableBrokenFirearmFailures.Value) { return true; }
-			if (__instance.CurPos == HandgunSlide.SlidePos.Forward && __instance.LastPos == HandgunSlide.SlidePos.Forward)
+			if (enableBrokenFirearmFailures.Value)
 			{
 				var rand = (float)rnd.Next(0, 10001) / 100;
-				if (enableConsoleDebugging.Value) { Debug.Log("Random number generated for Slam Fire: " + rand); };
+				if (enableConsoleDebugging.Value) { Debug.Log("Slam fire RNG: " + rand + " to " + SlamfireRate.Value * generalMult.Value); };
 				if (rand <= SlamfireRate.Value * generalMult.Value)
 				{
 					if (enableConsoleDebugging.Value) { Debug.Log("Slam fire!"); };
 					__instance.Handgun.DropHammer(false);
-					return true;
 				}
 			}
-			return true;
+		}
+
+		[HarmonyPatch(typeof(ClosedBolt), "BoltEvent_ArriveAtFore")]
+		[HarmonyPostfix]
+		static void SlamFireClosedBoltPatch(ClosedBolt __instance)
+		{
+			if (enableBrokenFirearmFailures.Value)
+			{
+				var rand = (float)rnd.Next(0, 10001) / 100;
+				if (enableConsoleDebugging.Value) { Debug.Log("Slam fire RNG: " + rand + " to " + SlamfireRate.Value * generalMult.Value); };
+				if (rand <= SlamfireRate.Value * generalMult.Value)
+				{
+					if (enableConsoleDebugging.Value) { Debug.Log("Slam fire!"); };
+					__instance.Weapon.DropHammer();
+				}
+			}
 		}
 
 
@@ -241,7 +319,7 @@ namespace Meatyceiver2
 		{
 			if (!enableBrokenFirearmFailures.Value) { return true; }
 			var rand = (float)rnd.Next(0, 10001) / 100;
-			if (enableConsoleDebugging.Value) { Debug.Log("Random number generated for Hammer Follow: " + rand); };
+			if (enableConsoleDebugging.Value) { Debug.Log("Hammer Follow RNG: " + rand + " to " + HammerFollowRate.Value * generalMult.Value); };
 			if (rand <= HammerFollowRate.Value * generalMult.Value)
 			{
 				if (enableConsoleDebugging.Value) { Debug.Log("Hammer follow!"); };
@@ -252,12 +330,12 @@ namespace Meatyceiver2
 
 		[HarmonyPatch(typeof(Handgun), "CockHammer")]
 		[HarmonyPrefix]
-		static bool hammerFollowHandgunPatch(bool ___isManual)
+		static bool hammerFollowHandgunPatch(bool isManual)
 		{
 			if (!enableBrokenFirearmFailures.Value) { return true; }
 			var rand = (float)rnd.Next(0, 10001) / 100;
-			if (enableConsoleDebugging.Value) { Debug.Log("Random number generated for Hammer Follow: " + rand); };
-			if (rand <= HammerFollowRate.Value * generalMult.Value || !___isManual)
+			if (enableConsoleDebugging.Value) { Debug.Log("Hammer Follow RNG: " + rand + " to " + HammerFollowRate.Value * generalMult.Value); };
+			if (rand <= HammerFollowRate.Value * generalMult.Value && !isManual)
 			{
 				if (enableConsoleDebugging.Value) { Debug.Log("Hammer follow!"); };
 				return false;

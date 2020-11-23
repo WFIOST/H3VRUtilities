@@ -14,3 +14,14 @@ F:\GitHub\PotatoesH3VRLib\H3VRUtilities.Weapons\bin\Debug\H3VRUtilities.Weapons.
 F:\GitHub\PotatoesH3VRLib\H3VRUtilities.Weapons\bin\Debug\H3VRUtilities.Weapons.mm.pdb
 F:\GitHub\PotatoesH3VRLib\H3VRUtilities.Weapons\obj\Debug\H3VRUtilities.Weapons.mm.dll
 F:\GitHub\PotatoesH3VRLib\H3VRUtilities.Weapons\obj\Debug\H3VRUtilities.Weapons.mm.pdb
+F:\GitHub\H3VRUtilities\H3VRUtilities.Weapons\bin\Debug\H3VRUtilities.Weapons.mm.dll
+F:\GitHub\H3VRUtilities\H3VRUtilities.Weapons\bin\Debug\H3VRUtilities.Weapons.mm.pdb
+F:\GitHub\H3VRUtilities\H3VRUtilities.Weapons\bin\Debug\Assembly-CSharp-firstpass.dll
+F:\GitHub\H3VRUtilities\H3VRUtilities.Weapons\bin\Debug\Assembly-CSharp.dll
+F:\GitHub\H3VRUtilities\H3VRUtilities.Weapons\bin\Debug\BepInEx.dll
+F:\GitHub\H3VRUtilities\H3VRUtilities.Weapons\bin\Debug\BepInEx.Harmony.dll
+F:\GitHub\H3VRUtilities\H3VRUtilities.Weapons\bin\Debug\UnityEngine.dll
+F:\GitHub\H3VRUtilities\H3VRUtilities.Weapons\bin\Debug\UnityEngine.UI.dll
+F:\GitHub\H3VRUtilities\H3VRUtilities.Weapons\obj\Debug\H3VRUtilities.Weapons.csproj.CopyComplete
+F:\GitHub\H3VRUtilities\H3VRUtilities.Weapons\obj\Debug\H3VRUtilities.Weapons.mm.dll
+F:\GitHub\H3VRUtilities\H3VRUtilities.Weapons\obj\Debug\H3VRUtilities.Weapons.mm.pdb

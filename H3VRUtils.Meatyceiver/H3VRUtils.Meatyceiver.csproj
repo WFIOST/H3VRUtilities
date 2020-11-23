@@ -56,9 +56,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AmmunitionFailures.cs" />
-    <Compile Include="brokenFirearmFailures.cs" />
-    <Compile Include="FirearmFailures.cs" />
+    <Compile Include="Meatyceiver2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
