@@ -24,12 +24,15 @@ namespace H3VRUtils
 
 		private bool _isMagazineNotNull;
 
+		[HideInInspector]
+		public float basex;
+
 		private void Start()
 		{
 			_isMagazineNotNull = this.fireArm.Magazine != null;
-			var localEulerAngles = this.transform.localEulerAngles;
-			jointReleaseSensitivityAbove = localEulerAngles.x + jointReleaseSensitivity;
-			jointReleaseSensitivityBelow = localEulerAngles.x - jointReleaseSensitivity;
+			basex = this.transform.rotation.x;
+			jointReleaseSensitivityAbove = basex + jointReleaseSensitivity;
+			jointReleaseSensitivityBelow = basex - jointReleaseSensitivity;
 		}
 		private void FixedUpdate()
 		{
@@ -37,13 +40,15 @@ namespace H3VRUtils
 			{
 				this._timeSinceLastCollision += Time.deltaTime;
 			}
-			if (_isMagazineNotNull && this._timeSinceLastCollision < 0.03f)
+			if (_isMagazineNotNull)
 			{
-				if (this.transform.localEulerAngles.x > jointReleaseSensitivityAbove || this.transform.localEulerAngles.x < jointReleaseSensitivityBelow){
+				if (transform.rotation.x >= jointReleaseSensitivityAbove || transform.rotation.x <= jointReleaseSensitivityBelow)
+				{
 					this.fireArm.EjectMag();
 				}
 			}
-			jointAngle = joint.angle;
+			jointAngle = transform.rotation.x;
+			//jointAngle = joint.angle;
 		}
 
 		private void OnCollisionEnter(Collision col)

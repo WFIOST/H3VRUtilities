@@ -52,21 +52,31 @@
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:\Users\rafae\source\repos\pcgH3VRframework\pcgH3VRframework\bin\Debug\UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeprecatedCode\attachmentYFoldingStockProxy.cs" />
     <Compile Include="DeprecatedCode\FVRInteractableObjectProxy.cs" />
     <Compile Include="DeprecatedCode\proxyLoaders\attachmentYFoldingStockProxyLoader.cs" />
+    <Compile Include="FVRInteractiveObjects\attachmentCode\AttachmentModifyFirearm.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentXFoldingStock.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentYFoldingStock.cs" />
     <Compile Include="FVRInteractiveObjects\BetterMagReleaseLatch.cs" />
+    <Compile Include="MonoScripts\VisualModifiers\MagFollower.cs" />
+    <Compile Include="MonoScripts\VisualModifiers\followDir.cs" />
+    <Compile Include="FVRInteractiveObjects\FVRFirearms\BreakOpenFlareGun.cs" />
+    <Compile Include="FVRInteractiveObjects\H3VRUtilsPhysBoltRelease.cs" />
     <Compile Include="FVRInteractiveObjects\customItems\shotClock\shotClock.cs" />
     <Compile Include="FVRInteractiveObjects\customItems\shotClock\shotClockButton.cs" />
+    <Compile Include="FVRInteractiveObjects\HandgunSecondarySwitch.cs" />
     <Compile Include="FVRInteractiveObjects\NadeCupLauncher.cs" />
-    <Compile Include="FVRInteractiveObjects\HandgunEjectionTrigger.cs" />
+    <Compile Include="DeprecatedCode\HandgunEjectionTrigger.cs" />
+    <Compile Include="FVRInteractiveObjects\H3VRUtilsMagRelease.cs" />
     <Compile Include="h3vrUtilsMapping\SosigSpawn.cs" />
-    <Compile Include="MonoScripts\compressingSpring.cs" />
-    <Compile Include="MonoScripts\CullOnZLoc.cs" />
+    <Compile Include="MonoScripts\VisualModifiers\compressingSpring.cs" />
+    <Compile Include="MonoScripts\VisualModifiers\CullOnZLoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FVRInteractiveObjects\FVRFirearms\TatoWeapon.cs" />
   </ItemGroup>

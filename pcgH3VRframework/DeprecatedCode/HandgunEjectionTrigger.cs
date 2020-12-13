@@ -7,6 +7,7 @@ using FistVR;
 
 namespace H3VRUtils
 {
+	//Deprecated. Use H3VRUtilsMagRelease.
 	public class HandgunEjectionTrigger : FVRInteractiveObject
 	{
 		// Token: 0x060033F4 RID: 13300 RVA: 0x0016AC7E File Offset: 0x0016907E
