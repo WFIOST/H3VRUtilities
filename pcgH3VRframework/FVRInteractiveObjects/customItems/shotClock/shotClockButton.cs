@@ -1,50 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FistVR;
-using UnityEngine;
+﻿using FistVR;
 
 namespace H3VRUtils.customItems.shotClock
 {
-	class shotClockButton : FVRPhysicalObject
-	{
-		public shotClock shotclock;
+    internal class shotClockButton : FVRPhysicalObject
+    {
+        public enum buttonType
+        {
+            start,
+            stop,
+            register,
+            delay
+        }
 
-		public bool pressed;
-		public enum buttonType
-		{
-			start,
-			stop,
-			register,
-			delay
-		}
-		public buttonType button;
+        public shotClock shotclock;
 
-		public void Update()
-		{
-			if (pressed){
-				pressed = false;
-				SimpleInteraction(null);
-			}
-		}
-		public override void SimpleInteraction(FVRViveHand hand)
-		{
-			switch (button)
-			{
-				case buttonType.start:
-					shotclock.startClockProcess();
-					break;
-				case buttonType.stop:
-					shotclock.StopClock();
-					break;
-				case buttonType.register:
+        public bool pressed;
+        public buttonType button;
 
-					break;
-				case buttonType.delay:
+        public void Update()
+        {
+            if (pressed)
+            {
+                pressed = false;
+                SimpleInteraction(null);
+            }
+        }
 
-					break;
-			}
-		}
-	}
+        public override void SimpleInteraction(FVRViveHand hand)
+        {
+            switch (button)
+            {
+                case buttonType.start:
+                    shotclock.startClockProcess();
+                    break;
+                case buttonType.stop:
+                    shotclock.StopClock();
+                    break;
+                case buttonType.register:
+
+                    break;
+                case buttonType.delay:
+
+                    break;
+            }
+        }
+    }
 }
