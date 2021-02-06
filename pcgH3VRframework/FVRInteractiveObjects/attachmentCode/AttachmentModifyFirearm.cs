@@ -49,6 +49,11 @@ namespace H3VRUtils
 		public float BoltSpringStiffness;
 		private float prevBoltSpringStiffness;
 
+		[Header("Spread Modifier")]
+		public bool ChangesSpread;
+		public float spreadmult;
+
+
 /*		[Header("Weapon Fire Selector Modifier")]
 		public bool ChangesFireSelector;
 		public CapType FireSelectorModiferType;
@@ -67,20 +72,9 @@ namespace H3VRUtils
 
 		void FixedUpdate()
 		{
-			if (attachment.curMount != null)
-			{
-				if (weapon == null)
-				{
-					OnAttach();
-				}
-			}
-			else
-			{
-				if (weapon != null)
-				{
-					OnDetach();
-				}
-			}
+			if (attachment.curMount != null) { if (weapon == null) OnAttach(); }
+			else if (weapon != null) OnDetach();
+			if (ChangesSpread) ChangeSpread();
 		}
 		public void OnAttach()
 		{
@@ -98,6 +92,39 @@ namespace H3VRUtils
 			if (ChangesBoltSpeed) BoltSpeedModifier(actionType.detach);
 //			if (ChangesFireSelector) FireSelectorModifier(actionType.detach);
 			weapon = null;
+		}
+
+		public void ChangeSpread()
+		{
+			FVRFireArmRound rnd = null;
+			if (weapon is OpenBoltReceiver)
+			{
+				var wep = weapon as OpenBoltReceiver;
+				rnd = wep.Chamber.GetRound();
+			}
+			else if (weapon is ClosedBoltWeapon)
+			{
+				var wep = weapon as ClosedBoltWeapon;
+				rnd = wep.Chamber.GetRound();
+			}
+			else if (weapon is Handgun)
+			{
+				var wep = weapon as Handgun;
+				rnd = wep.Chamber.GetRound();
+			}
+			else if (weapon is TubeFedShotgun)
+			{
+				var wep = weapon as TubeFedShotgun;
+				rnd = wep.Chamber.GetRound();
+			}
+
+			if (rnd == null) return;
+
+			if (rnd.ThrowAngMultiplier != 1.1)
+			{
+				rnd.ThrowAngMultiplier = 1.1f;
+				rnd.ProjectileSpread *= spreadmult;
+			}
 		}
 
 		public void RecoilModifier(actionType ActType)
@@ -137,21 +164,27 @@ namespace H3VRUtils
 			OpenBoltReceiver _OpenBoltWep = null;
 			ClosedBoltWeapon _ClosedBoltWep = null;
 			Handgun _HandgunWep = null;
+			TubeFedShotgun _TFWep = null;
 
 			if (weapon is OpenBoltReceiver)
 			{
-				_OpenBoltWep = weapon.GetComponent<OpenBoltReceiver>();
+				_OpenBoltWep = weapon as OpenBoltReceiver;
 				wepType = 1;
 			}
-			if (weapon is ClosedBoltWeapon)
+			else if (weapon is ClosedBoltWeapon)
 			{
-				_ClosedBoltWep = weapon.GetComponent<ClosedBoltWeapon>();
+				_ClosedBoltWep = weapon as ClosedBoltWeapon;
 				wepType = 2;
 			}
-			if (weapon is Handgun)
+			else if (weapon is Handgun)
 			{
-				_HandgunWep = weapon.GetComponent<Handgun>();
+				_HandgunWep = weapon as Handgun;
 				wepType = 3;
+			}
+			else if (weapon is TubeFedShotgun)
+			{
+				_TFWep = weapon as TubeFedShotgun;
+				wepType = 4;
 			}
 
 			float _boltSpeedBack = 0;

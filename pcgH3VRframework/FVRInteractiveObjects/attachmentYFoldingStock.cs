@@ -8,15 +8,14 @@ namespace H3VRUtils
 	// Token: 0x020003CD RID: 973
 	public class attachmentYFoldingStock : FVRInteractiveObject
 	{
-		// Token: 0x0600141B RID: 5147 RVA: 0x00089ED0 File Offset: 0x000882D0
+
 		public override void UpdateInteraction(FVRViveHand hand)
 		{
 			base.UpdateInteraction(hand);
 			Vector3 vector = hand.transform.position - this.root.position;
-			var up = this.root.up;
-			vector = Vector3.ProjectOnPlane(vector, up).normalized;
+			vector = Vector3.ProjectOnPlane(vector, this.root.up).normalized;
 			Vector3 lhs = -this.root.transform.forward;
-			this._rotAngle = Mathf.Atan2(Vector3.Dot(up, Vector3.Cross(lhs, vector)), Vector3.Dot(lhs, vector)) * 57.29578f;
+			this._rotAngle = Mathf.Atan2(Vector3.Dot(this.root.up, Vector3.Cross(lhs, vector)), Vector3.Dot(lhs, vector)) * 57.29578f;
 			if (Mathf.Abs(this._rotAngle - this.minRot) < 5f)
 			{
 				this._rotAngle = this.minRot;
@@ -136,6 +135,8 @@ namespace H3VRUtils
 		public float minRot;
 
 		public float maxRot;
+
+		private GameObject dirOfRot;
 
 		[FormerlySerializedAs("m_curPos")] public FVRFoldingStockYAxis.StockPos mCurPos;
 

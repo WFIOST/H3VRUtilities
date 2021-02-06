@@ -61,9 +61,13 @@
     <Compile Include="DeprecatedCode\FVRInteractableObjectProxy.cs" />
     <Compile Include="DeprecatedCode\proxyLoaders\attachmentYFoldingStockProxyLoader.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentCode\AttachmentModifyFirearm.cs" />
+    <Compile Include="FVRInteractiveObjects\attachmentCode\DisplayOnAttached.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentXFoldingStock.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentYFoldingStock.cs" />
     <Compile Include="FVRInteractiveObjects\BetterMagReleaseLatch.cs" />
+    <Compile Include="MonoScripts\VisualModifiers\ConstantSpin.cs" />
+    <Compile Include="MonoScripts\VisualModifiers\FeedRamp.cs" />
+    <Compile Include="MonoScripts\VisualModifiers\YFoldingStockEndPiece.cs" />
     <Compile Include="MonoScripts\VisualModifiers\MagFollower.cs" />
     <Compile Include="MonoScripts\VisualModifiers\followDir.cs" />
     <Compile Include="FVRInteractiveObjects\FVRFirearms\BreakOpenFlareGun.cs" />
@@ -77,8 +81,13 @@
     <Compile Include="h3vrUtilsMapping\SosigSpawn.cs" />
     <Compile Include="MonoScripts\VisualModifiers\compressingSpring.cs" />
     <Compile Include="MonoScripts\VisualModifiers\CullOnZLoc.cs" />
+    <Compile Include="NonAddedScripts\RecoilModificationSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FVRInteractiveObjects\FVRFirearms\TatoWeapon.cs" />
+    <Compile Include="UniqueCode\AssignMagIfNull.cs" />
+    <Compile Include="UniqueCode\OpenBoltLockOnSafe.cs" />
+    <Compile Include="UniqueCode\RevolverChargingHandle.cs" />
+    <Compile Include="UniqueCode\SelbstladerUnlockSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

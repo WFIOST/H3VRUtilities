@@ -10,22 +10,13 @@ namespace H3VRUtils
 	public class H3VRUtilsPhysBoltRelease : FVRInteractiveObject
 	{
 		public ClosedBoltWeapon ClosedBoltReceiver;
-		[HideInInspector]
-		public OpenBoltReceiver OpenBoltWeapon;
-		[HideInInspector]
-		public Handgun HandgunReceiver;
 
 		public bool ButtonPressToRelease;
 
-		public enum TouchpadDirType
-		{
-			Up,
-			Down,
-			Left,
-			Right,
-			Trigger
-		}
-		public TouchpadDirType TouchpadDir;
+		[HideInInspector]
+		public Vector2 dir;
+
+		public H3VRUtilsMagRelease.TouchpadDirType TouchpadDir;
 
 		[HideInInspector]
 		public int WepType = 0;
@@ -34,14 +25,21 @@ namespace H3VRUtils
 		{
 			base.Awake();
 			if (ClosedBoltReceiver != null) WepType = 1;
-			if (OpenBoltWeapon != null) WepType = 2;
-			if (HandgunReceiver != null) WepType = 3;
-			if (TouchpadDir == TouchpadDirType.Trigger) this.IsSimpleInteract = true;
+		}
+
+		protected override void FVRFixedUpdate()
+		{
+			base.FVRFixedUpdate();
+			if (TouchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Up) dir = Vector2.up;
+			if (TouchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Down) dir = Vector2.down;
+			if (TouchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Left) dir = Vector2.left;
+			if (TouchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Right) dir = Vector2.right;
+			if (TouchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Trigger) this.IsSimpleInteract = true; else this.IsSimpleInteract = false;
 		}
 
 		protected void OnHoverStay(FVRViveHand hand)
 		{
-			if (TouchpadDir == TouchpadDirType.Trigger && !hand.IsInStreamlinedMode) return;
+			if (TouchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Trigger && !hand.IsInStreamlinedMode) return;
 			if (hand.IsInStreamlinedMode && !hand.Input.AXButtonPressed) return;
 			ReleaseBolt(hand);
 		}
@@ -54,52 +52,17 @@ namespace H3VRUtils
 
 		public void ReleaseBolt(FVRViveHand hand, bool _forceDrop = false)
 		{
-			bool flag = false;
+			bool flag2 = false;
+			if (Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.2f) flag2 = true;
 
-			if (WepType == 1)
+			if (flag2 || hand.IsInStreamlinedMode && hand.Input.AXButtonPressed)
 			{
-				if (this.ClosedBoltReceiver.m_hand != null || hand != this.ClosedBoltReceiver.m_hand) flag = true;
-			}
-			if (WepType == 2)
-			{
-				if (this.OpenBoltWeapon.m_hand != null || hand != this.OpenBoltWeapon.m_hand) flag = true;
-			}
-			if (WepType == 3)
-			{
-				if (this.HandgunReceiver.m_hand != null || hand != this.HandgunReceiver.m_hand) flag = true;
+				this.ClosedBoltReceiver.Bolt.ReleaseBolt();
 			}
 
-			if (flag)
+			if (this.ClosedBoltReceiver.m_hand == null || hand != this.ClosedBoltReceiver.m_hand)
 			{
-				bool flag2 = false;
-				if (TouchpadDir == TouchpadDirType.Up && hand.Input.TouchpadNorthDown) flag2 = true;
-				if (TouchpadDir == TouchpadDirType.Down && hand.Input.TouchpadSouthDown) flag2 = true;
-				if (TouchpadDir == TouchpadDirType.Left && hand.Input.TouchpadWestDown) flag2 = true;
-				if (TouchpadDir == TouchpadDirType.Right && hand.Input.TouchpadEastDown) flag2 = true;
-				if (TouchpadDir == TouchpadDirType.Trigger) flag2 = true;
 
-				if (flag2 == true)
-				{
-					if (WepType == 1)
-					{
-						this.ClosedBoltReceiver.Bolt.ReleaseBolt();
-					}
-					if (WepType == 2)
-					{
-						
-					}
-					if (WepType == 3)
-					{
-						
-					}
-				}
-			}
-
-
-
-				if (this.ClosedBoltReceiver.m_hand == null || hand != this.ClosedBoltReceiver.m_hand)
-			{
-				if (hand.Input.TouchpadNorthDown) this.ClosedBoltReceiver.Bolt.ReleaseBolt();
 			}
 		}
 	}

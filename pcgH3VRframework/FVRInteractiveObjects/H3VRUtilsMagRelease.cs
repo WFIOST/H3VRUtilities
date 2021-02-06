@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace H3VRUtils
 {
-	class H3VRUtilsMagRelease : FVRInteractiveObject
+	public class H3VRUtilsMagRelease : FVRInteractiveObject
 	{
 
 		public ClosedBoltWeapon ClosedBoltReceiver;
@@ -16,15 +16,22 @@ namespace H3VRUtils
 
 		[HideInInspector] public int WepType;
 
+		[HideInInspector] public bool DisallowEjection;
+
+		private Collider col;
+
 		public bool PressDownToRelease;
 		public enum TouchpadDirType
 		{
 			Up,
 			Down,
 			Left,
-			Right
+			Right,
+			Trigger
 		}
 		public TouchpadDirType TouchpadDir;
+
+		public Vector2 dir;
 
 
 		protected override void Awake()
@@ -33,6 +40,7 @@ namespace H3VRUtils
 			if (ClosedBoltReceiver != null) WepType = 1;
 			if (OpenBoltWeapon != null) WepType = 2;
 			if (HandgunReceiver != null) WepType = 3;
+			col = GetComponent<Collider>();
 		}
 
 		public override bool IsInteractable()
@@ -42,10 +50,53 @@ namespace H3VRUtils
 			return !(this.HandgunReceiver.Magazine == null);
 		}
 
+		protected override void FVRFixedUpdate()
+		{
+			base.FVRFixedUpdate();
+			if (TouchpadDir == TouchpadDirType.Up) dir = Vector2.up;
+			if (TouchpadDir == TouchpadDirType.Down) dir = Vector2.down;
+			if (TouchpadDir == TouchpadDirType.Left) dir = Vector2.left;
+			if (TouchpadDir == TouchpadDirType.Right) dir = Vector2.right;
+			if (TouchpadDir == TouchpadDirType.Trigger) this.IsSimpleInteract = true; else this.IsSimpleInteract = false;
+			col.enabled = !DisallowEjection;
+		}
+
 		public override void BeginInteraction(FVRViveHand hand)
 		{
 			base.BeginInteraction(hand);
 		}
+
+		public override void SimpleInteraction(FVRViveHand hand)
+		{
+			base.SimpleInteraction(hand);
+			if (TouchpadDir == TouchpadDirType.Trigger)
+			dropmag(hand);
+		}
+
+		public void dropmag(FVRViveHand hand, bool _override = false)
+		{
+			if (DisallowEjection && !_override) return;
+			FVRFireArmMagazine magazine = null;
+
+			if (WepType == 1)
+			{
+				magazine = this.ClosedBoltReceiver.Magazine;
+				this.ClosedBoltReceiver.ReleaseMag();
+			}
+			if (WepType == 2)
+			{
+				magazine = this.OpenBoltWeapon.Magazine;
+				this.OpenBoltWeapon.ReleaseMag();
+			}
+			if (WepType == 3)
+			{
+				magazine = this.HandgunReceiver.Magazine;
+				this.HandgunReceiver.ReleaseMag();
+			}
+			if (hand != null) { hand.ForceSetInteractable(magazine); }
+			magazine.BeginInteraction(hand);
+		}
+
 
 		public override void UpdateInteraction(FVRViveHand hand)
 		{
@@ -67,35 +118,17 @@ namespace H3VRUtils
 
 			if (flag)
 			{
+				if (hand.Input.TouchpadDown)
+				{
+
+				}
 				bool flag2 = false;
-				if (TouchpadDir == TouchpadDirType.Up && hand.Input.TouchpadNorthDown) flag2 = true;
-				if (TouchpadDir == TouchpadDirType.Down && hand.Input.TouchpadSouthDown) flag2 = true;
-				if (TouchpadDir == TouchpadDirType.Left && hand.Input.TouchpadWestDown) flag2 = true;
-				if (TouchpadDir == TouchpadDirType.Right && hand.Input.TouchpadEastDown) flag2 = true;
+				if (Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.2f) flag2 = true;
 
 				if (flag2 || !PressDownToRelease || hand.IsInStreamlinedMode && hand.Input.AXButtonPressed)
 				{
+					dropmag(hand);
 					this.EndInteraction(hand);
-					FVRFireArmMagazine magazine = null;
-
-					if (WepType == 1)
-					{
-						magazine = this.ClosedBoltReceiver.Magazine;
-						this.ClosedBoltReceiver.ReleaseMag();
-					}
-					if (WepType == 2)
-					{
-						magazine = this.OpenBoltWeapon.Magazine;
-						this.OpenBoltWeapon.ReleaseMag();
-					}
-					if (WepType == 3)
-					{
-						magazine = this.HandgunReceiver.Magazine;
-						this.HandgunReceiver.ReleaseMag();
-					}
-
-					hand.ForceSetInteractable(magazine);
-					magazine.BeginInteraction(hand);
 				}
 			}
 		}

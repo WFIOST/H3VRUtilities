@@ -42,44 +42,6 @@ namespace H3VRUtils
 					objMeshRenderer.enabled = objTarget.transform.localPosition[(int)dir] < loc;
 					break;
 			}
-
-
-/*
-			switch (dir)
-			{
-				case dirType.x:
-					if (objTarget.transform.localPosition.x <= loc)
-					{
-						objMeshRenderer.enabled = false;
-					}
-					else if (objTarget.transform.localPosition.x > loc)
-					{
-						objMeshRenderer.enabled = true;
-					}
-					break;
-				case dirType.y:
-					if (objTarget.transform.localPosition.y <= loc)
-					{
-						objMeshRenderer.enabled = false;
-					}
-					else if (objTarget.transform.localPosition.y > loc)
-					{
-						objMeshRenderer.enabled = true;
-					}
-					break;
-				case dirType.z:
-					if (objTarget.transform.localPosition.z <= loc)
-					{
-						objMeshRenderer.enabled = false;
-					}
-					else if (objTarget.transform.localPosition.z > loc)
-					{
-						objMeshRenderer.enabled = true;
-					}
-					break;
-
-			}*/
-
 		}
 	}
 }

@@ -7,9 +7,9 @@ using UnityEngine.UI;
 using System.Diagnostics;
 using FistVR;
 
-namespace H3VRUtils.customItems.shotClock
+namespace H3VRUtils.customItems.SC
 {
-	class shotClock : MonoBehaviour
+	class shotTimer : MonoBehaviour
 	{
 		public string stopclocktextstring;
 
