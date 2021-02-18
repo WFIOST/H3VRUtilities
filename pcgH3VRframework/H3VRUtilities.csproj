@@ -67,6 +67,7 @@
     <Compile Include="FVRInteractiveObjects\BetterMagReleaseLatch.cs" />
     <Compile Include="MonoScripts\VisualModifiers\ConstantSpin.cs" />
     <Compile Include="MonoScripts\VisualModifiers\FeedRamp.cs" />
+    <Compile Include="MonoScripts\VisualModifiers\ManipulateObject.cs" />
     <Compile Include="MonoScripts\VisualModifiers\YFoldingStockEndPiece.cs" />
     <Compile Include="MonoScripts\VisualModifiers\MagFollower.cs" />
     <Compile Include="MonoScripts\VisualModifiers\followDir.cs" />

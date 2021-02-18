@@ -49,12 +49,21 @@ namespace H3VRUtils
 		public float BoltSpringStiffness;
 		private float prevBoltSpringStiffness;
 
-		[Header("Spread Modifier")]
+//		[Header("Spread Modifier")]
+		[HideInInspector]
 		public bool ChangesSpread;
+		[HideInInspector]
 		public float spreadmult;
 
+		[Header("GrabPos Modifier")]
+		public bool ChangesGrabPos;
+		public Transform NewPoseOverride;
+		private Transform oldPoseOverride;
+		public Transform NewPoseOverrideTouch;
+		private Transform oldPoseOverrideTouch;
 
-/*		[Header("Weapon Fire Selector Modifier")]
+
+		/*[Header("Weapon Fire Selector Modifier")]
 		public bool ChangesFireSelector;
 		public CapType FireSelectorModiferType;
 		[Tooltip("Leave blank to not change fire selector.")]
@@ -76,13 +85,15 @@ namespace H3VRUtils
 			else if (weapon != null) OnDetach();
 			if (ChangesSpread) ChangeSpread();
 		}
+
 		public void OnAttach()
 		{
 			weapon = attachment.curMount.Parent.GetComponent<FVRFireArm>();
 			if (ChangesRecoil) RecoilModifier(actionType.attach);
 			if (ChangesMagCapacity) MagSizeModifier(actionType.attach);
 			if (ChangesBoltSpeed) BoltSpeedModifier(actionType.attach);
-//			if (ChangesFireSelector) FireSelectorModifier(actionType.attach);
+			//if (ChangesFireSelector) FireSelectorModifier(actionType.attach);
+			if (ChangesGrabPos) ChangeGrabPos(actionType.attach);
 		}
 
 		public void OnDetach()
@@ -90,8 +101,25 @@ namespace H3VRUtils
 			if (ChangesRecoil) RecoilModifier(actionType.detach);
 			if (ChangesMagCapacity) MagSizeModifier(actionType.detach);
 			if (ChangesBoltSpeed) BoltSpeedModifier(actionType.detach);
-//			if (ChangesFireSelector) FireSelectorModifier(actionType.detach);
+			//if (ChangesFireSelector) FireSelectorModifier(actionType.detach);
+			if (ChangesGrabPos) ChangeGrabPos(actionType.detach);
 			weapon = null;
+		}
+
+		public void ChangeGrabPos(actionType ActType)
+		{
+			if (ActType == actionType.attach)
+			{
+				oldPoseOverride = weapon.PoseOverride;
+				weapon.PoseOverride = NewPoseOverride;
+				oldPoseOverrideTouch = weapon.PoseOverride_Touch;
+				weapon.PoseOverride_Touch = NewPoseOverrideTouch;
+			}
+			if (ActType == actionType.detach)
+			{
+				weapon.PoseOverride = oldPoseOverride;
+				weapon.PoseOverride_Touch = oldPoseOverrideTouch;
+			}
 		}
 
 		public void ChangeSpread()
