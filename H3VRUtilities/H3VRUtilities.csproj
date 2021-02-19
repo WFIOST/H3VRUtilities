@@ -53,13 +53,10 @@
       <HintPath>..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:\Users\rafae\source\repos\pcgH3VRframework\pcgH3VRframework\bin\Debug\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\Libraries\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeprecatedCode\attachmentYFoldingStockProxy.cs" />
-    <Compile Include="DeprecatedCode\FVRInteractableObjectProxy.cs" />
-    <Compile Include="DeprecatedCode\proxyLoaders\attachmentYFoldingStockProxyLoader.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentCode\AttachmentModifyFirearm.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentCode\DisplayOnAttached.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentXFoldingStock.cs" />
@@ -77,11 +74,11 @@
     <Compile Include="FVRInteractiveObjects\customItems\shotClock\shotClockButton.cs" />
     <Compile Include="FVRInteractiveObjects\HandgunSecondarySwitch.cs" />
     <Compile Include="FVRInteractiveObjects\NadeCupLauncher.cs" />
-    <Compile Include="DeprecatedCode\HandgunEjectionTrigger.cs" />
     <Compile Include="FVRInteractiveObjects\H3VRUtilsMagRelease.cs" />
     <Compile Include="h3vrUtilsMapping\SosigSpawn.cs" />
     <Compile Include="MonoScripts\VisualModifiers\compressingSpring.cs" />
     <Compile Include="MonoScripts\VisualModifiers\CullOnZLoc.cs" />
+    <Compile Include="NonAddedScripts\GetTransformPosition.cs" />
     <Compile Include="NonAddedScripts\RecoilModificationSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FVRInteractiveObjects\FVRFirearms\TatoWeapon.cs" />
@@ -89,6 +86,9 @@
     <Compile Include="UniqueCode\OpenBoltLockOnSafe.cs" />
     <Compile Include="UniqueCode\RevolverChargingHandle.cs" />
     <Compile Include="UniqueCode\SelbstladerUnlockSystem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="makefile" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
