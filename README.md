@@ -14,9 +14,3 @@ Dependencies required for building:
 
 [Find full releases on Bonetome](https://bonetome.com/h3vr/mods/160/)
 
-
-Dependencies
-
-[H3VR Sideloader](https://github.com/denikson/H3VR.Sideloader)
-
-(Also the dependencies listed under H3VR Sideloader.)
