@@ -58,13 +58,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FVRInteractiveObjects\attachmentCode\AttachmentModifyFirearm.cs" />
+    <Compile Include="FVRInteractiveObjects\attachmentCode\CustomRDShaderHandler.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentCode\DisplayOnAttached.cs" />
+    <Compile Include="FVRInteractiveObjects\attachmentCode\ScopeCamMagnifier.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentXFoldingStock.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentYFoldingStock.cs" />
+    <Compile Include="FVRInteractiveObjects\AutoRackOnMagLoad.cs" />
     <Compile Include="FVRInteractiveObjects\BetterMagReleaseLatch.cs" />
     <Compile Include="MonoScripts\UIModifiers\DispBulletAmount.cs" />
+    <Compile Include="MonoScripts\VisualModifiers\AnimPlayOnGrab.cs" />
     <Compile Include="MonoScripts\VisualModifiers\ConstantSpin.cs" />
     <Compile Include="MonoScripts\VisualModifiers\FeedRamp.cs" />
+    <Compile Include="MonoScripts\VisualModifiers\InvisibleMagOnLoad.cs" />
     <Compile Include="MonoScripts\VisualModifiers\laser.cs" />
     <Compile Include="MonoScripts\VisualModifiers\ManipulateObject.cs" />
     <Compile Include="MonoScripts\VisualModifiers\YFoldingStockEndPiece.cs" />
