@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>H3VRUtils</RootNamespace>
-    <AssemblyName>H3VRUtilities.mm</AssemblyName>
+    <AssemblyName>H3VRUtilities</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -49,6 +49,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libraries\UnityEditor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
@@ -65,6 +68,11 @@
     <Compile Include="FVRInteractiveObjects\attachmentYFoldingStock.cs" />
     <Compile Include="FVRInteractiveObjects\AutoRackOnMagLoad.cs" />
     <Compile Include="FVRInteractiveObjects\BetterMagReleaseLatch.cs" />
+    <Compile Include="Mapping\Audio\AudioCulling.cs" />
+    <Compile Include="Mapping\Camera\CameraSetup.cs" />
+    <Compile Include="Mapping\Components\ComponentCulling.cs" />
+    <Compile Include="Mapping\Editor\ShowHiddenObjects.cs" />
+    <Compile Include="MonoScripts\LoadHoloShader.cs" />
     <Compile Include="MonoScripts\UIModifiers\DispBulletAmount.cs" />
     <Compile Include="MonoScripts\VisualModifiers\AnimPlayOnGrab.cs" />
     <Compile Include="MonoScripts\VisualModifiers\ConstantSpin.cs" />
@@ -82,7 +90,6 @@
     <Compile Include="FVRInteractiveObjects\HandgunSecondarySwitch.cs" />
     <Compile Include="FVRInteractiveObjects\NadeCupLauncher.cs" />
     <Compile Include="FVRInteractiveObjects\H3VRUtilsMagRelease.cs" />
-    <Compile Include="h3vrUtilsMapping\SosigSpawn.cs" />
     <Compile Include="MonoScripts\VisualModifiers\compressingSpring.cs" />
     <Compile Include="MonoScripts\VisualModifiers\CullOnZLoc.cs" />
     <Compile Include="NonAddedScripts\GetTransformPosition.cs" />
@@ -93,9 +100,6 @@
     <Compile Include="UniqueCode\OpenBoltLockOnSafe.cs" />
     <Compile Include="UniqueCode\RevolverChargingHandle.cs" />
     <Compile Include="UniqueCode\SelbstladerUnlockSystem.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="makefile" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

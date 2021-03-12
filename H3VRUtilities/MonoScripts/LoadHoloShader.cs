@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace H3VRUtils.Unity
 {
-    public class HoloShader : MonoBehaviour
+    public class LoadHoloShader : MonoBehaviour
     {
+        [Header("Texture Settings")]
         public Texture2D sightTexture;
 
         public Vector2 sightOffset;
