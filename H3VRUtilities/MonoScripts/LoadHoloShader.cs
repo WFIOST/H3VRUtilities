@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 
-namespace H3VRUtils.Unity
+namespace H3VRUtils.Shaders
 {
     public class LoadHoloShader : MonoBehaviour
     {
