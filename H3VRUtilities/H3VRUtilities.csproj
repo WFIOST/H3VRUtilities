@@ -100,6 +100,8 @@
     <Compile Include="UniqueCode\OpenBoltLockOnSafe.cs" />
     <Compile Include="UniqueCode\RevolverChargingHandle.cs" />
     <Compile Include="UniqueCode\SelbstladerUnlockSystem.cs" />
+    <Compile Include="Vehicles\General\SteeringWheel.cs" />
+    <Compile Include="Vehicles\General\VehicleMovementHandling.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
