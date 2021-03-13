@@ -41,10 +41,24 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		private float observationpoint;
 		private float invertlerp;
 		private float lerppoint;
+		private float wiggleroom = 0.05f;
+
+		[Header("Special Affects")]
+		[Tooltip("When the observed object reaches or exceeds the stopofobservation, the affected object will snap back to the startofaffected, and will only reset when the observed object reaches the startofobserved.")]
+		public bool SnapForwardsOnMax;
+
+
+
+		private bool SnappedForwards;
+		private bool starttostopincreasesObservation;
+		private bool starttostopincreasesAffected;
 
 		public void Update()
 		{
-			//			float observationpoint = 0;
+			//define which is farther from the centre
+			if (StartOfObservation < StopOfObservation) starttostopincreasesObservation = true;
+			if (StartOfAffected < StopOfAffected) starttostopincreasesAffected = true;
+
 			switch (TransformationTypeOfObservedObject)
 			{
 				case transformtype.position:
@@ -66,7 +80,27 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 
 			invertlerp = Mathf.InverseLerp(StartOfObservation, StopOfObservation, observationpoint);
 
+			if (SnapForwardsOnMax)
+			{
+				//SnapForwardsOnMax test
+				if (starttostopincreasesObservation)
+				{
+					if (observationpoint >= StopOfObservation - wiggleroom)
+					{
+						SnappedForwards = true;
+					}
+				}
+				else { if (observationpoint <= StopOfObservation + wiggleroom) SnappedForwards = true; }
+
+				if (starttostopincreasesObservation) { if (observationpoint <= StartOfObservation + wiggleroom) SnappedForwards = false; }
+				else { if (observationpoint >= StartOfObservation - wiggleroom) SnappedForwards = false; }
+				if (SnappedForwards == true) { invertlerp = 0; }
+				//end test
+			}
+
 			lerppoint = Mathf.Lerp(StartOfAffected, StopOfAffected, invertlerp);
+
+
 
 			Vector3 v3;
 

@@ -20,6 +20,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		public bool IncludeChamberRound;
 		public int MinCharLength;
 		private bool WasFull;
+		private bool WasLoaded;
 		private FVRFireArmChamber chamber;
 
 		public void Start()
@@ -63,7 +64,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 
 				if (IncludeChamberRound)
 				{
-					if (WasFull && !chamber.IsFull)
+					if ((WasFull && !chamber.IsFull) || !WasLoaded)
 					{
 						
 					}
@@ -84,6 +85,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 				}
 
 				UItext.text = txt;
+				WasLoaded = true;
 			}
 			else
 			{
@@ -91,6 +93,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 				{
 					UItext.text = textWhenNoMag;
 				}
+				WasLoaded = false;
 			}
 		}
 	}
