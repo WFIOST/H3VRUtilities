@@ -9,13 +9,11 @@ namespace H3VRUtils
 {
 	class HandgunSecondarySwitch : FVRInteractiveObject
 	{
-		// Token: 0x06001740 RID: 5952 RVA: 0x000AA920 File Offset: 0x000A8D20
 		public new void Awake()
 		{
 			this.UpdateBaseGunSelector(this.CurModeIndex);
 		}
 
-		// Token: 0x06001741 RID: 5953 RVA: 0x000AA92E File Offset: 0x000A8D2E
 		public override void SimpleInteraction(FVRViveHand hand)
 		{
 			base.SimpleInteraction(hand);
@@ -34,9 +32,9 @@ namespace H3VRUtils
 			this.Weapon.PlayAudioEvent(FirearmAudioEventType.FireSelector, 1f);
 		}
 
-		// Token: 0x06001743 RID: 5955 RVA: 0x000AA994 File Offset: 0x000A8D94
 		private void UpdateBaseGunSelector(int i)
 		{
+			
 			Handgun.FireSelectorMode fireSelectorMode = this.Modes[i];
 			this.Weapon.SetAnimatedComponent(this.SelctorSwitch, fireSelectorMode.SelectorPosition, this.InterpStyle, this.Axis);
 			Handgun.FireSelectorMode fireSelectorMode2 = this.Weapon.FireSelectorModes[this.ModeIndexToSub];

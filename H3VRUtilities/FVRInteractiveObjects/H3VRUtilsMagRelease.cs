@@ -18,6 +18,8 @@ namespace H3VRUtils
 
 		[HideInInspector] public bool DisallowEjection;
 
+		private FVRFireArmMagazine mag;
+
 		private Collider col;
 
 		public bool PressDownToRelease;
@@ -27,7 +29,8 @@ namespace H3VRUtils
 			Down,
 			Left,
 			Right,
-			Trigger
+			Trigger,
+			NoDirection
 		}
 		public TouchpadDirType TouchpadDir;
 
@@ -53,6 +56,7 @@ namespace H3VRUtils
 		protected override void FVRFixedUpdate()
 		{
 			base.FVRFixedUpdate();
+			dir = Vector2.up;
 			if (TouchpadDir == TouchpadDirType.Up) dir = Vector2.up;
 			if (TouchpadDir == TouchpadDirType.Down) dir = Vector2.down;
 			if (TouchpadDir == TouchpadDirType.Left) dir = Vector2.left;
@@ -77,7 +81,7 @@ namespace H3VRUtils
 		{
 			if (DisallowEjection && !_override) return;
 			FVRFireArmMagazine magazine = null;
-
+			
 			if (WepType == 1)
 			{
 				magazine = this.ClosedBoltReceiver.Magazine;
@@ -93,6 +97,12 @@ namespace H3VRUtils
 				magazine = this.HandgunReceiver.Magazine;
 				this.HandgunReceiver.ReleaseMag();
 			}
+			movemagtohand(hand, magazine);
+		}
+
+		public void movemagtohand(FVRViveHand hand, FVRFireArmMagazine magazine)
+		{
+			//puts mag in hand
 			if (hand != null) { hand.ForceSetInteractable(magazine); }
 			magazine.BeginInteraction(hand);
 		}
@@ -101,35 +111,34 @@ namespace H3VRUtils
 		public override void UpdateInteraction(FVRViveHand hand)
 		{
 			base.UpdateInteraction(hand);
+
 			bool flag = false;
+			FVRFireArmMagazine prevmag = null;
+			if (mag != null) { flag = true; prevmag = mag; } //check if mag was previously loaded
 
-			if (WepType == 1)
-			{
-				if (this.ClosedBoltReceiver.Magazine != null) flag = true;
-			}
-			if (WepType == 2)
-			{
-				if (this.OpenBoltWeapon.Magazine != null) flag = true;
-			}
-			if (WepType == 3)
-			{
-				if (this.HandgunReceiver.Magazine != null) flag = true;
-			}
+			if (WepType == 1) { mag = this.ClosedBoltReceiver.Magazine; }
+			if (WepType == 2) { mag = this.OpenBoltWeapon.Magazine; }
+			if (WepType == 3) { mag = this.HandgunReceiver.Magazine; }
 
-			if (flag)
+			if (mag != null)
 			{
-				if (hand.Input.TouchpadDown)
-				{
-
-				}
 				bool flag2 = false;
 				if (Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.2f) flag2 = true;
 
 				if (flag2 || !PressDownToRelease || hand.IsInStreamlinedMode && hand.Input.AXButtonPressed)
 				{
+					if (TouchpadDir == TouchpadDirType.NoDirection) return;
 					dropmag(hand);
 					this.EndInteraction(hand);
 				}
+			}
+			else
+			{
+				if (flag) //if mag was previously loaded, but is now not
+				{
+					movemagtohand(hand, prevmag);
+				}
+				this.EndInteraction(hand);
 			}
 		}
 	}

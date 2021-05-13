@@ -54,19 +54,6 @@ namespace H3VRUtils
 
 		public void UpdateDisp()
 		{
-			if (UsesOneRoundPos)
-			{
-				Transform _b = StopPos.transform;
-				int _c = StopAtRoundCount;
-				if (UsesOneRoundPos) { _b = OneRoundPos.transform; _c++; }
-
-				follower.transform.position = Vector3.Lerp(StartPos.transform.position, _b.position, Mathf.InverseLerp((float)StartAtRoundCount, (float)_c, magazine.m_numRounds));
-
-				if (magazine.m_numRounds == 0)
-				{
-					follower.transform.position = StopPos.transform.position;
-				}
-			}
 
 			if (UsesIndivdualPointMagFollower)
 			{
@@ -81,21 +68,7 @@ namespace H3VRUtils
 				follower.transform.position = Positions[magazine.m_numRounds].transform.position;
 				follower.transform.rotation = Positions[magazine.m_numRounds].transform.rotation;
 			}
-
-			if (UsesIndivdualPointMagFollower)
-			{
-				if (Positions.Count < magazine.m_numRounds)
-				{
-					return;
-				}
-				if (Positions[magazine.m_numRounds] == null)
-				{
-					return;
-				}
-				follower.transform.position = Positions[magazine.m_numRounds].transform.position;
-				follower.transform.rotation = Positions[magazine.m_numRounds].transform.rotation;
-			}
-			if (UsesIndividualMeshReplacement)
+			else if (UsesIndividualMeshReplacement)
 			{
 				if (Meshes.Count < magazine.m_numRounds)
 				{
@@ -107,6 +80,19 @@ namespace H3VRUtils
 				}
 				followerFilter.mesh = Meshes[magazine.m_numRounds];
 				followerFilter.mesh = Meshes[magazine.m_numRounds];
+			}
+			else //if no other use
+			{
+				Transform _b = StopPos.transform;
+				int _c = StopAtRoundCount;
+				if (UsesOneRoundPos) { _b = OneRoundPos.transform; _c++; }
+
+				follower.transform.position = Vector3.Lerp(StartPos.transform.position, _b.position, Mathf.InverseLerp((float)StartAtRoundCount, (float)_c, magazine.m_numRounds));
+
+				if (magazine.m_numRounds == 0)
+				{
+					follower.transform.position = StopPos.transform.position;
+				}
 			}
 		}
 	}

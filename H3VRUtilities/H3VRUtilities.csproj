@@ -38,7 +38,7 @@
       <HintPath>..\Libraries\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx, Version=5.4.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Libraries\BepInEx.dll</HintPath>
+      <HintPath>..\..\CursedDlls.BepinEx\lib\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx.Harmony, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Libraries\BepInEx.Harmony.dll</HintPath>
@@ -60,10 +60,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UtilsBepInExLoader.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentCode\AttachmentModifyFirearm.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentCode\CustomRDShaderHandler.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentCode\DisplayOnAttached.cs" />
-    <Compile Include="FVRInteractiveObjects\attachmentCode\ScopeCamMagnifier.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentXFoldingStock.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentYFoldingStock.cs" />
     <Compile Include="FVRInteractiveObjects\AutoRackOnMagLoad.cs" />
@@ -85,8 +85,6 @@
     <Compile Include="MonoScripts\VisualModifiers\followDir.cs" />
     <Compile Include="FVRInteractiveObjects\FVRFirearms\BreakOpenFlareGun.cs" />
     <Compile Include="FVRInteractiveObjects\H3VRUtilsPhysBoltRelease.cs" />
-    <Compile Include="FVRInteractiveObjects\customItems\shotClock\shotClock.cs" />
-    <Compile Include="FVRInteractiveObjects\customItems\shotClock\shotClockButton.cs" />
     <Compile Include="FVRInteractiveObjects\HandgunSecondarySwitch.cs" />
     <Compile Include="FVRInteractiveObjects\NadeCupLauncher.cs" />
     <Compile Include="FVRInteractiveObjects\H3VRUtilsMagRelease.cs" />
@@ -95,7 +93,6 @@
     <Compile Include="NonAddedScripts\GetTransformPosition.cs" />
     <Compile Include="NonAddedScripts\RecoilModificationSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FVRInteractiveObjects\FVRFirearms\TatoWeapon.cs" />
     <Compile Include="UniqueCode\AssignMagIfNull.cs" />
     <Compile Include="UniqueCode\OpenBoltLockOnSafe.cs" />
     <Compile Include="UniqueCode\RevolverChargingHandle.cs" />
