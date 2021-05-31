@@ -39,24 +39,29 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		public float StopOfAffected;
 
 		//[Header("Debug Values")]
-		private float observationpoint;
-		private float invertlerp;
-		private float lerppoint;
-		private float wiggleroom = 0.05f;
+		[HideInInspector]
+		public float observationpoint;
+		[HideInInspector]
+		public float invertlerp;
+		[HideInInspector]
+		public float lerppoint;
+		[HideInInspector]
+		public float wiggleroom = 0.05f;
 
 		[Header("Special Observations")]
 		[Tooltip("When the observed object reaches or exceeds the stopofobservation, the affected object will snap back to the startofaffected, and will only reset when the observed object reaches the startofobserved.")]
 
-		[Header("Snap Forwards - Not Working")]
+		[Header("Snap Forwards")]
 		public bool SnapForwardsOnMax;
-		private bool SnappedForwards;
-		private bool starttostopincreasesObservation;
-		private bool starttostopincreasesAffected;
+		public bool SnappedForwards;
+		public float SnapBackAt;
+		[Tooltip("If off, it will 'unsnap' when under the bounds of Start Of Observation, Stop Of Observation, and Snap Back At. When on, it will unsnap when above all of those.")]
+		public bool ResetIfOverBounds;
+		[Tooltip("When on, it will lock when at its max, rather than snapping forward.")]
+		public bool LockForward;
 
 		[Header("Move On Touch Pad")]
 		public bool ReadHandTouchpadMovement;
-		public bool IsToggle;
-		private bool p_isCurrentlyOn;
 		public FVRPhysicalObject ItemToReadFrom;
 		public H3VRUtilsMagRelease.TouchpadDirType DirToRead;
 		public enum StreamlinedDirType
@@ -81,8 +86,6 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			//define which is farther from the centre
 			if (!(ReadHandTouchpadMovement || ReadIfGunIsLoaded || ReadIfBoltIsLocked))
 			{
-				if (StartOfObservation < StopOfObservation) starttostopincreasesObservation = true;
-				if (StartOfAffected < StopOfAffected) starttostopincreasesAffected = true;
 
 				switch (TransformationTypeOfObservedObject)
 				{
@@ -108,20 +111,25 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 
 			if (SnapForwardsOnMax)
 			{
-				//SnapForwardsOnMax test
-				if (starttostopincreasesObservation)
+				if (observationpoint <= Math.Min(StopOfObservation, Math.Min(StartOfObservation, SnapBackAt)) || observationpoint >= Math.Max(StopOfObservation, Math.Max(StartOfObservation, SnapBackAt)))
 				{
-					if (observationpoint >= StopOfObservation - wiggleroom)
-					{
-						SnappedForwards = true;
-					}
+					SnappedForwards = true;
 				}
-				else { if (observationpoint <= StopOfObservation + wiggleroom) SnappedForwards = true; }
 
-				if (starttostopincreasesObservation) { if (observationpoint <= StartOfObservation + wiggleroom) SnappedForwards = false; }
-				else { if (observationpoint >= StartOfObservation - wiggleroom) SnappedForwards = false; }
-				if (SnappedForwards == true) { invertlerp = 0; }
-				//end test
+				if (SnappedForwards)
+				{
+					invertlerp = 0;
+				}
+
+				if ((observationpoint <= Math.Min(StopOfObservation, Math.Min(StartOfObservation, SnapBackAt)) && !ResetIfOverBounds) ||
+					(observationpoint >= Math.Max(StopOfObservation, Math.Max(StartOfObservation, SnapBackAt)) && ResetIfOverBounds))
+				{
+					SnappedForwards = false;
+				}
+				if (SnappedForwards)
+				{
+					if (LockForward) invertlerp = 1;
+				}
 			}
 
 			//SpecialFX - TouchpadDir
@@ -137,28 +145,18 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 
 				if (ItemToReadFrom.m_hand != null)
 				{
-					if (!ItemToReadFrom.m_hand.IsInStreamlinedMode)
+					if (/*!ItemToReadFrom.m_hand.IsInStreamlinedMode*/ false == true)
 					{
-						bool pressed = ItemToReadFrom.m_hand.Input.TouchpadPressed;
-						if (IsToggle) pressed = ItemToReadFrom.m_hand.Input.TouchpadDown;
 
-						if ((Vector2.Angle(ItemToReadFrom.m_hand.Input.TouchpadAxes, dir) <= 45f && ItemToReadFrom.m_hand.Input.TouchpadAxes.magnitude > 0.4f && pressed))
+						if ((Vector2.Angle(ItemToReadFrom.m_hand.Input.TouchpadAxes, dir) <= 45f && ItemToReadFrom.m_hand.Input.TouchpadAxes.magnitude > 0.4f && ItemToReadFrom.m_hand.Input.TouchpadPressed))
 						{
-							p_isCurrentlyOn = !p_isCurrentlyOn;
 							invertlerp = 1;
 						}
-
-
-
 						if (isTrigger)
 						{
-							if (ItemToReadFrom.m_hand.Input.TriggerPressed)
+							if (ItemToReadFrom.m_hand.Input.TriggerDown)
 							{
 								invertlerp = 1;
-							}
-							if(ItemToReadFrom.m_hand.Input.TriggerDown && IsToggle)
-							{
-								p_isCurrentlyOn = !p_isCurrentlyOn;
 							}
 						}
 					}
@@ -169,33 +167,22 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 							case StreamlinedDirType.AX_Button:
 								if (ItemToReadFrom.m_hand.Input.AXButtonPressed)
 								{
-									p_isCurrentlyOn = !p_isCurrentlyOn;
 									invertlerp = 1;
 								}
 								break;
 							case StreamlinedDirType.BY_Button:
-								if (ItemToReadFrom.m_hand.Input.BYButtonPressed)
+								/*if (ItemToReadFrom.m_hand.Input.BYButtonPressed)
 								{
-									p_isCurrentlyOn = !p_isCurrentlyOn;
 									invertlerp = 1;
-								}
+								}*/
 								break;
 							case StreamlinedDirType.Trigger:
 								if (ItemToReadFrom.m_hand.Input.TriggerDown)
 								{
-									p_isCurrentlyOn = !p_isCurrentlyOn;
 									invertlerp = 1;
 								}
 								break;
 						}
-					}
-
-					if (IsToggle)
-					{ //bool to int
-						if (p_isCurrentlyOn)
-							invertlerp = 1;
-						else
-							invertlerp = 0;
 					}
 				}
 			}

@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FVRInteractiveObjects\ActivateSeveralFVRInteractiveAtOnce.cs" />
     <Compile Include="FVRInteractiveObjects\AR15HandleFlipperSounds.cs" />
     <Compile Include="MonoScripts\VisualModifiers\CycleOnBoltRelease.cs" />
     <Compile Include="UtilsBepInExLoader.cs" />
