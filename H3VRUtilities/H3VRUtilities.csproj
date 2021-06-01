@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="FVRInteractiveObjects\ActivateSeveralFVRInteractiveAtOnce.cs" />
     <Compile Include="FVRInteractiveObjects\AR15HandleFlipperSounds.cs" />
+    <Compile Include="FVRInteractiveObjects\GoToNearestSosig.cs" />
     <Compile Include="MonoScripts\VisualModifiers\CycleOnBoltRelease.cs" />
     <Compile Include="UtilsBepInExLoader.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentCode\AttachmentModifyFirearm.cs" />
