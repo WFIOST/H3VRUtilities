@@ -145,7 +145,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 
 				if (ItemToReadFrom.m_hand != null)
 				{
-					if (/*!ItemToReadFrom.m_hand.IsInStreamlinedMode*/ false == true)
+					if (!ItemToReadFrom.m_hand.IsInStreamlinedMode)
 					{
 
 						if ((Vector2.Angle(ItemToReadFrom.m_hand.Input.TouchpadAxes, dir) <= 45f && ItemToReadFrom.m_hand.Input.TouchpadAxes.magnitude > 0.4f && ItemToReadFrom.m_hand.Input.TouchpadPressed))
