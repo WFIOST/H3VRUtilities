@@ -47,6 +47,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		public float lerppoint;
 		[HideInInspector]
 		public float wiggleroom = 0.05f;
+		private float rememberLerpPoint = -999f;
 
 		[Header("Special Observations")]
 		[Tooltip("When the observed object reaches or exceeds the stopofobservation, the affected object will snap back to the startofaffected, and will only reset when the observed object reaches the startofobserved.")]
@@ -79,6 +80,12 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		[Header("Move If Bolt Locked - Closed Bolt Only")]
 		public bool ReadIfBoltIsLocked;
 		public ClosedBolt BoltToReadFrom;
+
+		[Header("Move If Specific Attachment Attached")]
+		public bool MoveIfSpecificAttachmentAttached;
+		public string AttachmentID;
+		public FVRFireArmAttachmentMount AttachmentMount;
+		private int rememberAttached;
 
 		public void Update()
 		{
@@ -186,8 +193,8 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 					}
 				}
 			}
-
 			//EndSpecialFX - TouchpadDir
+
 			//SpecialFX - GunLoaded
 			if (ReadIfGunIsLoaded)
 			{
@@ -201,6 +208,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 				}
 			}
 			//EndSpecialFX - GunLoaded
+
 			//SpecialFX - BoltLocked
 			if (ReadIfBoltIsLocked)
 			{
@@ -215,11 +223,33 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			}
 			//EndSpecialFX - BoltLocked
 
+			//SpecialFX - MoveIfSpecificAttachmentAttached
+			if (MoveIfSpecificAttachmentAttached)
+			{
+				if (rememberAttached != AttachmentMount.AttachmentsList.Count)
+				{
+					foreach (var mount in AttachmentMount.AttachmentsList)
+					{
+						if (mount.ObjectWrapper.ItemID == AttachmentID)
+						{
+							invertlerp = 1;
+							break;
+						}
+					}
+				}
+				else
+					rememberAttached = AttachmentMount.AttachmentsList.Count;
+			}
+			//EndSpecialFX - MoveIfSpecificAttachmentAttached
+
+
 			lerppoint = Mathf.Lerp(StartOfAffected, StopOfAffected, invertlerp);
 
-
-
 			Vector3 v3;
+
+			//make sure lerp isnt same
+			if (rememberLerpPoint == lerppoint) return;
+			rememberLerpPoint = lerppoint;
 
 			switch (TransformationTypeOfAffectedObject)
 			{
