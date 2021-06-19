@@ -13,6 +13,7 @@ namespace H3VRUtils
 		public ClosedBoltWeapon ClosedBoltReceiver;
 		public OpenBoltReceiver OpenBoltWeapon;
 		public Handgun HandgunReceiver;
+		public BoltActionRifle BoltActionWeapon;
 
 		[HideInInspector] public int WepType;
 
@@ -43,6 +44,7 @@ namespace H3VRUtils
 			if (ClosedBoltReceiver != null) WepType = 1;
 			if (OpenBoltWeapon != null) WepType = 2;
 			if (HandgunReceiver != null) WepType = 3;
+			if (BoltActionWeapon != null) WepType = 4;
 			col = GetComponent<Collider>();
 		}
 
@@ -50,13 +52,21 @@ namespace H3VRUtils
 		{
 			if (WepType == 1) return !(this.ClosedBoltReceiver.Magazine == null);
 			if (WepType == 2) return !(this.OpenBoltWeapon.Magazine == null);
-			return !(this.HandgunReceiver.Magazine == null);
+			if (WepType == 3) return !(this.HandgunReceiver.Magazine == null);
+			return !(this.BoltActionWeapon.Magazine == null);
 		}
 
 		protected override void FVRFixedUpdate()
 		{
 			base.FVRFixedUpdate();
 			dir = Vector2.up;
+			
+			//config override
+			if (UtilsBepInExLoader.paddleMagReleaseDir.Value != UtilsBepInExLoader.TouchpadDirTypePT.BasedOnWeapon)
+			{
+				TouchpadDir = (TouchpadDirType)(int)UtilsBepInExLoader.paddleMagReleaseDir.Value;
+			}
+
 			if (TouchpadDir == TouchpadDirType.Up) dir = Vector2.up;
 			if (TouchpadDir == TouchpadDirType.Down) dir = Vector2.down;
 			if (TouchpadDir == TouchpadDirType.Left) dir = Vector2.left;
@@ -97,6 +107,11 @@ namespace H3VRUtils
 				magazine = this.HandgunReceiver.Magazine;
 				this.HandgunReceiver.ReleaseMag();
 			}
+			if (WepType == 4)
+			{
+				magazine = this.BoltActionWeapon.Magazine;
+				this.BoltActionWeapon.ReleaseMag();
+			}
 			movemagtohand(hand, magazine);
 		}
 
@@ -119,15 +134,22 @@ namespace H3VRUtils
 			if (WepType == 1) { mag = this.ClosedBoltReceiver.Magazine; }
 			if (WepType == 2) { mag = this.OpenBoltWeapon.Magazine; }
 			if (WepType == 3) { mag = this.HandgunReceiver.Magazine; }
+			if (WepType == 4) { mag = this.BoltActionWeapon.Magazine; }
 
 			if (mag != null)
 			{
 				bool flag2 = false;
 				if (Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.2f) flag2 = true;
 
-				if (flag2 || !PressDownToRelease || hand.IsInStreamlinedMode && hand.Input.AXButtonPressed)
+				
+				if (
+					   !PressDownToRelease //if it's not a paddle release anyway
+					|| !UtilsBepInExLoader.paddleMagRelease.Value //if paddle release is disabled
+					|| (TouchpadDir == TouchpadDirType.NoDirection && !UtilsBepInExLoader.magDropRequiredRelease.Value) //if mag drop required and mag drop is disabled
+					|| flag2 //if it is enabled, and user is pressing all the right buttons
+					|| (hand.IsInStreamlinedMode && hand.Input.AXButtonPressed)) //if it is enabled, and user is pressing streamlined button (and is in steamlined mode)
 				{
-					if (TouchpadDir == TouchpadDirType.NoDirection) return;
+					if (TouchpadDir == TouchpadDirType.NoDirection && UtilsBepInExLoader.magDropRequiredRelease.Value) return;
 					dropmag(hand);
 					this.EndInteraction(hand);
 				}

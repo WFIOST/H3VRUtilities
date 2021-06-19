@@ -37,8 +37,9 @@
     <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Libraries\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="BepInEx, Version=5.4.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\CursedDlls.BepinEx\lib\BepInEx.dll</HintPath>
+    <Reference Include="BepInEx, Version=5.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\SteamLibrary\steamapps\common\H3VR\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx.Harmony, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Libraries\BepInEx.Harmony.dll</HintPath>
@@ -67,7 +68,6 @@
     <Compile Include="FVRInteractiveObjects\AR15HandleFlipperSounds.cs" />
     <Compile Include="FVRInteractiveObjects\GoToNearestSosig.cs" />
     <Compile Include="MonoScripts\VisualModifiers\CycleOnBoltRelease.cs" />
-    <Compile Include="UtilsBepInExLoader.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentCode\AttachmentModifyFirearm.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentCode\CustomRDShaderHandler.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentCode\DisplayOnAttached.cs" />
@@ -106,6 +106,12 @@
     <Compile Include="UniqueCode\SelbstladerUnlockSystem.cs" />
     <Compile Include="Vehicles\General\SteeringWheel.cs" />
     <Compile Include="Vehicles\General\VehicleMovementHandling.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\H3VRUtilsConfig\H3VRUtilsConfig.csproj">
+      <Project>{83438cce-0ced-4ed4-a2f8-e1468b5bc01b}</Project>
+      <Name>H3VRUtilsConfig</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
