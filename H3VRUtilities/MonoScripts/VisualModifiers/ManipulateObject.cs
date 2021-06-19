@@ -91,7 +91,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		{
 			invertlerp = 0;
 			//define which is farther from the centre
-			if (!(ReadHandTouchpadMovement || ReadIfGunIsLoaded || ReadIfBoltIsLocked))
+			if (!(ReadHandTouchpadMovement || ReadIfGunIsLoaded || ReadIfBoltIsLocked || MoveIfSpecificAttachmentAttached))
 			{
 
 				switch (TransformationTypeOfObservedObject)
