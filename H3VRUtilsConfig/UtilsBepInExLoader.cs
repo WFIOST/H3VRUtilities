@@ -46,7 +46,7 @@ namespace H3VRUtils
 			//sodalite check
 			try
 			{
-				UtilsOptionsPanel uop = new UtilsOptionsPanel();
+				UtilsOptionsPanel uop = new UtilsOptionsPanel(); // dont do this
 			} catch
 			{
 				Logger.LogWarning("Error when initializing panel! Is Sodalite not installed?");
@@ -76,13 +76,7 @@ namespace H3VRUtils
 
 		public static string GetTerm(bool value)
 		{
-			if (value)
-			{
-				return "Disable";
-			} else
-			{
-				return "Enable";
-			}
+			return value ? "Disable" : "Enable";
 		}
 
 		private void ConfigureUtilsPanel(GameObject panel)
