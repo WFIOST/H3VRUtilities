@@ -38,7 +38,7 @@ namespace H3VRUtils
 		public Vector2 dir;
 
 
-		protected override void Awake()
+		public override void Awake()
 		{
 			base.Awake();
 			setWepType();
@@ -61,11 +61,11 @@ namespace H3VRUtils
 			return !(this.BoltActionWeapon.Magazine == null);
 		}
 
-		protected override void FVRFixedUpdate()
+		public override void FVRFixedUpdate()
 		{
 			base.FVRFixedUpdate();
 			dir = Vector2.up;
-
+			
 			//config override
 			if (UtilsBepInExLoader.paddleMagReleaseDir.Value != UtilsBepInExLoader.TouchpadDirTypePT.BasedOnWeapon)
 			{
@@ -89,14 +89,14 @@ namespace H3VRUtils
 		{
 			base.SimpleInteraction(hand);
 			if (TouchpadDir == TouchpadDirType.Trigger)
-				dropmag(hand);
+			dropmag(hand);
 		}
 
 		public void dropmag(FVRViveHand hand, bool _override = false)
 		{
 			if (DisallowEjection && !_override) return;
 			FVRFireArmMagazine magazine = null;
-
+			
 			if (WepType == 1)
 			{
 				magazine = this.ClosedBoltReceiver.Magazine;
@@ -146,7 +146,7 @@ namespace H3VRUtils
 				bool flag2 = false;
 				if (Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.2f) flag2 = true;
 
-
+				
 				if (
 					   !PressDownToRelease //if it's not a paddle release anyway
 					|| !UtilsBepInExLoader.paddleMagRelease.Value //if paddle release is disabled
