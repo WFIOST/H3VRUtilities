@@ -12,13 +12,15 @@ namespace H3VRUtils.FVRInteractiveObjects
 	{
 		public float speed;
 		public Rigidbody rigidbody;
-		[Tooltip("Change this if you want the object to throw itself to a different tag")]
-		public string TagOverride;
 		public void Start()
 		{
-			if (string.IsNullOrEmpty(TagOverride)) TagOverride = "AgentBody";
 			//we do a slightly unavoidable amount of trolling
-			GameObject[] objs = GameObject.FindGameObjectsWithTag(TagOverride);
+			var objs = FindObjectsOfType<Sosig>();
+			Debug.Log("Found " + objs.Length + " sosigs!");
+			for (int i = 0; i < objs.Length; i++)
+			{
+				Debug.Log("Sosig found: " + objs[i].name);
+			}
 			if (objs.Length == 0) return;
 			
 			//this and the for basically just yoinks the closest sosig
@@ -26,10 +28,11 @@ namespace H3VRUtils.FVRInteractiveObjects
 			float curobjdist = 999999;
 			for (int i = 0; i < objs.Length; i++)
 			{
-				float distance = Vector3.Distance(this.transform.position, objs[i].transform.position);
+				float distance = Vector3.Distance(this.transform.position, objs[i].gameObject.transform.position);
 				if(distance < curobjdist)
 				{
-					curobj = objs[i];
+					Debug.Log("Current Sosig: " + objs[i].name);
+					curobj = objs[i].gameObject;
 					curobjdist = distance;
 				}
 			}
@@ -38,8 +41,10 @@ namespace H3VRUtils.FVRInteractiveObjects
 
 			//look at sosig
 			transform.LookAt(curobj.transform);
+			Debug.Log("looking at " + curobj.transform);
 			//do the troll
-			rigidbody.velocity = new Vector3(0,0,speed);
+			rigidbody.AddForce(new Vector3(0, 0, speed));
+			Debug.Log("setting velocity to " + speed);
 		}
 	}
 }
