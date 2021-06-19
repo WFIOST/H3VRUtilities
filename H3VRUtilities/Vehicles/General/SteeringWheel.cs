@@ -6,7 +6,7 @@ namespace H3VRUtils.Vehicles
 {
 	public class Lever : FVRInteractiveObject
 	{
-		protected override void Awake()
+		public override void Awake()
 		{
 			base.Awake();
 		}
@@ -31,7 +31,7 @@ namespace H3VRUtils.Vehicles
 			return Mathf.InverseLerp(this.minValue, this.maxValue, this.m_curRot);
 		}
 
-		protected override void FVRUpdate()
+		public override void FVRUpdate()
 		{
 			base.FVRUpdate();
 			this.m_curRot = Mathf.Clamp(this.m_curRot, minValue, maxValue);

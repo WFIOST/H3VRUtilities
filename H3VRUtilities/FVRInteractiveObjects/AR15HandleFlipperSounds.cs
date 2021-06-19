@@ -6,7 +6,7 @@ namespace FistVR
 {
 	public class AR15HandleFlipperSounds : FVRInteractiveObject
 	{
-		protected override void Awake()
+		public override void Awake()
 		{
 			base.Awake();
 		}
@@ -26,7 +26,7 @@ namespace FistVR
 			}
 		}
 
-		protected override void FVRUpdate()
+		public override void FVRUpdate()
 		{
 			base.FVRUpdate();
 			if (this.m_isLargeAperture)

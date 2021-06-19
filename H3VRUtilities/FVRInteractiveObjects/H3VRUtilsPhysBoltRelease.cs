@@ -21,13 +21,13 @@ namespace H3VRUtils
 		[HideInInspector]
 		public int WepType = 0;
 
-		protected override void Awake()
+		public override void Awake()
 		{
 			base.Awake();
 			if (ClosedBoltReceiver != null) WepType = 1;
 		}
 
-		protected override void FVRFixedUpdate()
+		public override void FVRFixedUpdate()
 		{
 			base.FVRFixedUpdate();
 			if (TouchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Up) dir = Vector2.up;

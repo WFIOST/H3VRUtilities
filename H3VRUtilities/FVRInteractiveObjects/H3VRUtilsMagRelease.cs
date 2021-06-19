@@ -38,7 +38,7 @@ namespace H3VRUtils
 		public Vector2 dir;
 
 
-		protected override void Awake()
+		public override void Awake()
 		{
 			base.Awake();
 			setWepType();
@@ -61,7 +61,7 @@ namespace H3VRUtils
 			return !(this.BoltActionWeapon.Magazine == null);
 		}
 
-		protected override void FVRFixedUpdate()
+		public override void FVRFixedUpdate()
 		{
 			base.FVRFixedUpdate();
 			dir = Vector2.up;

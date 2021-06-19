@@ -31,11 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Libraries\Assembly-CSharp.dll</HintPath>
-    </Reference>
     <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Libraries\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp_publicized">
+      <HintPath>E:\SteamLibrary\steamapps\common\H3VR\BepInEx\Assembly-CSharp_publicized.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx, Version=5.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -67,6 +67,7 @@
     <Compile Include="FVRInteractiveObjects\AlternatingMag\AlternatingMagSingleSwitch.cs" />
     <Compile Include="FVRInteractiveObjects\AR15HandleFlipperSounds.cs" />
     <Compile Include="FVRInteractiveObjects\GoToNearestSosig.cs" />
+    <Compile Include="FVRInteractiveObjects\OpenBoltBurstFire.cs" />
     <Compile Include="MonoScripts\VisualModifiers\CycleOnBoltRelease.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentCode\AttachmentModifyFirearm.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentCode\CustomRDShaderHandler.cs" />
