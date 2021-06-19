@@ -9,6 +9,7 @@ using Sodalite;
 using Sodalite.Api;
 using Sodalite.UiWidgets;
 using Sodalite.Utilities;
+using HarmonyLib;
 
 namespace H3VRUtils
 {
@@ -39,8 +40,10 @@ namespace H3VRUtils
 
 			paddleMagReleaseDir = Config.Bind("Fine Tuning", "Enhanced Mag Release Direction", TouchpadDirTypePT.BasedOnWeapon, "Based On Weapon is the default direction chosen by the modmaker. Others are overrides.");
 
-			//sodalite check
+			Harmony.CreateAndPatchAll(typeof(MagReplacer));
 
+
+			//sodalite check
 			try
 			{
 				UtilsOptionsPanel uop = new UtilsOptionsPanel();
@@ -104,8 +107,17 @@ namespace H3VRUtils
 				widget.LayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
 				widget.LayoutGroup.constraintCount = 3;
 
+				//ROW ONE
+
+				widget.AddChild((TextWidget text) => {
+					text.Text.text = "";
+					text.RectTransform.localRotation = Quaternion.identity;
+				});
+
 				widget.AddChild((TextWidget text) => {
 					text.Text.text = "H3VR Utilities Settings";
+					text.Text.alignment = TextAnchor.MiddleCenter;
+					text.Text.fontSize += 5;
 					text.RectTransform.localRotation = Quaternion.identity;
 				});
 
@@ -114,10 +126,7 @@ namespace H3VRUtils
 					text.RectTransform.localRotation = Quaternion.identity;
 				});
 
-				widget.AddChild((TextWidget text) => {
-					text.Text.text = "";
-					text.RectTransform.localRotation = Quaternion.identity;
-				});
+				//ROW TWO
 
 				widget.AddChild((ButtonWidget button) => {
 					button.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Paddle Release";
@@ -132,6 +141,13 @@ namespace H3VRUtils
 					MagDropRequiredReleaseButton = button;
 					button.RectTransform.localRotation = Quaternion.identity;
 				});
+
+				widget.AddChild((ButtonWidget button) => {
+					button.ButtonText.text = "Reload Magazine Release Cache";
+					button.AddButtonListener(ReloadVanillaMagRelease);
+					MagDropRequiredReleaseButton = button;
+					button.RectTransform.localRotation = Quaternion.identity;
+				});
 			});
 		}
 
@@ -143,6 +159,12 @@ namespace H3VRUtils
 		private void ToggleMagRelease() {
 			UtilsBepInExLoader.magDropRequiredRelease.Value = !UtilsBepInExLoader.magDropRequiredRelease.Value;
 			MagDropRequiredReleaseButton.ButtonText.text = GetTerm(UtilsBepInExLoader.magDropRequiredRelease.Value) + " Mag Drop Required Release";
+		}
+
+		private void ReloadVanillaMagRelease()
+		{
+			MagReplacerData.GetMagDropData(true);
+			MagReplacerData.GetPaddleData(true);
 		}
 
 		private void SpawnUtilsPanel()
