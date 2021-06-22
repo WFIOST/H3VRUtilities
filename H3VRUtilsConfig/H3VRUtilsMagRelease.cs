@@ -1,172 +1,210 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using FistVR;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
-	public class H3VRUtilsMagRelease : FVRInteractiveObject
-	{
+    public class H3VRUtilsMagRelease : FVRInteractiveObject
+    {
+        public enum TouchpadDirType
+        {
+            Up,
+            Down,
+            Left,
+            Right,
+            Trigger,
+            NoDirection
+        }
 
-		public ClosedBoltWeapon ClosedBoltReceiver;
-		public OpenBoltReceiver OpenBoltWeapon;
-		public Handgun HandgunReceiver;
-		public BoltActionRifle BoltActionWeapon;
+        [FormerlySerializedAs("ClosedBoltReceiver")] public ClosedBoltWeapon closedBoltReceiver;
+        [FormerlySerializedAs("OpenBoltWeapon")] public OpenBoltReceiver openBoltWeapon;
+        [FormerlySerializedAs("HandgunReceiver")] public Handgun handgunReceiver;
+        [FormerlySerializedAs("BoltActionWeapon")] public BoltActionRifle boltActionWeapon;
 
-		[HideInInspector] public int WepType;
+        [FormerlySerializedAs("WepType")] [HideInInspector] public int wepType;
 
-		[HideInInspector] public bool DisallowEjection;
+        [FormerlySerializedAs("DisallowEjection")] [HideInInspector] public bool disallowEjection;
 
-		private FVRFireArmMagazine mag;
+        [FormerlySerializedAs("PressDownToRelease")] public bool pressDownToRelease;
+        [FormerlySerializedAs("TouchpadDir")] public TouchpadDirType touchpadDir;
 
-		private Collider col;
+        public Vector2 dir;
 
-		public bool PressDownToRelease;
-		public enum TouchpadDirType
-		{
-			Up,
-			Down,
-			Left,
-			Right,
-			Trigger,
-			NoDirection
-		}
-		public TouchpadDirType TouchpadDir;
+        private Collider _col;
 
-		public Vector2 dir;
-
-
-		public override void Awake()
-		{
-			base.Awake();
-			setWepType();
-			col = GetComponent<Collider>();
-		}
-
-		public void setWepType()
-		{
-			if (ClosedBoltReceiver != null) WepType = 1;
-			if (OpenBoltWeapon != null) WepType = 2;
-			if (HandgunReceiver != null) WepType = 3;
-			if (BoltActionWeapon != null) WepType = 4;
-		}
-
-		public override bool IsInteractable()
-		{
-			if (WepType == 1) return !(this.ClosedBoltReceiver.Magazine == null);
-			if (WepType == 2) return !(this.OpenBoltWeapon.Magazine == null);
-			if (WepType == 3) return !(this.HandgunReceiver.Magazine == null);
-			return !(this.BoltActionWeapon.Magazine == null);
-		}
-
-		public override void FVRFixedUpdate()
-		{
-			base.FVRFixedUpdate();
-			dir = Vector2.up;
-			
-			//config override
-			if (UtilsBepInExLoader.paddleMagReleaseDir.Value != UtilsBepInExLoader.TouchpadDirTypePT.BasedOnWeapon)
-			{
-				TouchpadDir = (TouchpadDirType)(int)UtilsBepInExLoader.paddleMagReleaseDir.Value;
-			}
-
-			if (TouchpadDir == TouchpadDirType.Up) dir = Vector2.up;
-			if (TouchpadDir == TouchpadDirType.Down) dir = Vector2.down;
-			if (TouchpadDir == TouchpadDirType.Left) dir = Vector2.left;
-			if (TouchpadDir == TouchpadDirType.Right) dir = Vector2.right;
-			if (TouchpadDir == TouchpadDirType.Trigger) this.IsSimpleInteract = true; else this.IsSimpleInteract = false;
-			col.enabled = !DisallowEjection;
-		}
-
-		public override void BeginInteraction(FVRViveHand hand)
-		{
-			base.BeginInteraction(hand);
-		}
-
-		public override void SimpleInteraction(FVRViveHand hand)
-		{
-			base.SimpleInteraction(hand);
-			if (TouchpadDir == TouchpadDirType.Trigger)
-			dropmag(hand);
-		}
-
-		public void dropmag(FVRViveHand hand, bool _override = false)
-		{
-			if (DisallowEjection && !_override) return;
-			FVRFireArmMagazine magazine = null;
-			
-			if (WepType == 1)
-			{
-				magazine = this.ClosedBoltReceiver.Magazine;
-				this.ClosedBoltReceiver.ReleaseMag();
-			}
-			if (WepType == 2)
-			{
-				magazine = this.OpenBoltWeapon.Magazine;
-				this.OpenBoltWeapon.ReleaseMag();
-			}
-			if (WepType == 3)
-			{
-				magazine = this.HandgunReceiver.Magazine;
-				this.HandgunReceiver.ReleaseMag();
-			}
-			if (WepType == 4)
-			{
-				magazine = this.BoltActionWeapon.Magazine;
-				this.BoltActionWeapon.ReleaseMag();
-			}
-			movemagtohand(hand, magazine);
-		}
-
-		public void movemagtohand(FVRViveHand hand, FVRFireArmMagazine magazine)
-		{
-			//puts mag in hand
-			if (hand != null) { hand.ForceSetInteractable(magazine); }
-			magazine.BeginInteraction(hand);
-		}
+        private FVRFireArmMagazine _mag;
 
 
-		public override void UpdateInteraction(FVRViveHand hand)
-		{
-			base.UpdateInteraction(hand);
+        public void Awake()
+        {
+            base.Awake();
+            SetWepType();
+            _col = GetComponent<Collider>();
+        }
 
-			bool flag = false;
-			FVRFireArmMagazine prevmag = null;
-			if (mag != null) { flag = true; prevmag = mag; } //check if mag was previously loaded
+        public void SetWepType()
+        {
+            if (closedBoltReceiver != null) wepType = 1;
+            if (openBoltWeapon != null) wepType = 2;
+            if (handgunReceiver != null) wepType = 3;
+            if (boltActionWeapon != null) wepType = 4;
+        }
 
-			if (WepType == 1) { mag = this.ClosedBoltReceiver.Magazine; }
-			if (WepType == 2) { mag = this.OpenBoltWeapon.Magazine; }
-			if (WepType == 3) { mag = this.HandgunReceiver.Magazine; }
-			if (WepType == 4) { mag = this.BoltActionWeapon.Magazine; }
+        public override bool IsInteractable()
+        {
+            switch (wepType)
+            {
+                case 1:
+                    return !(closedBoltReceiver.Magazine == null);
+                case 2:
+                    return !(openBoltWeapon.Magazine == null);
+                case 3:
+                    return !(handgunReceiver.Magazine == null);
+                default:
+                    return !(boltActionWeapon.Magazine == null);
+            }
+        }
 
-			if (mag != null)
-			{
-				bool flag2 = false;
-				if (Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.2f) flag2 = true;
+        public void FvrFixedUpdate()
+        {
+            base.FVRFixedUpdate();
+            dir = Vector2.up;
 
-				
-				if (
-					   !PressDownToRelease //if it's not a paddle release anyway
-					|| !UtilsBepInExLoader.paddleMagRelease.Value //if paddle release is disabled
-					|| (TouchpadDir == TouchpadDirType.NoDirection && !UtilsBepInExLoader.magDropRequiredRelease.Value) //if mag drop required and mag drop is disabled
-					|| flag2 //if it is enabled, and user is pressing all the right buttons
-					|| (hand.IsInStreamlinedMode && hand.Input.AXButtonPressed)) //if it is enabled, and user is pressing streamlined button (and is in steamlined mode)
-				{
-					if (TouchpadDir == TouchpadDirType.NoDirection && UtilsBepInExLoader.magDropRequiredRelease.Value) return;
-					dropmag(hand);
-					this.EndInteraction(hand);
-				}
-			}
-			else
-			{
-				if (flag) //if mag was previously loaded, but is now not
-				{
-					movemagtohand(hand, prevmag);
-				}
-				this.EndInteraction(hand);
-			}
-		}
-	}
+            //config override
+            if (UtilsBepInExLoader.paddleMagReleaseDir.Value != UtilsBepInExLoader.TouchpadDirTypePT.BasedOnWeapon)
+                touchpadDir = (TouchpadDirType) (int) UtilsBepInExLoader.paddleMagReleaseDir.Value;
+
+            switch (touchpadDir)
+            {
+                case TouchpadDirType.Up:
+                    dir = Vector2.up;
+                    break;
+                case TouchpadDirType.Down:
+                    dir = Vector2.down;
+                    break;
+                case TouchpadDirType.Left:
+                    dir = Vector2.left;
+                    break;
+                case TouchpadDirType.Right:
+                    dir = Vector2.right;
+                    break;
+                case TouchpadDirType.Trigger:
+                    break;
+                case TouchpadDirType.NoDirection:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            IsSimpleInteract = touchpadDir == TouchpadDirType.Trigger;
+            _col.enabled = !disallowEjection;
+        }
+
+        public override void BeginInteraction(FVRViveHand hand)
+        {
+            base.BeginInteraction(hand);
+        }
+
+        public override void SimpleInteraction(FVRViveHand hand)
+        {
+            base.SimpleInteraction(hand);
+            if (touchpadDir == TouchpadDirType.Trigger)
+                Dropmag(hand);
+        }
+
+        public void Dropmag(FVRViveHand hand, bool @override = false)
+        {
+            if (disallowEjection && !@override) return;
+            FVRFireArmMagazine magazine = null;
+
+            switch (wepType)
+            {
+                case 1:
+                    magazine = closedBoltReceiver.Magazine;
+                    closedBoltReceiver.ReleaseMag();
+                    break;
+                case 2:
+                    magazine = openBoltWeapon.Magazine;
+                    openBoltWeapon.ReleaseMag();
+                    break;
+                case 3:
+                    magazine = handgunReceiver.Magazine;
+                    handgunReceiver.ReleaseMag();
+                    break;
+                case 4:
+                    magazine = boltActionWeapon.Magazine;
+                    boltActionWeapon.ReleaseMag();
+                    break;
+            }
+
+            Movemagtohand(hand, magazine);
+        }
+
+        public void Movemagtohand(FVRViveHand hand, FVRFireArmMagazine magazine)
+        {
+            //puts mag in hand
+            if (hand != null) hand.ForceSetInteractable(magazine);
+            magazine.BeginInteraction(hand);
+        }
+
+
+        public override void UpdateInteraction(FVRViveHand hand)
+        {
+            base.UpdateInteraction(hand);
+
+            var flag = false;
+            FVRFireArmMagazine prevmag = null;
+            if (_mag != null)
+            {
+                flag = true;
+                prevmag = _mag;
+            } //check if mag was previously loaded
+
+            switch (wepType)
+            {
+                case 1:
+                    _mag = closedBoltReceiver.Magazine;
+                    break;
+                case 2:
+                    _mag = openBoltWeapon.Magazine;
+                    break;
+                case 3:
+                    _mag = handgunReceiver.Magazine;
+                    break;
+                case 4:
+                    _mag = boltActionWeapon.Magazine;
+                    break;
+            }
+
+            if (_mag != null)
+            {
+                var flag2 = Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown &&
+                            hand.Input.TouchpadAxes.magnitude > 0.2f;
+
+
+                if (
+                    !pressDownToRelease //if it's not a paddle release anyway
+                    || !UtilsBepInExLoader.paddleMagRelease.Value //if paddle release is disabled
+                    || touchpadDir == TouchpadDirType.NoDirection &&
+                    !UtilsBepInExLoader.magDropRequiredRelease.Value //if mag drop required and mag drop is disabled
+                    || flag2 //if it is enabled, and user is pressing all the right buttons
+                    || hand.IsInStreamlinedMode &&
+                    hand.Input
+                        .AXButtonPressed) //if it is enabled, and user is pressing streamlined button (and is in steamlined mode)
+                {
+                    if (touchpadDir == TouchpadDirType.NoDirection &&
+                        UtilsBepInExLoader.magDropRequiredRelease.Value) return;
+                    Dropmag(hand);
+                    EndInteraction(hand);
+                }
+            }
+            else
+            {
+                if (flag) //if mag was previously loaded, but is now not
+                    Movemagtohand(hand, prevmag);
+                EndInteraction(hand);
+            }
+        }
+    }
 }
