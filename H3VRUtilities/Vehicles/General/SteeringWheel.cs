@@ -4,51 +4,55 @@ using FistVR;
 
 namespace H3VRUtils.Vehicles
 {
-	public class Lever : FVRInteractiveObject
+	class SteeringWheel : FVRInteractiveObject
 	{
-		public override void Awake()
-		{
-			base.Awake();
-		}
+		public Vehicle vehicle;
+		public float resetLerpSpeed;
+		public float lerp;
+		public float inlerp;
 
 		public override void UpdateInteraction(FVRViveHand hand)
 		{
 			base.UpdateInteraction(hand);
-			Vector3 vector = hand.transform.position - this.LeverTransform.position;
-			Vector3 to = Vector3.ProjectOnPlane(vector, this.LeverTransform.right);
-			if (Vector3.Dot(to.normalized, this.Base.up) > 0f)
+			transform.LookAt(hand.transform);
+			float clamp = transform.localEulerAngles.y;
+			transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+
+
+			if (transform.localEulerAngles.y < 180f)
 			{
-				this.m_curRot = -Vector3.Angle(this.Base.forward, to);
+				inlerp = Mathf.InverseLerp(0, 180, transform.localEulerAngles.y);
+				lerp = Mathf.Lerp(0, vehicle.rotSpeed, inlerp);
+				vehicle.Rotate(lerp);
 			}
 			else
 			{
-				this.m_curRot = Vector3.Angle(this.Base.forward, to);
+				inlerp = Mathf.InverseLerp(360, 180, transform.localEulerAngles.y);
+				lerp = -Mathf.Lerp(0, vehicle.rotSpeed, inlerp);
+				vehicle.Rotate(lerp);
 			}
+			if (transform.localEulerAngles.y < 5 && transform.localEulerAngles.y > 355)
+			{
+				vehicle.Rotate(0);
+			}
+
+			vehicle.Accelerate(hand.Input.TriggerFloat);
 		}
 
-		public float GetLeverValue()
+		void FixedUpdate()
 		{
-			return Mathf.InverseLerp(this.minValue, this.maxValue, this.m_curRot);
-		}
+			if (base.m_hand == null)
+			{
+				if (transform.localEulerAngles.y < 180)
+				{
+					transform.localEulerAngles = new Vector3(0, Mathf.Lerp(1, transform.localEulerAngles.y, resetLerpSpeed), 0);
+				}
+				else
+				{
+					transform.localEulerAngles = new Vector3(0, Mathf.Lerp(359, transform.localEulerAngles.y, resetLerpSpeed), 0);
+				}
 
-		public override void FVRUpdate()
-		{
-			base.FVRUpdate();
-			this.m_curRot = Mathf.Clamp(this.m_curRot, minValue, maxValue);
-			this.LeverTransform.localEulerAngles = new Vector3(this.m_curRot, 0f, 0f);
-		}
-
-		public Transform LeverTransform;
-		public Transform Base;
-		public float m_curRot = -22.5f;
-		public float minValue = -22.5f;
-		public float maxValue = 22.5f;
-
-		public enum LeverState
-		{
-			Off,
-			Mid,
-			On
+			}
 		}
 	}
 }
