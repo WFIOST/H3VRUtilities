@@ -22,21 +22,21 @@ namespace H3VRUtils.Vehicles
 			if (transform.localEulerAngles.y < 180f)
 			{
 				inlerp = Mathf.InverseLerp(0, 180, transform.localEulerAngles.y);
-				lerp = Mathf.Lerp(0, vehicle.rotSpeed, inlerp);
-				vehicle.Rotate(lerp);
+				lerp = Mathf.Lerp(0, vehicle.maxRotation, inlerp);
+				vehicle.setRotation(lerp);
 			}
 			else
 			{
 				inlerp = Mathf.InverseLerp(360, 180, transform.localEulerAngles.y);
-				lerp = -Mathf.Lerp(0, vehicle.rotSpeed, inlerp);
-				vehicle.Rotate(lerp);
+				lerp = -Mathf.Lerp(0, vehicle.maxRotation, inlerp);
+				vehicle.setRotation(lerp);
 			}
 			if (transform.localEulerAngles.y < 5 && transform.localEulerAngles.y > 355)
 			{
-				vehicle.Rotate(0);
+				vehicle.setRotation(0);
 			}
 
-			vehicle.Accelerate(hand.Input.TriggerFloat);
+			vehicle.setAcceleration(hand.Input.TriggerFloat * vehicle.maxAcceleration);
 		}
 
 		void FixedUpdate()

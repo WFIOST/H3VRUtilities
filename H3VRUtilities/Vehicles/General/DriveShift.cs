@@ -28,7 +28,7 @@ namespace H3VRUtils.Vehicles
 
 		void Start()
 		{
-			vehicle.ShiftPos = DriveShiftPos[currentPosition];
+			vehicle.setDriveShift(DriveShiftPos[currentPosition]);
 			transform.localEulerAngles = new Vector3(RotPositions[currentPosition], 0, 0);
 		}
 
@@ -51,7 +51,8 @@ namespace H3VRUtils.Vehicles
 				if (transform.localEulerAngles.x > RotPositions[currentPosition + 1])
 				{
 					currentPosition++;
-					vehicle.ShiftPos = DriveShiftPos[currentPosition];
+					vehicle.setDriveShift(DriveShiftPos[currentPosition]);
+					SM.PlayGenericSound(vehicle.AudioSet.HandbrakeDown, transform.position);
 				}
 			}
 
@@ -63,7 +64,8 @@ namespace H3VRUtils.Vehicles
 				if (transform.localEulerAngles.x < RotPositions[currentPosition - 1])
 				{
 					currentPosition--;
-					vehicle.ShiftPos = DriveShiftPos[currentPosition];
+					vehicle.setDriveShift(DriveShiftPos[currentPosition]);
+					SM.PlayGenericSound(vehicle.AudioSet.HandbrakeUp, transform.position);
 				}
 			}
 			transform.localEulerAngles = new Vector3(RotPositions[currentPosition], 0, 0);
