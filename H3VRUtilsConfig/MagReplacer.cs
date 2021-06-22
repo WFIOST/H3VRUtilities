@@ -17,42 +17,91 @@ namespace H3VRUtils
 		[HarmonyPrefix]
 		static bool ClosedBoltForcePaddleOnPatch(ClosedBoltWeapon __instance)
 		{
+			GetAndAddUniqueMagRelease(__instance.ObjectWrapper.ItemID, __instance.transform, "ClosedBoltWeapon");
+			return true;
+		}
+
+		static void GetAndAddUniqueMagRelease(string itemID, Transform objTransform, string WepType)
+		{
 			string[] f = MagReplacerData.GetPaddleData().Concat(MagReplacerData.GetMagDropData()).ToArray();
-			foreach(var id in f)
+			foreach (var id in f)
 			{
-				if (__instance.ObjectWrapper.ItemID == id)
+				if (itemID == id)
 				{
 					Debug.Log("Applying paddle release to object ID " + id);
-					var objs = FindObjectsOfType<ClosedBoltMagEjectionTrigger>(); //fuck your cpu
-					foreach (var files in objs)
+					if (WepType == "ClosedBoltWeapon")
 					{
-						if (files.transform.parent == __instance.transform)
-						{
-							var mr = files.gameObject.AddComponent(typeof(H3VRUtilsMagRelease)) as H3VRUtilsMagRelease;
-							mr.PositionInterpSpeed = 1;
-							mr.RotationInterpSpeed = 1;
-							mr.EndInteractionIfDistant = true;
-							mr.EndInteractionDistance = 0.25f;
-							mr.ClosedBoltReceiver = files.Receiver;
-							mr.PressDownToRelease = true;
-
-							if (MagReplacerData.GetPaddleData().Contains(id))
-							{
-								mr.TouchpadDir = H3VRUtilsMagRelease.TouchpadDirType.Down;
-							} else
-							{
-								mr.TouchpadDir = H3VRUtilsMagRelease.TouchpadDirType.NoDirection;
-							}
-
-							mr.setWepType();
-							Destroy(files);
-							break;
-						}
+						ApplyUniqueMagReleaseClosedBolt(itemID, objTransform);
+					} else
+					if (WepType == "OpenBoltReceiver")
+					{
+						ApplyUniqueMagReleaseOpenBolt(itemID, objTransform);
 					}
 					break;
 				}
 			}
-			return true;
+		}
+
+		static void ApplyUniqueMagReleaseClosedBolt(string itemID, Transform objTransform)
+		{
+			var objs = FindObjectsOfType<ClosedBoltMagEjectionTrigger>(); //fuck your cpu
+			foreach (var files in objs)
+			{
+				if (files.transform.parent == objTransform)
+				{
+					var mr = files.gameObject.AddComponent(typeof(H3VRUtilsMagRelease)) as H3VRUtilsMagRelease;
+					mr.PositionInterpSpeed = 1;
+					mr.RotationInterpSpeed = 1;
+					mr.EndInteractionIfDistant = true;
+					mr.EndInteractionDistance = 0.25f;
+					mr.ClosedBoltReceiver = files.Receiver;
+					mr.PressDownToRelease = true;
+
+					if (MagReplacerData.GetPaddleData().Contains(itemID))
+					{
+						mr.TouchpadDir = H3VRUtilsMagRelease.TouchpadDirType.Down;
+					}
+					else
+					{
+						mr.TouchpadDir = H3VRUtilsMagRelease.TouchpadDirType.NoDirection;
+					}
+
+					mr.setWepType();
+					Destroy(files);
+					break;
+				}
+			}
+		}
+
+		static void ApplyUniqueMagReleaseOpenBolt(string itemID, Transform objTransform)
+		{
+			var objs = FindObjectsOfType<OpenBoltMagReleaseTrigger>(); //fuck your cpu
+			foreach (var files in objs)
+			{
+				if (files.transform.parent == objTransform)
+				{
+					var mr = files.gameObject.AddComponent(typeof(H3VRUtilsMagRelease)) as H3VRUtilsMagRelease;
+					mr.PositionInterpSpeed = 1;
+					mr.RotationInterpSpeed = 1;
+					mr.EndInteractionIfDistant = true;
+					mr.EndInteractionDistance = 0.25f;
+					mr.OpenBoltWeapon = files.Receiver;
+					mr.PressDownToRelease = true;
+
+					if (MagReplacerData.GetPaddleData().Contains(itemID))
+					{
+						mr.TouchpadDir = H3VRUtilsMagRelease.TouchpadDirType.Down;
+					}
+					else
+					{
+						mr.TouchpadDir = H3VRUtilsMagRelease.TouchpadDirType.NoDirection;
+					}
+
+					mr.setWepType();
+					Destroy(files);
+					break;
+				}
+			}
 		}
 	}
 
