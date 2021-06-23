@@ -15,18 +15,18 @@ namespace H3VRUtils
 	{
 		[HarmonyPatch(typeof(ClosedBoltWeapon), "Awake")]
 		[HarmonyPrefix]
-		static bool ClosedBoltForcePaddleOnPatch(ClosedBoltWeapon instance)
+		static bool ClosedBoltForcePaddleOnPatch(ClosedBoltWeapon __instance)
 		{
 			var f = MagReplacerData.GetPaddleData().Concat(MagReplacerData.GetMagDropData()).ToArray();
 			foreach(var id in f)
 			{
-				if (instance.ObjectWrapper.ItemID == id)
+				if (__instance.ObjectWrapper.ItemID == id)
 				{
 					Debug.Log("Applying paddle release to object ID " + id);
 					var objs = FindObjectsOfType<ClosedBoltMagEjectionTrigger>(); //fuck your cpu
 					foreach (var files in objs)
 					{
-						if (files.transform.parent == instance.transform)
+						if (files.transform.parent == __instance.transform)
 						{
 							var mr = files.gameObject.AddComponent(typeof(H3VRUtilsMagRelease)) as H3VRUtilsMagRelease;
 							mr.PositionInterpSpeed = 1;
