@@ -29,5 +29,7 @@ namespace H3VRUtils.Vehicles
 
 		public AudioEvent Brake;
 		public AudioEvent BrakeLong;
+
+		public AudioEvent PedalSwitchSound;
 	}
 }

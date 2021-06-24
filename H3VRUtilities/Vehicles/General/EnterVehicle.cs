@@ -9,22 +9,35 @@ namespace H3VRUtils.Vehicles
 {
 	class EnterVehicle : FVRInteractiveObject
 	{
-		public Vehicle vehicle;
+		public VehicleSeat vehicleSeat;
 
 		public override void SimpleInteraction(FVRViveHand hand)
 		{
+			base.SimpleInteraction(hand);
 			if (hand.IsThisTheRightHand)
 			{
 				hand = hand.OtherHand;
 			}
-			base.SimpleInteraction(hand);
-			if (vehicle.hand == null)
+			if (vehicleSeat.hand == null)
 			{
-				vehicle.hand = hand;
+				vehicleSeat.hand = hand;
+
+				var rot = hand.Head.transform.rotation;
+				
+				rot.y = vehicleSeat.SitPos.transform.rotation.y;
+				hand.Head.transform.rotation = rot;
 			}
 			else
 			{
-				vehicle.hand = null;
+				//so someone can't just eject someone else
+				if (hand == vehicleSeat.hand)
+				{
+					vehicleSeat.hand = null;
+					if (vehicleSeat.EjectPos != null)
+					{
+						hand.MovementManager.transform.position = vehicleSeat.EjectPos.transform.position;
+					}
+				}
 			}
 		}
 	}
