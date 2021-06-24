@@ -166,7 +166,7 @@ namespace H3VRUtils
 			FVRWristMenu wristMenu = WristMenuAPI.Instance;
 			if (wristMenu is null || !wristMenu) return;
 			GameObject panel = _UtilsPanel.GetOrCreatePanel();
-			wristMenu.m_currentHand.RetrieveObject(panel.GetComponent<FVRPhysicalObject>());
+			//wristMenu.m_currentHand.RetrieveObject(panel.GetComponent<FVRPhysicalObject>());
 		}
 	}
 }

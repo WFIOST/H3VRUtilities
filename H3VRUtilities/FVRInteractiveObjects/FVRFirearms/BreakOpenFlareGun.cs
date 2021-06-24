@@ -10,7 +10,7 @@ namespace H3VRUtils
 	public class BreakOpenFlareGun : FVRFireArm
 	{
 		// Token: 0x06003434 RID: 13364 RVA: 0x0016D073 File Offset: 0x0016B473
-		protected override void Awake()
+		protected void Awake()
 		{
 			base.Awake();
 			if (this.CanUnlatch)
@@ -24,7 +24,7 @@ namespace H3VRUtils
 		}
 
 		// Token: 0x06003435 RID: 13365 RVA: 0x0016D0A4 File Offset: 0x0016B4A4
-		protected override void FVRUpdate()
+		protected void FVRUpdate()
 		{
 			if (this.HasVisibleHammer)
 			{

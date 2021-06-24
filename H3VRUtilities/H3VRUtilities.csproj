@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony, Version=2.4.2.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\H3VR-Utilities-2\libs\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\H3VR-Utilities-2\libs\Assembly-CSharp_publicized.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Libraries\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
@@ -40,6 +46,9 @@
     <Reference Include="BepInEx, Version=5.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\SteamLibrary\steamapps\common\H3VR\BepInEx\core\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx, Version=5.4.4.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libraries\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx.Harmony, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Libraries\BepInEx.Harmony.dll</HintPath>
@@ -59,12 +68,12 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>..\Libraries\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\H3VR-Utilities-2\libs\UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FVRInteractiveObjects\ActivateSeveralFVRInteractiveAtOnce.cs" />
-    <Compile Include="FVRInteractiveObjects\AlternatingMag\AlternatingMagMount.cs" />
-    <Compile Include="FVRInteractiveObjects\AlternatingMag\AlternatingMagsHandler.cs" />
-    <Compile Include="FVRInteractiveObjects\AlternatingMag\AlternatingMagSingleSwitch.cs" />
     <Compile Include="FVRInteractiveObjects\AR15HandleFlipperSounds.cs" />
     <Compile Include="FVRInteractiveObjects\GoToNearestSosig.cs" />
     <Compile Include="FVRInteractiveObjects\OpenBoltBurstFire.cs" />
@@ -105,8 +114,13 @@
     <Compile Include="UniqueCode\OpenBoltLockOnSafe.cs" />
     <Compile Include="UniqueCode\RevolverChargingHandle.cs" />
     <Compile Include="UniqueCode\SelbstladerUnlockSystem.cs" />
+    <Compile Include="Vehicles\General\DriveShift.cs" />
+    <Compile Include="Vehicles\General\EnterVehicle.cs" />
     <Compile Include="Vehicles\General\SteeringWheel.cs" />
-    <Compile Include="Vehicles\General\VehicleMovementHandling.cs" />
+    <Compile Include="Vehicles\General\Vehicle.cs" />
+    <Compile Include="Vehicles\General\VehicleAudioSet.cs" />
+    <Compile Include="Vehicles\General\VehicleSeat.cs" />
+    <Compile Include="Vehicles\General\Wheel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\H3VRUtilsConfig\H3VRUtilsConfig.csproj">
