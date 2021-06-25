@@ -143,11 +143,12 @@ namespace H3VRUtils
 
 			if (mag != null)
 			{
-				bool flag2 = Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.2f;
+				bool flag2 = false;
+				if (Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.2f) flag2 = true;
 
 
 				if (
-					!PressDownToRelease //if it's not a paddle release anyway
+					   !PressDownToRelease //if it's not a paddle release anyway
 					|| !UtilsBepInExLoader.paddleMagRelease.Value //if paddle release is disabled
 					|| (TouchpadDir == TouchpadDirType.NoDirection && !UtilsBepInExLoader.magDropRequiredRelease.Value) //if mag drop required and mag drop is disabled
 					|| flag2 //if it is enabled, and user is pressing all the right buttons

@@ -25,7 +25,7 @@ namespace H3VRUtils.UniqueCode
 			float l = Mathf.InverseLerp(frontMostPoint.localPosition.z, rearMostPoint.localPosition.z, transform.localPosition.z);
 		}
 
-		protected void FVRUpdate()
+		protected override void FVRUpdate()
 		{
 			base.FVRUpdate();
 			if (!base.IsHeld && Mathf.Abs(transform.localPosition.z - frontMostPoint.localPosition.z) > 0.001f)
