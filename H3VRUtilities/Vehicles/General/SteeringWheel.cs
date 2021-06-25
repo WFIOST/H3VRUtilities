@@ -20,6 +20,7 @@ namespace H3VRUtils.Vehicles
 		public float lerp;
 
 		public bool isBraking;
+		public bool reverseRot;
 
 		public override void BeginInteraction(FVRViveHand hand)
 		{
@@ -96,6 +97,8 @@ namespace H3VRUtils.Vehicles
 			}
 
 			//if (lerp < 2 && lerp > -2) lerp = 0;
+
+			if (reverseRot) lerp = -lerp;
 
 			vehicle.setRotation(lerp);
 

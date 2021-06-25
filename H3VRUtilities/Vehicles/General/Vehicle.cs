@@ -133,8 +133,8 @@ namespace H3VRUtils.Vehicles
 			}
 			catch { }
 
-			idleAudioSource.pitch = Mathf.Lerp(PitchIdle, PitchMaxSpeed, Mathf.InverseLerp(0, maxSpeed, _kmh));
-			idleAudioSource.volume = Mathf.Lerp(VolIdle, VolMaxSpeed, Mathf.InverseLerp(0, maxSpeed, _kmh));
+			idleAudioSource.pitch = Mathf.Lerp(PitchIdle, PitchMaxSpeed, Mathf.InverseLerp(0, maxSpeed, Mathf.Abs(_kmh)));
+			idleAudioSource.volume = Mathf.Lerp(VolIdle, VolMaxSpeed, Mathf.InverseLerp(0, maxSpeed, Mathf.Abs(_kmh)));
 		}
 
 		public void FixedUpdate()
