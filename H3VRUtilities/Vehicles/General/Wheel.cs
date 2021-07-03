@@ -7,71 +7,47 @@ using FistVR;
 
 namespace H3VRUtils.Vehicles
 {
-	class Wheel : MonoBehaviour
+	class Wheel : MonoBehaviour, IFVRDamageable
 	{
 		public Vehicle vehicle;
 
-		private Rigidbody rb;
-		private HingeJoint hj;
-		private HingeJoint hjp;
+		private WheelCollider wheel;
 
-		[HideInInspector]
-		public float applyforce;
-		[HideInInspector]
-		public float rotAmt;
-		[HideInInspector]
-		public DriveShift.DriveShiftPosition ShiftPos;
+		public float wheelMaxHP;
+		public float wheelHP;
+		private bool dead;
 
-		public bool isBreaking;
+		private float wheelDefRadius;
+		public float wheelPoppedRadius;
+		public float wheelPoppedDampening;
 
-		public bool doesRotate;
+		public AudioEvent PopSound;
 
 		public void Start()
 		{
-			rb = GetComponent<Rigidbody>();
-			hj = GetComponent<HingeJoint>();
+			wheel = GetComponent<WheelCollider>();
+			wheelDefRadius = wheel.radius;
 		}
 
 		public void FixedUpdate()
 		{
-			var speed = vehicle.maxSpeed;
-			var force = applyforce;
-			if (ShiftPos == DriveShift.DriveShiftPosition.Neutral) force = 0;
-			if (ShiftPos == DriveShift.DriveShiftPosition.Reverse) speed = -speed;
-			if (ShiftPos == DriveShift.DriveShiftPosition.Park)
+			if (wheelHP < 0)
 			{
-				hj.motor = new JointMotor()
+				if (!dead)
 				{
-					targetVelocity = 0,
-					force = 99999999,
-					freeSpin = false
-				};
-				if (doesRotate)
-					transform.parent.transform.localEulerAngles = new Vector3(transform.parent.transform.localEulerAngles.x, rotAmt, transform.parent.transform.localEulerAngles.z);
-				return;
+					float num = Vector3.Distance(base.transform.position, GM.CurrentPlayerBody.Head.position);
+					float num2 = num / 343f;
+					SM.PlayCoreSoundDelayedOverrides(FVRPooledAudioType.GenericLongRange, PopSound, base.transform.position, PopSound.VolumeRange, PopSound.PitchRange, num2 + 0.04f);
+					dead = true;
+				}
+				wheel.wheelDampingRate = wheelPoppedDampening;
+				wheel.radius = Mathf.Lerp(wheelPoppedRadius, wheel.radius, 0.5f);
 			}
-			
+		}
 
-			if (applyforce > 0)
-			{
-				hj.motor = new JointMotor()
-				{
-					targetVelocity = speed,
-					force = force,
-					freeSpin = true
-				};
-			}
-			else
-			{
-				hj.motor = new JointMotor()
-				{
-					targetVelocity = 0,
-					force = 0,
-					freeSpin = true
-				};
-			}
-			if (doesRotate)
-				transform.parent.transform.localEulerAngles = new Vector3(transform.parent.transform.localEulerAngles.x, rotAmt, transform.parent.transform.localEulerAngles.z);
+		public void Damage(Damage dam)
+		{
+			wheelHP -= dam.Dam_TotalKinetic;
 		}
 	}
 }
