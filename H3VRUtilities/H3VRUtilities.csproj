@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>H3VRUtils</RootNamespace>
-    <AssemblyName>H3VRUtilities</AssemblyName>
+    <AssemblyName>Assembly-CSharp.H3VRUtilities.mm</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -67,6 +68,7 @@
     <Compile Include="FVRInteractiveObjects\AlternatingMag\AlternatingMagSingleSwitch.cs" />
     <Compile Include="FVRInteractiveObjects\AR15HandleFlipperSounds.cs" />
     <Compile Include="FVRInteractiveObjects\GoToNearestSosig.cs" />
+    <Compile Include="FVRInteractiveObjects\OpenBoltMagSafety.cs" />
     <Compile Include="FVRInteractiveObjects\OpenBoltBurstFire.cs" />
     <Compile Include="MonoScripts\VisualModifiers\CycleOnBoltRelease.cs" />
     <Compile Include="FVRInteractiveObjects\attachmentCode\AttachmentModifyFirearm.cs" />
@@ -88,6 +90,8 @@
     <Compile Include="MonoScripts\VisualModifiers\InvisibleMagOnLoad.cs" />
     <Compile Include="MonoScripts\VisualModifiers\laser.cs" />
     <Compile Include="MonoScripts\VisualModifiers\ManipulateObject.cs" />
+    <Compile Include="Vehicles\fakeBipod.cs" />
+    <Compile Include="Vehicles\General\VehicleSeat.cs" />
     <Compile Include="MonoScripts\VisualModifiers\YFoldingStockEndPiece.cs" />
     <Compile Include="MonoScripts\VisualModifiers\MagFollower.cs" />
     <Compile Include="MonoScripts\VisualModifiers\followDir.cs" />
@@ -105,8 +109,15 @@
     <Compile Include="UniqueCode\OpenBoltLockOnSafe.cs" />
     <Compile Include="UniqueCode\RevolverChargingHandle.cs" />
     <Compile Include="UniqueCode\SelbstladerUnlockSystem.cs" />
+    <Compile Include="Vehicles\General\DriveShift.cs" />
+    <Compile Include="Vehicles\General\EnterVehicle.cs" />
     <Compile Include="Vehicles\General\SteeringWheel.cs" />
-    <Compile Include="Vehicles\General\VehicleMovementHandling.cs" />
+    <Compile Include="Vehicles\General\Vehicle.cs" />
+    <Compile Include="Vehicles\General\VehicleAudioSet.cs" />
+    <Compile Include="Vehicles\General\Wheel.cs" />
+    <Compile Include="Vehicles\LockGun.cs" />
+    <Compile Include="Vehicles\SupportAspects\MountedMedkit.cs" />
+    <Compile Include="Vehicles\Unique\ForkliftLift.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\H3VRUtilsConfig\H3VRUtilsConfig.csproj">
