@@ -366,3 +366,6 @@ FodyWeavers.xsd
 .DS_Store
 H3VRUtilities/.DS_Store
 H3VRUtilities/src/.DS_Store
+
+# i dont wanna be copyrited
+libs/UnityEngine.UI.dll
