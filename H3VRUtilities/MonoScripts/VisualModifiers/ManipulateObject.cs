@@ -83,9 +83,10 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 
 		[Header("Move If Specific Attachment Attached")]
 		public bool MoveIfSpecificAttachmentAttached;
-		public string AttachmentID;
+		public List<string> AttachmentIDs;
 		public FVRFireArmAttachmentMount AttachmentMount;
 		private int rememberAttached;
+		private float lastDecision;
 
 		public void Update()
 		{
@@ -226,19 +227,30 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			//SpecialFX - MoveIfSpecificAttachmentAttached
 			if (MoveIfSpecificAttachmentAttached)
 			{
-				if (rememberAttached != AttachmentMount.AttachmentsList.Count)
-				{
-					foreach (var mount in AttachmentMount.AttachmentsList)
+				//is this slow af? yes. do i give a shit? not really. i cant make it fucking work because i'm incompetent
+				//if (rememberAttached != AttachmentMount.AttachmentsList.Count)
+				//{
+					//bool found = false;
+					foreach (var attachment in AttachmentMount.AttachmentsList)
 					{
-						if (mount.ObjectWrapper.ItemID == AttachmentID)
+						foreach (var attachmentID in AttachmentIDs)
 						{
-							invertlerp = 1;
-							break;
+							if (attachment.ObjectWrapper.ItemID == attachmentID)
+							{
+								invertlerp = 1;
+								//found = true;
+								break;
+							}
 						}
 					}
-				}
-				else
-					rememberAttached = AttachmentMount.AttachmentsList.Count;
+					//if (found) { lastDecision = 0; } else { lastDecision = 1; }
+				//}
+				//else
+				//{
+				//	invertlerp = lastDecision;
+				//}
+
+				//rememberAttached = AttachmentMount.AttachmentsList.Count;
 			}
 			//EndSpecialFX - MoveIfSpecificAttachmentAttached
 
