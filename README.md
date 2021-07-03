@@ -3,7 +3,7 @@ Library for custom scripts/utilities for making custom guns in H3VR.
 
 Dependencies required for building:
 
-`Assembly-CSharp.dll` (from h3vr)
+`Assembly-CSharp.dll` (from h3vr) (needs to be publicised)
 
 `UnityEngine.dll`
 
