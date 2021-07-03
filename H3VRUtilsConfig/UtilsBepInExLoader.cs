@@ -20,6 +20,9 @@ namespace H3VRUtils
 	{
 		public static ConfigEntry<bool> paddleMagRelease;
 		public static ConfigEntry<bool> magDropRequiredRelease;
+		public static ConfigEntry<bool> VehicleLockXRot;
+		public static ConfigEntry<bool> VehicleLockYRot;
+		public static ConfigEntry<bool> VehicleLockZRot;
 		public static ConfigEntry<TouchpadDirTypePT> paddleMagReleaseDir;
 
 		public enum TouchpadDirTypePT
@@ -40,6 +43,9 @@ namespace H3VRUtils
 
 			paddleMagReleaseDir = Config.Bind("Fine Tuning", "Enhanced Mag Release Direction", TouchpadDirTypePT.BasedOnWeapon, "Based On Weapon is the default direction chosen by the modmaker. Others are overrides.");
 
+			VehicleLockXRot = Config.Bind("Vehicles", "Lock X Rotation", false, "Rotates your X rotation based on the vehicles rotation. Induces VR sickness.");
+			VehicleLockYRot = Config.Bind("Vehicles", "Lock Y Rotation", false, "Rotates your Y rotation based on the vehicles rotation. Induces VR sickness.");
+			VehicleLockZRot = Config.Bind("Vehicles", "Lock Z Rotation", false, "Rotates your Z rotation based on the vehicles rotation. Induces VR sickness.");
 			Harmony.CreateAndPatchAll(typeof(MagReplacer));
 
 
@@ -73,15 +79,20 @@ namespace H3VRUtils
 		ButtonWidget paddleMagReleaseButton;
 		ButtonWidget MagDropRequiredReleaseButton;
 
+		ButtonWidget VehicleLockXRotButton;
+		ButtonWidget VehicleLockYRotButton;
+		ButtonWidget VehicleLockZRotButton;
+
 
 		public static string GetTerm(bool value)
 		{
+			//what the fuck do this do i'm not smart
 			return value ? "Disable" : "Enable";
 		}
 
 		private void ConfigureUtilsPanel(GameObject panel)
 		{
-			
+			//there's gotta be a fucking better way man there's no way
 			GameObject canvas = panel.transform.Find("OptionsCanvas_0_Main/Canvas").gameObject;
 			UiWidget.CreateAndConfigureWidget(canvas, (GridLayoutWidget widget) =>
 			{
@@ -142,6 +153,28 @@ namespace H3VRUtils
 					MagDropRequiredReleaseButton = button;
 					button.RectTransform.localRotation = Quaternion.identity;
 				});
+
+				//ROW THREE
+				widget.AddChild((ButtonWidget button) => {
+					button.ButtonText.text = GetTerm(UtilsBepInExLoader.VehicleLockXRot.Value) + " Vehicle X Lock";
+					button.AddButtonListener(lockXRot);
+					VehicleLockXRotButton = button;
+					button.RectTransform.localRotation = Quaternion.identity;
+				});
+
+				widget.AddChild((ButtonWidget button) => {
+					button.ButtonText.text = GetTerm(UtilsBepInExLoader.VehicleLockYRot.Value) + " Vehicle Y Lock";
+					button.AddButtonListener(lockYRot);
+					VehicleLockYRotButton = button;
+					button.RectTransform.localRotation = Quaternion.identity;
+				});
+
+				widget.AddChild((ButtonWidget button) => {
+					button.ButtonText.text = GetTerm(UtilsBepInExLoader.VehicleLockZRot.Value) + " Vehicle Z Lock";
+					button.AddButtonListener(lockZRot);
+					VehicleLockZRotButton = button;
+					button.RectTransform.localRotation = Quaternion.identity;
+				});
 			});
 		}
 
@@ -153,6 +186,22 @@ namespace H3VRUtils
 		private void ToggleMagRelease() {
 			UtilsBepInExLoader.magDropRequiredRelease.Value = !UtilsBepInExLoader.magDropRequiredRelease.Value;
 			MagDropRequiredReleaseButton.ButtonText.text = GetTerm(UtilsBepInExLoader.magDropRequiredRelease.Value) + " Mag Drop Required Release";
+		}
+
+		private void lockXRot()
+		{
+			UtilsBepInExLoader.VehicleLockXRot.Value = !UtilsBepInExLoader.paddleMagRelease.Value;
+			VehicleLockXRotButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Vehicle X Lock";
+		}
+		private void lockYRot()
+		{
+			UtilsBepInExLoader.VehicleLockYRot.Value = !UtilsBepInExLoader.paddleMagRelease.Value;
+			VehicleLockYRotButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Vehicle Y Lock";
+		}
+		private void lockZRot()
+		{
+			UtilsBepInExLoader.VehicleLockZRot.Value = !UtilsBepInExLoader.paddleMagRelease.Value;
+			VehicleLockZRotButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Vehicle Z Lock";
 		}
 
 		private void ReloadVanillaMagRelease()
