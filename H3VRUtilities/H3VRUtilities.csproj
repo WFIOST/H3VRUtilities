@@ -32,98 +32,77 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Libraries\Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp_publicized">
-      <HintPath>E:\SteamLibrary\steamapps\common\H3VR\BepInEx\Assembly-CSharp_publicized.dll</HintPath>
-    </Reference>
-    <Reference Include="BepInEx, Version=5.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\SteamLibrary\steamapps\common\H3VR\BepInEx\core\BepInEx.dll</HintPath>
-    </Reference>
-    <Reference Include="BepInEx.Harmony, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Libraries\BepInEx.Harmony.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Libraries\UnityEditor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
+      <HintPath>..\packages\UnityEngine.Core.5.6.1\lib\net35\UnityEngine.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\Libraries\UnityEngine.UI.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="FVRInteractiveObjects\ActivateSeveralFVRInteractiveAtOnce.cs" />
-    <Compile Include="FVRInteractiveObjects\AlternatingMag\AlternatingMagMount.cs" />
-    <Compile Include="FVRInteractiveObjects\AlternatingMag\AlternatingMagsHandler.cs" />
-    <Compile Include="FVRInteractiveObjects\AlternatingMag\AlternatingMagSingleSwitch.cs" />
-    <Compile Include="FVRInteractiveObjects\AR15HandleFlipperSounds.cs" />
-    <Compile Include="FVRInteractiveObjects\GoToNearestSosig.cs" />
-    <Compile Include="FVRInteractiveObjects\OpenBoltMagSafety.cs" />
-    <Compile Include="FVRInteractiveObjects\OpenBoltBurstFire.cs" />
-    <Compile Include="MonoScripts\VisualModifiers\CycleOnBoltRelease.cs" />
-    <Compile Include="FVRInteractiveObjects\attachmentCode\AttachmentModifyFirearm.cs" />
-    <Compile Include="FVRInteractiveObjects\attachmentCode\CustomRDShaderHandler.cs" />
-    <Compile Include="FVRInteractiveObjects\attachmentCode\DisplayOnAttached.cs" />
-    <Compile Include="FVRInteractiveObjects\attachmentXFoldingStock.cs" />
-    <Compile Include="FVRInteractiveObjects\attachmentYFoldingStock.cs" />
-    <Compile Include="FVRInteractiveObjects\AutoRackOnMagLoad.cs" />
-    <Compile Include="FVRInteractiveObjects\BetterMagReleaseLatch.cs" />
-    <Compile Include="Mapping\Audio\AudioCulling.cs" />
-    <Compile Include="Mapping\Camera\CameraSetup.cs" />
-    <Compile Include="Mapping\Components\ComponentCulling.cs" />
-    <Compile Include="Mapping\Editor\ShowHiddenObjects.cs" />
-    <Compile Include="MonoScripts\LoadHoloShader.cs" />
-    <Compile Include="MonoScripts\UIModifiers\DispBulletAmount.cs" />
-    <Compile Include="MonoScripts\VisualModifiers\AnimPlayOnGrab.cs" />
-    <Compile Include="MonoScripts\VisualModifiers\ConstantSpin.cs" />
-    <Compile Include="MonoScripts\VisualModifiers\FeedRamp.cs" />
-    <Compile Include="MonoScripts\VisualModifiers\InvisibleMagOnLoad.cs" />
-    <Compile Include="MonoScripts\VisualModifiers\laser.cs" />
-    <Compile Include="MonoScripts\VisualModifiers\ManipulateObject.cs" />
-    <Compile Include="Vehicles\fakeBipod.cs" />
-    <Compile Include="Vehicles\General\VehicleSeat.cs" />
-    <Compile Include="MonoScripts\VisualModifiers\YFoldingStockEndPiece.cs" />
-    <Compile Include="MonoScripts\VisualModifiers\MagFollower.cs" />
-    <Compile Include="MonoScripts\VisualModifiers\followDir.cs" />
-    <Compile Include="FVRInteractiveObjects\FVRFirearms\BreakOpenFlareGun.cs" />
-    <Compile Include="FVRInteractiveObjects\H3VRUtilsPhysBoltRelease.cs" />
-    <Compile Include="FVRInteractiveObjects\HandgunSecondarySwitch.cs" />
-    <Compile Include="FVRInteractiveObjects\NadeCupLauncher.cs" />
-    <Compile Include="FVRInteractiveObjects\H3VRUtilsMagRelease.cs" />
-    <Compile Include="MonoScripts\VisualModifiers\compressingSpring.cs" />
-    <Compile Include="MonoScripts\VisualModifiers\CullOnZLoc.cs" />
-    <Compile Include="NonAddedScripts\GetTransformPosition.cs" />
-    <Compile Include="NonAddedScripts\RecoilModificationSystem.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UniqueCode\AssignMagIfNull.cs" />
-    <Compile Include="UniqueCode\OpenBoltLockOnSafe.cs" />
-    <Compile Include="UniqueCode\RevolverChargingHandle.cs" />
-    <Compile Include="UniqueCode\SelbstladerUnlockSystem.cs" />
-    <Compile Include="Vehicles\General\DriveShift.cs" />
-    <Compile Include="Vehicles\General\EnterVehicle.cs" />
-    <Compile Include="Vehicles\General\SteeringWheel.cs" />
-    <Compile Include="Vehicles\General\Vehicle.cs" />
-    <Compile Include="Vehicles\General\VehicleAudioSet.cs" />
-    <Compile Include="Vehicles\General\Wheel.cs" />
-    <Compile Include="Vehicles\LockGun.cs" />
-    <Compile Include="Vehicles\SupportAspects\MountedMedkit.cs" />
-    <Compile Include="Vehicles\Unique\ForkliftLift.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\H3VRUtilsConfig\H3VRUtilsConfig.csproj">
       <Project>{83438cce-0ced-4ed4-a2f8-e1468b5bc01b}</Project>
       <Name>H3VRUtilsConfig</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\FVRInteractiveObjects\ActivateSeveralFVRInteractiveAtOnce.cs" />
+    <Compile Include="src\FVRInteractiveObjects\AR15HandleFlipperSounds.cs" />
+    <Compile Include="src\FVRInteractiveObjects\attachmentCode\AttachmentModifyFirearm.cs" />
+    <Compile Include="src\FVRInteractiveObjects\attachmentCode\CustomRDShaderHandler.cs" />
+    <Compile Include="src\FVRInteractiveObjects\attachmentCode\DisplayOnAttached.cs" />
+    <Compile Include="src\FVRInteractiveObjects\attachmentXFoldingStock.cs" />
+    <Compile Include="src\FVRInteractiveObjects\attachmentYFoldingStock.cs" />
+    <Compile Include="src\FVRInteractiveObjects\AutoRackOnMagLoad.cs" />
+    <Compile Include="src\FVRInteractiveObjects\BetterMagReleaseLatch.cs" />
+    <Compile Include="src\FVRInteractiveObjects\FVRFirearms\BreakOpenFlareGun.cs" />
+    <Compile Include="src\FVRInteractiveObjects\FVRFirearms\jungleMag.cs" />
+    <Compile Include="src\FVRInteractiveObjects\GoToNearestSosig.cs" />
+    <Compile Include="src\FVRInteractiveObjects\H3VRUtilsMagRelease.cs" />
+    <Compile Include="src\FVRInteractiveObjects\H3VRUtilsPhysBoltRelease.cs" />
+    <Compile Include="src\FVRInteractiveObjects\HandgunSecondarySwitch.cs" />
+    <Compile Include="src\FVRInteractiveObjects\NadeCupLauncher.cs" />
+    <Compile Include="src\FVRInteractiveObjects\OpenBoltBurstFire.cs" />
+    <Compile Include="src\Mapping\Audio\AudioCulling.cs" />
+    <Compile Include="src\Mapping\Camera\CameraSetup.cs" />
+    <Compile Include="src\Mapping\Components\ComponentCulling.cs" />
+    <Compile Include="src\Mapping\Editor\ShowHiddenObjects.cs" />
+    <Compile Include="src\MonoScripts\LoadHoloShader.cs" />
+    <Compile Include="src\MonoScripts\UIModifiers\DispBulletAmount.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\AnimPlayOnGrab.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\compressingSpring.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\ConstantSpin.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\cullOnZLoc.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\CycleOnBoltRelease.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\FeedRamp.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\followDir.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\InvisibleMagOnLoad.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\laser.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\MagFollower.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\ManipulateObject.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\YFoldingStockEndPiece.cs" />
+    <Compile Include="src\NonAddedScripts\GetTransformPosition.cs" />
+    <Compile Include="src\NonAddedScripts\RecoilModificationSystem.cs" />
+    <Compile Include="src\UniqueCode\AssignMagIfNull.cs" />
+    <Compile Include="src\UniqueCode\LebelCutoff.cs" />
+    <Compile Include="src\UniqueCode\OpenBoltLockOnSafe.cs" />
+    <Compile Include="src\UniqueCode\RevolverChargingHandle.cs" />
+    <Compile Include="src\UniqueCode\SelbstladerUnlockSystem.cs" />
+    <Compile Include="src\Vehicles\General\DriveShift.cs" />
+    <Compile Include="src\Vehicles\General\EnterVehicle.cs" />
+    <Compile Include="src\Vehicles\General\SteeringWheel.cs" />
+    <Compile Include="src\Vehicles\General\Vehicle.cs" />
+    <Compile Include="src\Vehicles\General\VehicleAudioSet.cs" />
+    <Compile Include="src\Vehicles\General\VehicleSeat.cs" />
+    <Compile Include="src\Vehicles\General\Wheel.cs" />
+    <Compile Include="src\Vehicles\Unique\ForkliftLift.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
