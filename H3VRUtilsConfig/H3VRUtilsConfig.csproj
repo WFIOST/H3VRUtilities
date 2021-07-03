@@ -39,21 +39,12 @@
     <Reference Include="Assembly-CSharp, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\libs\Assembly-CSharp_publicized.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\CursedDlls.BepinEx\lib\Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
     <Reference Include="Assembly-CSharp_publicized">
       <HintPath>E:\SteamLibrary\steamapps\common\H3VR\BepInEx\Assembly-CSharp_publicized.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx, Version=5.4.11.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\BepInEx.BaseLib.5.4.11\lib\net35\BepInEx.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="BepInEx.Harmony">
-      <HintPath>..\..\PotatoesH3VRLib\H3VRUtilities.Weapons\bin\Debug\BepInEx.Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="ES2">
-      <HintPath>..\..\CursedDlls.BepinEx\lib\ES2.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
       <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.dll</HintPath>
@@ -99,6 +90,9 @@
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>C:\Users\rafae\source\repos\pcgH3VRframework\pcgH3VRframework\bin\Debug\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\libs\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
