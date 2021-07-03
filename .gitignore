@@ -363,3 +363,6 @@ FodyWeavers.xsd
 
 # IntelliJ IDEA-based IDEs
 .idea/
+.DS_Store
+H3VRUtilities/.DS_Store
+H3VRUtilities/src/.DS_Store
