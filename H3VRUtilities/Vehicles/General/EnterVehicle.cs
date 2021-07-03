@@ -22,10 +22,12 @@ namespace H3VRUtils.Vehicles
 			{
 				vehicleSeat.hand = hand;
 
-				var rot = hand.Head.transform.rotation;
+				hand.MovementManager.TeleportToPoint(vehicleSeat.SitPos.transform.position, false, vehicleSeat.SitPos.transform.localEulerAngles);
+
+				//var rot = hand.Head.transform.rotation;
 				
-				rot.y = vehicleSeat.SitPos.transform.rotation.y;
-				hand.Head.transform.rotation = rot;
+				//rot.y = vehicleSeat.SitPos.transform.rotation.y;
+				//hand.Head.transform.rotation = rot;
 			}
 			else
 			{
