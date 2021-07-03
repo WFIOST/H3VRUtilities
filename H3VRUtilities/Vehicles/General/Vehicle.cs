@@ -64,7 +64,10 @@ namespace H3VRUtils.Vehicles
 		private AudioSource idleAudioSource;
 		//private AudioSource interimAudioSource;
 		private AudioSource brakeAudioSource;
+		public float maxDistListen = 100f;
 
+		private float distFromPlayer;
+		private float prevDistFromPlayer;
 		void Start()
 		{
 			rb = GetComponent<Rigidbody>();
@@ -89,6 +92,7 @@ namespace H3VRUtils.Vehicles
 			return audsrc;
 		}
 
+		//applies rotation of wheel colliders to their childs (which should be the mesh)
 		public void ApplyLocalPositionToVisuals(WheelCollider collider)
 		{
 			//not yoinked from unity docs
@@ -107,41 +111,85 @@ namespace H3VRUtils.Vehicles
 			visualWheel.transform.rotation = rotation;
 		}
 
-		public void Update()
+		public float GetSpeed()
 		{
-			//anti-tipping
-			springloc.transform.position = new Vector3(transform.position.x, transform.position.y + springlocHeight, transform.position.z);
+			return GetSpeed(MeasurementType);
+		}
 
-			//measure speed
+		public float GetSpeed(MeasurementSystems mt)
+		{
 			var _cir = Mathf.PI * 2 * spedometerMeasurer.radius; //get circumference in metres
 			var _rpm = spedometerMeasurer.rpm; //yoink rpm
 			var _mpm = _rpm * _cir; //metres per minute
 			var _kmh = (_mpm / 1000) * 60; //metres per minute / 1000 to km per minute, * 60 to km per hour
-			if (MeasurementType == MeasurementSystems.Imperial)
+			if (mt == MeasurementSystems.Imperial)
 			{
 				_kmh *= 0.6213712f; //miles per hour
-			}
+			} //yes, all the fucking measurements measure in mph if you select this, cry about it
+			return _kmh;
+		}
 
+		public void Update()
+		{
+			//anti-tipping. i'm not even sure what it does myself lol
+			springloc.transform.position = new Vector3(transform.position.x, transform.position.y + springlocHeight, transform.position.z);
+
+			var speed = GetSpeed();
+
+			//spedometer
 			try
 			{
 				spedometerNeedle.transform.localEulerAngles = new Vector3(
 					0,
 					Mathf.Lerp(0, spedometerMaxRotation, //get the rotation of needle based on percentage dist in spedometer
-					Mathf.InverseLerp(0, spedometerMaxSpeed, _kmh) //get percentage dist in spedometer
+					Mathf.InverseLerp(0, spedometerMaxSpeed, speed) //get percentage dist in spedometer
 					),
 					0);
 			}
 			catch { }
 
-			idleAudioSource.pitch = Mathf.Lerp(PitchIdle, PitchMaxSpeed, Mathf.InverseLerp(0, maxSpeed, Mathf.Abs(_kmh)));
-			idleAudioSource.volume = Mathf.Lerp(VolIdle, VolMaxSpeed, Mathf.InverseLerp(0, maxSpeed, Mathf.Abs(_kmh)));
+			//engine rev pitch
+
+
+
+			idleAudioSource.pitch = GetEnginePitch();
+
+
+
+
+			idleAudioSource.volume = GetEngineVolume();
+		}
+
+		public float GetEngineVolume()
+		{
+			var voldistmult = Mathf.InverseLerp(maxDistListen, 0, distFromPlayer); //volume mult based on distance
+			var volspeedmult = Mathf.Lerp(VolIdle, VolMaxSpeed, Mathf.InverseLerp(0, maxSpeed, Mathf.Abs(GetSpeed()))); //volume mult based on speed
+			return voldistmult * volspeedmult;
+		}
+
+
+		public float GetEnginePitch()
+		{
+			//get doppler effect
+			float diff = (distFromPlayer - prevDistFromPlayer) * 50f; //difference between two frames in m/s
+			diff = diff * 3.6f; //conversion from ms to kmh
+			float pitchdiffmult = (diff * -0.005f) + 1f; // * 0.05 ensures a max of +/- 100% pitch at 200kmh; the - inverts the result
+			pitchdiffmult = Mathf.Clamp(pitchdiffmult, 0.05f, 2f);
+			//get speed effect
+			float pitchspeedmult = Mathf.Lerp(PitchIdle, PitchMaxSpeed, Mathf.InverseLerp(0, maxSpeed, Mathf.Abs(GetSpeed())));
+			return pitchspeedmult * pitchdiffmult;
 		}
 
 		public void FixedUpdate()
 		{
+			//get player distance
+			prevDistFromPlayer = distFromPlayer;
+			distFromPlayer = Vector3.Distance(transform.position, GM.CurrentPlayerBody.transform.position);
+
 			//enable complete kinematic locking
 			//this is mainly to allow machine guns to lock to it
-			if (spedometerMeasurer != null)
+			//it's been removed because locking physics surprisingly fucks with physics
+			/*if (spedometerMeasurer != null)
 			{
 				if (   spedometerMeasurer.rpm * 60 < 0.15 //basically stopped
 					&& ShiftPos == DriveShift.DriveShiftPosition.Park //in park
@@ -154,64 +202,78 @@ namespace H3VRUtils.Vehicles
 				{
 					rb.isKinematic = false;
 				}
-			}
+			}*/
 
-
-
-
-
+			//ensure that the rotation isn't out of bounds. i would use mathf.clamp but i'm too paranoid
 			if (Rotation > maxRotation)
 			{
 				Rotation = maxRotation;
 			}
-			if (Rotation < -maxRotation)
+			else if (Rotation < -maxRotation)
 			{
 				Rotation = -maxRotation;
 			}
 
+			//get applied dampening and acceleration
+			float AppliedDampening = 0f;
+			float AppliedAcceleration = Acceleration;
+			switch (ShiftPos)
+			{
+				case DriveShift.DriveShiftPosition.Park:
+					AppliedDampening = dampParkingGear;
+					break;
+				case DriveShift.DriveShiftPosition.Reverse:
+					AppliedDampening = dampDriveGear;
+					AppliedAcceleration = -AppliedAcceleration;
+					break;
+				case DriveShift.DriveShiftPosition.Neutral:
+					AppliedDampening = dampNeutralGear;
+					AppliedAcceleration = 0f;
+					break;
+				case DriveShift.DriveShiftPosition.Drive:
+					AppliedDampening = dampDriveGear;
+					break;
+			}
+			AppliedDampening = AppliedDampening + BrakingForce;
+
+
+			//i feel like this should be in update but idc
 			foreach (var tiregroup in TireGroups)
 			{
 				foreach (var tire in tiregroup.Tires)
 				{
-					tire.wheelDampingRate = BrakingForce;
-
 					if (tiregroup.drives)
 					{
-						if (ShiftPos != DriveShift.DriveShiftPosition.Neutral)
+						tire.motorTorque = AppliedAcceleration;
+						tire.wheelDampingRate = AppliedDampening;
+
+						//brakes if moving in reverse and in drive
+						if (spedometerMeasurer.rpm < 0 && ShiftPos == DriveShift.DriveShiftPosition.Drive)
 						{
-							var acc = Acceleration;
-							if (ShiftPos == DriveShift.DriveShiftPosition.Reverse) acc = -acc;
-							tire.motorTorque = acc;
-							tire.wheelDampingRate += dampNeutralGear;
-						}
-						else
-						{
-							tire.wheelDampingRate += dampDriveGear;
+							tire.wheelDampingRate = AppliedDampening + maxDampBreak;
 						}
 					}
 					if (tiregroup.steers)
 					{
 						tire.steerAngle = Rotation;
 					}
+
 					if (tiregroup.locks && ShiftPos == DriveShift.DriveShiftPosition.Park)
 					{
-						tire.wheelDampingRate += dampParkingGear;
+						tire.wheelDampingRate = AppliedDampening;
 					}
 					else
 					{
-						tire.brakeTorque = 0;
+						tire.wheelDampingRate = 0;
 					}
 
 					ApplyLocalPositionToVisuals(tire);
 				}
 			}
+
+			//attempted anti-tipping methods. not even sure if it works tbh
 			rb.AddRelativeForce(0, -(downPressure + dPmult * Acceleration), 0);
 			rb.AddRelativeTorque(0, 0, -(transform.localEulerAngles.z * sidePushBack));
-
-			/*if (ShiftPos != DriveShift.DriveShiftPosition.Park)
-			{
-				SM.PlayGenericSound(AudioSet.VehicleIdle, transform.position);
-			}*/
 		}
 
 		public void setRotation(float rotation)
@@ -223,7 +285,7 @@ namespace H3VRUtils.Vehicles
 		public void setDriveShift(DriveShift.DriveShiftPosition dsp)
 		{
 			if (debug) return;
-			if(ShiftPos == DriveShift.DriveShiftPosition.Park && dsp != DriveShift.DriveShiftPosition.Park)
+			if (ShiftPos == DriveShift.DriveShiftPosition.Park && dsp != DriveShift.DriveShiftPosition.Park)
 			{
 				SM.PlayGenericSound(AudioSet.VehicleStart, transform.position);
 				idleAudioSource.Play();
@@ -233,7 +295,7 @@ namespace H3VRUtils.Vehicles
 				SM.PlayGenericSound(AudioSet.VehicleStop, transform.position);
 				idleAudioSource.Stop();
 			}
-			ShiftPos = dsp;	
+			ShiftPos = dsp;
 		}
 
 		public void setAcceleration(float acceleration)
