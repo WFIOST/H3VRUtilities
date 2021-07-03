@@ -36,6 +36,9 @@
       <HintPath>..\packages\HarmonyX.2.4.2\lib\net35\0Harmony.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Assembly-CSharp, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\libs\Assembly-CSharp_publicized.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\..\CursedDlls.BepinEx\lib\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
