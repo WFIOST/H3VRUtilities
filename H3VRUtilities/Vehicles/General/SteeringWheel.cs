@@ -83,24 +83,7 @@ namespace H3VRUtils.Vehicles
 			rh = rothand.y;
 			lr = lastrot.y;
 
-			//float inlerp = 0;
-			//float lerp = 0;
-			if (rotAmt > 0)
-			{
-				inlerp = Mathf.InverseLerp(0, maxRot, rotAmt);
-				lerp = -Mathf.Lerp(0, vehicle.maxRotation, inlerp);
-			}
-			else //if rotAmt is negative
-			{
-				inlerp = Mathf.InverseLerp(0, -maxRot, rotAmt);
-				lerp = Mathf.Lerp(0, vehicle.maxRotation, inlerp);
-			}
-
-			//if (lerp < 2 && lerp > -2) lerp = 0;
-
-			if (reverseRot) lerp = -lerp;
-
-			vehicle.setRotation(lerp);
+			SetRot();
 
 			if(Vector2.Angle(hand.Input.TouchpadAxes, -Vector2.up) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.3f){
 				isBraking = !isBraking;
@@ -127,7 +110,28 @@ namespace H3VRUtils.Vehicles
 				if (rotAmt > 0) rLS = -rLS;
 				rotAmt += rLS;
 				transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y + rLS, transform.localEulerAngles.z);
+				vehicle.setAcceleration(0);
+				vehicle.setBraking(0);
+				SetRot();
 			}
+		}
+
+		void SetRot()
+		{
+			if (rotAmt > 0)
+			{
+				inlerp = Mathf.InverseLerp(0, maxRot, rotAmt);
+				lerp = -Mathf.Lerp(0, vehicle.maxRotation, inlerp);
+			}
+			else //if rotAmt is negative
+			{
+				inlerp = Mathf.InverseLerp(0, -maxRot, rotAmt);
+				lerp = Mathf.Lerp(0, vehicle.maxRotation, inlerp);
+			}
+
+			if (reverseRot) lerp = -lerp;
+
+			vehicle.setRotation(lerp);
 		}
 	}
 }
