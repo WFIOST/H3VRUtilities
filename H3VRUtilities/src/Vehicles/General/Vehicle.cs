@@ -38,8 +38,6 @@ namespace H3VRUtils.Vehicles
 		public float sidePushBack;
 		public float BrakingForce;
 
-
-
 		public VehicleAudioSet AudioSet;
 
 		public GameObject springloc;
@@ -64,10 +62,12 @@ namespace H3VRUtils.Vehicles
 		private AudioSource idleAudioSource;
 		//private AudioSource interimAudioSource;
 		private AudioSource brakeAudioSource;
-		public float maxDistListen = 100f;
+		public float maxDistListen = 50f;
 
 		private float distFromPlayer;
 		private float prevDistFromPlayer;
+		private bool isEngineForcedShutOff;
+
 		void Start()
 		{
 			rb = GetComponent<Rigidbody>();
@@ -151,11 +151,7 @@ namespace H3VRUtils.Vehicles
 			//engine rev pitch
 
 
-
 			idleAudioSource.pitch = GetEnginePitch();
-
-
-
 
 			idleAudioSource.volume = GetEngineVolume();
 		}
@@ -164,7 +160,9 @@ namespace H3VRUtils.Vehicles
 		{
 			var voldistmult = Mathf.InverseLerp(maxDistListen, 0, distFromPlayer); //volume mult based on distance
 			var volspeedmult = Mathf.Lerp(VolIdle, VolMaxSpeed, Mathf.InverseLerp(0, maxSpeed, Mathf.Abs(GetSpeed()))); //volume mult based on speed
-			return voldistmult * volspeedmult;
+			var voloverride = 1f;
+			if (isEngineForcedShutOff) voloverride = 0f; //if engine is off multiply engine volume by 0
+			return voldistmult * volspeedmult * voloverride;
 		}
 
 
@@ -173,7 +171,8 @@ namespace H3VRUtils.Vehicles
 			//get doppler effect
 			float diff = (distFromPlayer - prevDistFromPlayer) * 50f; //difference between two frames in m/s
 			diff = diff * 3.6f; //conversion from ms to kmh
-			float pitchdiffmult = (diff * -0.005f) + 1f; // * 0.05 ensures a max of +/- 100% pitch at 200kmh; the - inverts the result
+			float doppleraffectmult = 0.4f;
+			float pitchdiffmult = (diff * -0.005f * doppleraffectmult) + 1f; // * 0.05 ensures a max of +/- 100% pitch at 200kmh; the - inverts the result
 			pitchdiffmult = Mathf.Clamp(pitchdiffmult, 0.05f, 2f);
 			//get speed effect
 			float pitchspeedmult = Mathf.Lerp(PitchIdle, PitchMaxSpeed, Mathf.InverseLerp(0, maxSpeed, Mathf.Abs(GetSpeed())));
@@ -244,7 +243,11 @@ namespace H3VRUtils.Vehicles
 				{
 					if (tiregroup.drives)
 					{
-						tire.motorTorque = AppliedAcceleration;
+						if (!isEngineForcedShutOff)
+						{ //apply acceleration unless engine off
+							tire.motorTorque = AppliedAcceleration;
+						}
+
 						tire.wheelDampingRate = AppliedDampening;
 
 						//brakes if moving in reverse and in drive
@@ -308,6 +311,18 @@ namespace H3VRUtils.Vehicles
 		{
 			if (debug) return;
 			BrakingForce = braking;
+		}
+
+		public void ToggleEngine(bool set)
+		{
+			if (!set) //if engine is set off
+			{
+				isEngineForcedShutOff = true;
+			}
+			else //if engine is set on
+			{
+				isEngineForcedShutOff = false;
+			}
 		}
 	}
 
