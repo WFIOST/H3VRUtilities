@@ -38,6 +38,7 @@ namespace H3VRUtils
 
         public void Awake()
         {
+			Debug.Log("i shouldn't fuckin exist, wtf");
             base.Awake();
             SetWepType();
             _col = GetComponent<Collider>();

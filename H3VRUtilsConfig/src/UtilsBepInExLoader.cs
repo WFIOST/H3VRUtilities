@@ -10,6 +10,7 @@ using Sodalite.Api;
 using Sodalite.UiWidgets;
 using Sodalite.Utilities;
 using HarmonyLib;
+using System.Reflection;
 
 namespace H3VRUtils
 {
@@ -46,7 +47,7 @@ namespace H3VRUtils
 			VehicleLockXRot = Config.Bind("Vehicles", "Lock X Rotation", false, "Rotates your X rotation based on the vehicles rotation. Induces VR sickness.");
 			VehicleLockYRot = Config.Bind("Vehicles", "Lock Y Rotation", false, "Rotates your Y rotation based on the vehicles rotation. Induces VR sickness.");
 			VehicleLockZRot = Config.Bind("Vehicles", "Lock Z Rotation", false, "Rotates your Z rotation based on the vehicles rotation. Induces VR sickness.");
-			Harmony.CreateAndPatchAll(typeof(MagReplacer));
+			//Harmony.CreateAndPatchAll(typeof(MagReplacer));
 
 
 			//sodalite check
@@ -74,6 +75,7 @@ namespace H3VRUtils
 			//setup panel
 			_UtilsPanel = new LockablePanel();
 			_UtilsPanel.Configure += ConfigureUtilsPanel;
+			_UtilsPanel.TextureOverride = SodaliteUtils.LoadTextureFromBytes(Assembly.GetExecutingAssembly().GetResource("UtilsPanel.png"));
 		}
 
 		ButtonWidget paddleMagReleaseButton;
@@ -147,7 +149,7 @@ namespace H3VRUtils
 					button.RectTransform.localRotation = Quaternion.identity;
 				});
 
-				widget.AddChild((ButtonWidget button) => {
+				/*widget.AddChild((ButtonWidget button) => {
 					button.ButtonText.text = "Reload Magazine Release Cache";
 					button.AddButtonListener(ReloadVanillaMagRelease);
 					MagDropRequiredReleaseButton = button;
@@ -174,7 +176,7 @@ namespace H3VRUtils
 					button.AddButtonListener(lockZRot);
 					VehicleLockZRotButton = button;
 					button.RectTransform.localRotation = Quaternion.identity;
-				});
+				});*/
 			});
 		}
 

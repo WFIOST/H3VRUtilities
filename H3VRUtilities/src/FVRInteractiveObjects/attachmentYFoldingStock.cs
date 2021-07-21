@@ -50,28 +50,33 @@ namespace H3VRUtils
 						else if (num > 0.9f)
 						{
 							this.mCurPos = FVRFoldingStockYAxis.StockPos.Open;
-							if (!isNotAttachment) this.fireArm.HasActiveShoulderStock = true;
+							if (!isNotAttachment)
+							this.fireArm.HasActiveShoulderStock = true;
 						}
 						else
 						{
 							this.mCurPos = FVRFoldingStockYAxis.StockPos.Mid;
-							if (!isNotAttachment) this.fireArm.HasActiveShoulderStock = false;
+							if (!isNotAttachment)
+							this.fireArm.HasActiveShoulderStock = false;
 						}
 					}
 					else if (num < 0.1f)
 					{
 						this.mCurPos = FVRFoldingStockYAxis.StockPos.Open;
-						if (!isNotAttachment) this.fireArm.HasActiveShoulderStock = true;
+						if (!isNotAttachment)
+						this.fireArm.HasActiveShoulderStock = true;
 					}
 					else if (num > 0.98f)
 					{
 						this.mCurPos = FVRFoldingStockYAxis.StockPos.Closed;
-						if (!isNotAttachment) this.fireArm.HasActiveShoulderStock = false;
+						if (!isNotAttachment)
+						this.fireArm.HasActiveShoulderStock = false;
 					}
 					else
 					{
 						this.mCurPos = FVRFoldingStockYAxis.StockPos.Mid;
-						if (!isNotAttachment) this.fireArm.HasActiveShoulderStock = false;
+						if (!isNotAttachment)
+							this.fireArm.HasActiveShoulderStock = false;
 					}
 					this.mLastPos = this.mCurPos;
 				}

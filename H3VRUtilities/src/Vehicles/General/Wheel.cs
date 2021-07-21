@@ -34,15 +34,14 @@ namespace H3VRUtils.Vehicles
 
 		public override void onDeath()
 		{
-			base.onDeath();
 			float num = Vector3.Distance(base.transform.position, GM.CurrentPlayerBody.Head.position);
 			float num2 = num / 343f;
 			SM.PlayCoreSoundDelayedOverrides(FVRPooledAudioType.GenericLongRange, PopSound, base.transform.position, PopSound.VolumeRange, PopSound.PitchRange, num2 + 0.04f);
 			dead = true;
 		}
+
 		public override void whileDead()
 		{
-			base.whileDead();
 			wheel.wheelDampingRate = wheelPoppedDampening;
 			wheel.radius = Mathf.Lerp(wheelPoppedRadius, wheel.radius, 0.9f);
 
