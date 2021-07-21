@@ -8,7 +8,7 @@ using FistVR;
 
 namespace H3VRUtils.Vehicles
 {
-	class ForkliftLift : FVRInteractiveObject
+	public class ForkliftLift : FVRInteractiveObject
 	{
 		public float minRot;
 		public float defRot;
@@ -23,12 +23,12 @@ namespace H3VRUtils.Vehicles
 		{
 			base.UpdateInteraction(hand);
 			transform.LookAt(hand.transform);
-			var rot = transform.localEulerAngles.x;
+			float rot = transform.localEulerAngles.x;
 			if (rot > maxRot) rot = maxRot;
 			if (rot < minRot) rot = minRot;
 
 			transform.localEulerAngles = new Vector3(rot, 0, 0);
-			var pos = lift.transform.localPosition;
+			Vector3 pos = lift.transform.localPosition;
 			if (rot > defRot)
 			{
 				pos.y += liftSpeed;

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace H3VRUtils
 {
-	class lockToHead : MonoBehaviour
+	class LockToHead : MonoBehaviour
 	{
 		public Vector3 posOffset;
 		public void Update()

@@ -14,14 +14,14 @@ namespace H3VRUtils.UniqueCode
 		public Transform rearMostPoint;
 		public float forwardspeed;
 
-		private bool pulled;
+		private bool _pulled;
 
 		public override void UpdateInteraction(FVRViveHand hand)
 		{
 			base.UpdateInteraction(hand);
 			Vector3 closestValidPoint = base.GetClosestValidPoint(this.frontMostPoint.position, this.rearMostPoint.position, this.m_hand.Input.Pos);
 			base.transform.position = closestValidPoint;
-			float m_currentHandleZ = transform.localPosition.z;
+			float mCurrentHandleZ = transform.localPosition.z;
 			float l = Mathf.InverseLerp(frontMostPoint.localPosition.z, rearMostPoint.localPosition.z, transform.localPosition.z);
 		}
 
@@ -35,19 +35,19 @@ namespace H3VRUtils.UniqueCode
 			else if (Mathf.Abs(transform.localPosition.z - rearMostPoint.localPosition.z) < 0.01f)
 			{
 				try { wep.PlayAudioEvent(FirearmAudioEventType.HandleBack); } catch { Console.WriteLine("Forgot to assign FireArmAudioEventType.HandleBack!"); }
-				if (!pulled)
+				if (!_pulled)
 				{
 					FVRViveHand fakehand = new FVRViveHand();
 					fakehand.IsInStreamlinedMode = true;
 					fakehand.Input.AXButtonDown = true;
 					wep.UpdateInteraction(fakehand);
-					pulled = true;
+					_pulled = true;
 				}
 			}
 			else if (Mathf.Abs(transform.localPosition.z - frontMostPoint.localPosition.z) < 0.01f)
 			{
 				try { wep.PlayAudioEvent(FirearmAudioEventType.HandleForward); } catch { Console.WriteLine("Forgot to assign FireArmAudioEventType.HandleForward!"); }
-				pulled = false;
+				_pulled = false;
 			}
 		}
 	}

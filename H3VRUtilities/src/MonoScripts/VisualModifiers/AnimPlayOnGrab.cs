@@ -4,35 +4,36 @@ using System.Linq;
 using System.Text;
 using FistVR;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils.MonoScripts.VisualModifiers
 {
 	class AnimPlayOnGrab : MonoBehaviour
 	{
 		public Animation animation;
-		public FVRPhysicalObject Object;
-		public string AnimNameOnGrab;
-		public string AnimNameOnLetGo;
+		[FormerlySerializedAs("Object")] public FVRPhysicalObject @object;
+		[FormerlySerializedAs("AnimNameOnGrab")] public string animNameOnGrab;
+		[FormerlySerializedAs("AnimNameOnLetGo")] public string animNameOnLetGo;
 
-		private bool isGrabbed;
+		private bool _isGrabbed;
 
 		public void Update()
 		{
 			if (animation.isPlaying) return;
-			if (Object.m_hand != null) //held
+			if (@object.m_hand != null) //held
 			{
-				if (!isGrabbed) //was not held before
+				if (!_isGrabbed) //was not held before
 				{
-					animation.Play(AnimNameOnGrab);
-					isGrabbed = true;
+					animation.Play(animNameOnGrab);
+					_isGrabbed = true;
 				}
 			}
 			else //is not held
 			{
-				if (isGrabbed) //was held before
+				if (_isGrabbed) //was held before
 				{
-					animation.Play(AnimNameOnLetGo);
-					isGrabbed = false;
+					animation.Play(animNameOnLetGo);
+					_isGrabbed = false;
 				}
 			}
 		}

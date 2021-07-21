@@ -4,42 +4,43 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
 	public class H3VRUtilsPhysBoltRelease : FVRInteractiveObject
 	{
-		public ClosedBoltWeapon ClosedBoltReceiver;
+		[FormerlySerializedAs("ClosedBoltReceiver")] public ClosedBoltWeapon closedBoltReceiver;
 
-		public bool ButtonPressToRelease;
+		[FormerlySerializedAs("ButtonPressToRelease")] public bool buttonPressToRelease;
 
 		[HideInInspector]
 		public Vector2 dir;
 
-		public H3VRUtilsMagRelease.TouchpadDirType TouchpadDir;
+		[FormerlySerializedAs("TouchpadDir")] public H3VRUtilsMagRelease.TouchpadDirType touchpadDir;
 
-		[HideInInspector]
-		public int WepType = 0;
+		[FormerlySerializedAs("WepType")] [HideInInspector]
+		public int wepType = 0;
 
 		public override void Awake()
 		{
 			base.Awake();
-			if (ClosedBoltReceiver != null) WepType = 1;
+			if (closedBoltReceiver != null) wepType = 1;
 		}
 
 		public override void FVRFixedUpdate()
 		{
 			base.FVRFixedUpdate();
-			if (TouchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Up) dir = Vector2.up;
-			if (TouchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Down) dir = Vector2.down;
-			if (TouchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Left) dir = Vector2.left;
-			if (TouchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Right) dir = Vector2.right;
-			if (TouchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Trigger) this.IsSimpleInteract = true; else this.IsSimpleInteract = false;
+			if (touchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Up) dir = Vector2.up;
+			if (touchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Down) dir = Vector2.down;
+			if (touchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Left) dir = Vector2.left;
+			if (touchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Right) dir = Vector2.right;
+			if (touchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Trigger) this.IsSimpleInteract = true; else this.IsSimpleInteract = false;
 		}
 
 		protected void OnHoverStay(FVRViveHand hand)
 		{
-			if (TouchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Trigger && !hand.IsInStreamlinedMode) return;
+			if (touchpadDir == H3VRUtilsMagRelease.TouchpadDirType.Trigger && !hand.IsInStreamlinedMode) return;
 			if (hand.IsInStreamlinedMode && !hand.Input.AXButtonPressed) return;
 			ReleaseBolt(hand);
 		}
@@ -50,17 +51,17 @@ namespace H3VRUtils
 			ReleaseBolt(hand);
 		}
 
-		public void ReleaseBolt(FVRViveHand hand, bool _forceDrop = false)
+		public void ReleaseBolt(FVRViveHand hand, bool forceDrop = false)
 		{
 			bool flag2 = false;
 			if (Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.2f) flag2 = true;
 
 			if (flag2 || hand.IsInStreamlinedMode && hand.Input.AXButtonPressed)
 			{
-				this.ClosedBoltReceiver.Bolt.ReleaseBolt();
+				this.closedBoltReceiver.Bolt.ReleaseBolt();
 			}
 
-			if (this.ClosedBoltReceiver.m_hand == null || hand != this.ClosedBoltReceiver.m_hand)
+			if (this.closedBoltReceiver.m_hand == null || hand != this.closedBoltReceiver.m_hand)
 			{
 
 			}

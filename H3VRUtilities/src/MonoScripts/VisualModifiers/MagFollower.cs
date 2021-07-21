@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FistVR;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
@@ -13,85 +14,85 @@ namespace H3VRUtils
 
 		public GameObject follower;
 
-		[Header("Translation Mag Follower")]
-		public bool UsesOneRoundPos;
-		public int StartAtRoundCount;
-		public int StopAtRoundCount;
-		[Tooltip("The position where the follower should be when the magazine is empty.")]
-		public GameObject StartPos;
-		[Tooltip("The position where the follower should be when the magazine has one round left.")]
-		public GameObject OneRoundPos;
-		[Tooltip("The position where the follower should be when the magazine is full.")]
-		public GameObject StopPos;
+		[FormerlySerializedAs("UsesOneRoundPos")] [Header("Translation Mag Follower")]
+		public bool usesOneRoundPos;
+		[FormerlySerializedAs("StartAtRoundCount")] public int startAtRoundCount;
+		[FormerlySerializedAs("StopAtRoundCount")] public int stopAtRoundCount;
+		[FormerlySerializedAs("StartPos")] [Tooltip("The position where the follower should be when the magazine is empty.")]
+		public GameObject startPos;
+		[FormerlySerializedAs("OneRoundPos")] [Tooltip("The position where the follower should be when the magazine has one round left.")]
+		public GameObject oneRoundPos;
+		[FormerlySerializedAs("StopPos")] [Tooltip("The position where the follower should be when the magazine is full.")]
+		public GameObject stopPos;
 
-		[Header("Individual Point Mag Follower")]
-		public bool UsesIndivdualPointMagFollower;
-		[Tooltip("Top-to-bottom order, where the 0th position is when the magazine is empty. ")]
-		public List<GameObject> Positions;
+		[FormerlySerializedAs("UsesIndivdualPointMagFollower")] [Header("Individual Point Mag Follower")]
+		public bool usesIndivdualPointMagFollower;
+		[FormerlySerializedAs("Positions")] [Tooltip("Top-to-bottom order, where the 0th position is when the magazine is empty. ")]
+		public List<GameObject> positions;
 
-		[Header("Individual Mesh Replacement")]
-		public bool UsesIndividualMeshReplacement;
-		[Tooltip("Top-to-bottom order, where the 0th position is when the magazine is empty. ")]
-		public List<Mesh> Meshes;
+		[FormerlySerializedAs("UsesIndividualMeshReplacement")] [Header("Individual Mesh Replacement")]
+		public bool usesIndividualMeshReplacement;
+		[FormerlySerializedAs("Meshes")] [Tooltip("Top-to-bottom order, where the 0th position is when the magazine is empty. ")]
+		public List<Mesh> meshes;
 
-		private int magrounds;
+		private int _magrounds;
 
-		private MeshFilter followerFilter;
+		private MeshFilter _followerFilter;
 
 		public void Update()
 		{
-			if (magazine.m_numRounds != magrounds)
+			if (magazine.m_numRounds != _magrounds)
 			{
-				magrounds = magazine.m_numRounds;
+				_magrounds = magazine.m_numRounds;
 				UpdateDisp();
 			}
 		}
 
 		public void Start()
 		{
-			followerFilter = follower.GetComponent<MeshFilter>();
+			_followerFilter = follower.GetComponent<MeshFilter>();
 		}
 
 		public void UpdateDisp()
 		{
 
-			if (UsesIndivdualPointMagFollower)
+			if (usesIndivdualPointMagFollower)
 			{
-				if (Positions.Count < magazine.m_numRounds)
+				if (positions.Count < magazine.m_numRounds)
 				{
 					return;
 				}
-				if (Positions[magazine.m_numRounds] == null)
+				if (positions[magazine.m_numRounds] == null)
 				{
 					return;
 				}
-				follower.transform.position = Positions[magazine.m_numRounds].transform.position;
-				follower.transform.rotation = Positions[magazine.m_numRounds].transform.rotation;
+				follower.transform.position = positions[magazine.m_numRounds].transform.position;
+				follower.transform.rotation = positions[magazine.m_numRounds].transform.rotation;
 			}
-			else if (UsesIndividualMeshReplacement)
+			else if (usesIndividualMeshReplacement)
 			{
-				if (Meshes.Count < magazine.m_numRounds)
+				if (meshes.Count < magazine.m_numRounds)
 				{
 					return;
 				}
-				if (Meshes[magazine.m_numRounds] == null)
+				if (meshes[magazine.m_numRounds] == null)
 				{
 					return;
 				}
-				followerFilter.mesh = Meshes[magazine.m_numRounds];
-				followerFilter.mesh = Meshes[magazine.m_numRounds];
+				_followerFilter.mesh = meshes[magazine.m_numRounds];
+				_followerFilter.mesh = meshes[magazine.m_numRounds];
 			}
 			else //if no other use
 			{
-				Transform _b = StopPos.transform;
-				int _c = StopAtRoundCount;
-				if (UsesOneRoundPos) { _b = OneRoundPos.transform; _c++; }
+				Transform b = stopPos.transform;
+				int c = stopAtRoundCount;
+				if (usesOneRoundPos) { b = oneRoundPos.transform; c++; }
 
-				follower.transform.position = Vector3.Lerp(StartPos.transform.position, _b.position, Mathf.InverseLerp((float)StartAtRoundCount, (float)_c, magazine.m_numRounds));
+				follower.transform.position = Vector3.Lerp(startPos.transform.position, b.position, Mathf.InverseLerp((float)startAtRoundCount, (float)c, magazine.m_numRounds));
 
 				if (magazine.m_numRounds == 0)
 				{
-					follower.transform.position = StopPos.transform.position;
+					follower.transform.position = stopPos.transform.position;
 				}
 			}
 		}

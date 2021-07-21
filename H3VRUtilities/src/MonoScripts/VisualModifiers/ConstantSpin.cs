@@ -10,7 +10,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 	{
 		public GameObject spinnything;
 		public float spinrate;
-		public cullOnZLoc.dirType directionofspeen;
+		public CullOnZLoc.DirType directionofspeen;
 
 		public void FixedUpdate()
 		{

@@ -6,20 +6,20 @@ using UnityEngine;
 
 namespace H3VRUtils
 {
-	class compressingSpring : MonoBehaviour
+	class CompressingSpring : MonoBehaviour
 	{
 		public GameObject compressor;
 		public GameObject spring;
-		public enum dirType
+		public enum DirType
 		{
-			x = 0,
-			y = 1,
-			z = 2
+			X = 0,
+			Y = 1,
+			Z = 2
 		}
 
-		public dirType directionOfCompression = dirType.z;
+		public DirType directionOfCompression = DirType.Z;
 
-		public dirType directionOfCompressor = dirType.z;
+		public DirType directionOfCompressor = DirType.Z;
 
 		[Tooltip("The directionOfCompression position where the scale will be 1.")]
 		public float fullextend;
@@ -27,7 +27,7 @@ namespace H3VRUtils
 		public float fullcompress;
 		void Update()
 		{
-			var localScale = spring.transform.localScale;
+			Vector3 localScale = spring.transform.localScale;
 			float[] dir = new float[3];
 
 			dir[0] = localScale.x;

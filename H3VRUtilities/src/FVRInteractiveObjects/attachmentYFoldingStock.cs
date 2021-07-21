@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
-	public class attachmentYFoldingStock : FVRInteractiveObject
+	public class AttachmentYFoldingStock : FVRInteractiveObject
 	{
 		public enum UpRightForward
 		{
@@ -17,7 +17,7 @@ namespace H3VRUtils
 			Backwards
 		}
 
-		public UpRightForward DirOfRotation = UpRightForward.Up;
+		[FormerlySerializedAs("DirOfRotation")] public UpRightForward dirOfRotation = UpRightForward.Up;
 
 		// Token: 0x0600141B RID: 5147 RVA: 0x00089ED0 File Offset: 0x000882D0
 		public override void UpdateInteraction(FVRViveHand hand)
@@ -26,18 +26,18 @@ namespace H3VRUtils
 			Vector3 vector = hand.transform.position - this.root.position;
 			vector = Vector3.ProjectOnPlane(vector, this.root.up).normalized;
 			Vector3 lhs = -this.root.transform.forward;
-			this._rotAngle = Mathf.Atan2(Vector3.Dot(this.root.up, Vector3.Cross(lhs, vector)), Vector3.Dot(lhs, vector)) * 57.29578f; if (Mathf.Abs(this._rotAngle - this.minRot) < 5f)
+			this.rotAngle = Mathf.Atan2(Vector3.Dot(this.root.up, Vector3.Cross(lhs, vector)), Vector3.Dot(lhs, vector)) * 57.29578f; if (Mathf.Abs(this.rotAngle - this.minRot) < 5f)
 			{
-				this._rotAngle = this.minRot;
+				this.rotAngle = this.minRot;
 			}
-			if (Mathf.Abs(this._rotAngle - this.maxRot) < 5f)
+			if (Mathf.Abs(this.rotAngle - this.maxRot) < 5f)
 			{
-				this._rotAngle = this.maxRot;
+				this.rotAngle = this.maxRot;
 			}
-			if (this._rotAngle >= this.minRot && this._rotAngle <= this.maxRot)
+			if (this.rotAngle >= this.minRot && this.rotAngle <= this.maxRot)
 			{
-				this.stock.localEulerAngles = new Vector3(0f, this._rotAngle, 0f);
-				float num = Mathf.InverseLerp(this.minRot, this.maxRot, this._rotAngle);
+				this.stock.localEulerAngles = new Vector3(0f, this.rotAngle, 0f);
+				float num = Mathf.InverseLerp(this.minRot, this.maxRot, this.rotAngle);
 				if (fireArm != null)
 				{
 					if (this.isMinClosed)
@@ -102,9 +102,9 @@ namespace H3VRUtils
 			Gizmos.color = new Color(0.7f, 0.9f, 0.1f, 0.5f);
 			Gizmos.DrawCube(center, Vector3.one * 0.02f);
 			Gizmos.color = new Color(0.9f, 0.7f, 0.1f);
-			var up = this.root.transform.up;
-			var down = -this.root.transform.forward;
-			switch (DirOfRotation)
+			Vector3 up = this.root.transform.up;
+			Vector3 down = -this.root.transform.forward;
+			switch (dirOfRotation)
 			{
 				case UpRightForward.Down:
 					up = -this.root.transform.up;
@@ -160,7 +160,7 @@ namespace H3VRUtils
 		public bool forBreakOpenFlareGun;
 		public BreakOpenFlareGun flareGun;
 
-		public float _rotAngle;
+		[FormerlySerializedAs("_rotAngle")] public float rotAngle;
 		[HideInInspector]
 		public Vector3 lhs;
 

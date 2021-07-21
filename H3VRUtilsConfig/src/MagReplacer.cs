@@ -15,20 +15,20 @@ namespace H3VRUtils
 	{
 		[HarmonyPatch(typeof(ClosedBoltWeapon), "Awake")]
 		[HarmonyPrefix]
-		static bool ClosedBoltForcePaddleOnPatch(ClosedBoltWeapon __instance)
+		static bool ClosedBoltForcePaddleOnPatch(ClosedBoltWeapon instance)
 		{
-			var f = MagReplacerData.GetPaddleData().Concat(MagReplacerData.GetMagDropData()).ToArray();
-			foreach(var id in f)
+			string[] f = MagReplacerData.GetPaddleData().Concat(MagReplacerData.GetMagDropData()).ToArray();
+			foreach(string id in f)
 			{
-				if (__instance.ObjectWrapper.ItemID == id)
+				if (instance.ObjectWrapper.ItemID == id)
 				{
 					Debug.Log("Applying paddle release to object ID " + id);
-					var objs = FindObjectsOfType<ClosedBoltMagEjectionTrigger>(); //fuck your cpu
-					foreach (var files in objs)
+					ClosedBoltMagEjectionTrigger[] objs = FindObjectsOfType<ClosedBoltMagEjectionTrigger>(); //fuck your cpu
+					foreach (ClosedBoltMagEjectionTrigger files in objs)
 					{
-						if (files.transform.parent == __instance.transform)
+						if (files.transform.parent == instance.transform)
 						{
-							var mr = files.gameObject.AddComponent(typeof(H3VRUtilsMagRelease)) as H3VRUtilsMagRelease;
+							H3VRUtilsMagRelease mr = files.gameObject.AddComponent(typeof(H3VRUtilsMagRelease)) as H3VRUtilsMagRelease;
 							mr.PositionInterpSpeed = 1;
 							mr.RotationInterpSpeed = 1;
 							mr.EndInteractionIfDistant = true;

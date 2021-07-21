@@ -5,17 +5,22 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using FistVR;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils.Vehicles
 {
-	class DriveShift : FVRInteractiveObject
+	public class DriveShift : FVRInteractiveObject
 	{
 		public Vehicle vehicle;
 
-		public List<float> RotPositions;
-		public List<DriveShiftPosition> DriveShiftPos;
+		[FormerlySerializedAs("RotPositions")] 
+		public List<float> rotPositions;
+		
+		[FormerlySerializedAs("DriveShiftPos")] 
+		public List<DriveShiftPosition> driveShiftPosition;
 
-		public Text shiftpos;
+		[FormerlySerializedAs("shiftpos")] 
+		public Text shiftPosition;
 
 		public enum DriveShiftPosition
 		{
@@ -28,31 +33,31 @@ namespace H3VRUtils.Vehicles
 
 		void Start()
 		{
-			vehicle.setDriveShift(DriveShiftPos[currentPosition]);
-			transform.localEulerAngles = new Vector3(RotPositions[currentPosition], 0, 0);
+			vehicle.SetDriveShift(driveShiftPosition[currentPosition]);
+			transform.localEulerAngles = new Vector3(rotPositions[currentPosition], 0, 0);
 		}
 
 		public override void UpdateInteraction(FVRViveHand hand)
 		{
-			shiftpos.text = DriveShiftPos[currentPosition].ToString();
+			shiftPosition.text = driveShiftPosition[currentPosition].ToString();
 			base.UpdateInteraction(hand);
 			//drive shift, looked towards hand rotation
 			transform.LookAt(hand.transform, this.transform.up);
 
 			if (transform.localEulerAngles.x > 300) {
-				transform.localEulerAngles = new Vector3(RotPositions[currentPosition], 0, 0);
+				transform.localEulerAngles = new Vector3(rotPositions[currentPosition], 0, 0);
 				return;
 			}
 
 			//if its not top
-			if (currentPosition != DriveShiftPos.Count - 1)
+			if (currentPosition != driveShiftPosition.Count - 1)
 			{
 				//if it's closer to the drive shift one up than the current
-				if (transform.localEulerAngles.x > RotPositions[currentPosition + 1])
+				if (transform.localEulerAngles.x > rotPositions[currentPosition + 1])
 				{
 					currentPosition++;
-					vehicle.setDriveShift(DriveShiftPos[currentPosition]);
-					SM.PlayGenericSound(vehicle.AudioSet.HandbrakeDown, transform.position);
+					vehicle.SetDriveShift(driveShiftPosition[currentPosition]);
+					SM.PlayGenericSound(vehicle.audioSet.handbrakeDown, transform.position);
 				}
 			}
 
@@ -61,14 +66,14 @@ namespace H3VRUtils.Vehicles
 			if (currentPosition != 0)
 			{
 				//if it's closer to the drive shfit one below than the one current
-				if (transform.localEulerAngles.x < RotPositions[currentPosition - 1])
+				if (transform.localEulerAngles.x < rotPositions[currentPosition - 1])
 				{
 					currentPosition--;
-					vehicle.setDriveShift(DriveShiftPos[currentPosition]);
-					SM.PlayGenericSound(vehicle.AudioSet.HandbrakeUp, transform.position);
+					vehicle.SetDriveShift(driveShiftPosition[currentPosition]);
+					SM.PlayGenericSound(vehicle.audioSet.handbrakeUp, transform.position);
 				}
 			}
-			transform.localEulerAngles = new Vector3(RotPositions[currentPosition], 0, 0);
+			transform.localEulerAngles = new Vector3(rotPositions[currentPosition], 0, 0);
 		}
 	}
 }

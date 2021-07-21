@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils.Weapons
 {
-	class jungleMag : MonoBehaviour
+	class JungleMag : MonoBehaviour
 	{
 		//We will break the shackles that are Monarchy.
 		public FVRFireArmMagazine masterMag;
@@ -17,10 +18,10 @@ namespace H3VRUtils.Weapons
 		public GameObject slaveMagGameObject;
 		[HideInInspector]
 		public GameObject parentMag;
-		[HideInInspector]
-		public bool _isMasterMagNotNull;
-		[HideInInspector]
-		public bool _isSlaveMagNotNull;
+		[FormerlySerializedAs("_isMasterMagNotNull")] [HideInInspector]
+		public bool isMasterMagNotNull;
+		[FormerlySerializedAs("_isSlaveMagNotNull")] [HideInInspector]
+		public bool isSlaveMagNotNull;
 
 		private bool _isFireArmNotNull;
 		private bool _fireArmNotNull;
@@ -35,11 +36,11 @@ namespace H3VRUtils.Weapons
 
 		void Update()
 		{
-			_isMasterMagNotNull = _isFireArmNotNull;
-			_isSlaveMagNotNull = _fireArmNotNull;
+			isMasterMagNotNull = _isFireArmNotNull;
+			isSlaveMagNotNull = _fireArmNotNull;
 			if (parentMag == masterMagGameObject)
 			{
-				if (_isSlaveMagNotNull)
+				if (isSlaveMagNotNull)
 				{
 					//prevents master mag from being loaded
 					masterMag.DoesDisplayXOscillate = false;
@@ -54,7 +55,7 @@ namespace H3VRUtils.Weapons
 			}
 			else
 			{
-				if (_isMasterMagNotNull)
+				if (isMasterMagNotNull)
 				{
 					slaveMag.DoesDisplayXOscillate = false;
 //					masterMagGameObject.transform.parent = null;
@@ -63,7 +64,7 @@ namespace H3VRUtils.Weapons
 				}
 			}
 
-			if (_isMasterMagNotNull || _isSlaveMagNotNull) return;
+			if (isMasterMagNotNull || isSlaveMagNotNull) return;
 			masterMag.DoesDisplayXOscillate = true;
 			slaveMag.DoesDisplayXOscillate = true;
 		}

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using FistVR;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils.Vehicles
 {
-	class EngineDamagable : VehicleDamagable
+	public class EngineDamagable : VehicleDamagable
 	{
 		public GameObject particleSystemCentre;
-		public float SmokeParticleHPThreshold;
+		[FormerlySerializedAs("SmokeParticleHPThreshold")] public float smokeParticleHpThreshold;
 		public GameObject particleSmokePrefab;
 		public GameObject particleFirePrefab;
 		public GameObject explosionPrefab;
@@ -18,31 +19,31 @@ namespace H3VRUtils.Vehicles
 		public GameObject damagedMesh;
 		public GameObject destroyedMesh;
 
-		private ParticleSystem particleSmoke;
-		private ParticleSystem particleFire;
+		private ParticleSystem _particleSmoke;
+		private ParticleSystem _particleFire;
 
 		public void Start()
 		{
 			GameObject particleSmokeGO = Instantiate(particleSmokePrefab, particleSystemCentre.transform);
-			particleSmoke = particleSmokeGO.GetComponent<ParticleSystem>();
-			particleSmoke.Stop();
+			_particleSmoke = particleSmokeGO.GetComponent<ParticleSystem>();
+			_particleSmoke.Stop();
 			GameObject particleFireGO = Instantiate(particleFirePrefab, particleSystemCentre.transform);
-			particleFire = particleFireGO.GetComponent<ParticleSystem>();
-			particleFire.Stop();
+			_particleFire = particleFireGO.GetComponent<ParticleSystem>();
+			_particleFire.Stop();
 		}
 
-		public override void onHealthChange()
+		public override void ONHealthChange()
 		{
-			if (HPLessThanPercent(SmokeParticleHPThreshold))
+			if (HpLessThanPercent(smokeParticleHpThreshold))
 			{
-				if (!particleSmoke.IsAlive())
+				if (!_particleSmoke.IsAlive())
 				{
-					particleSmoke.Play();
+					_particleSmoke.Play();
 				}
 			}
 			else
 			{
-				particleSmoke.Stop();
+				_particleSmoke.Stop();
 			}
 
 
@@ -52,7 +53,7 @@ namespace H3VRUtils.Vehicles
 				damagedMesh.SetActive(false);
 				destroyedMesh.SetActive(true);
 			}
-			else if(HPLessThanPercent(SmokeParticleHPThreshold))
+			else if(HpLessThanPercent(smokeParticleHpThreshold))
 			{
 				fixedMesh.SetActive(false);
 				damagedMesh.SetActive(true);
@@ -66,9 +67,9 @@ namespace H3VRUtils.Vehicles
 			}
 		}
 
-		public override void onDeath()
+		public override void ONDeath()
 		{
-			particleFire.Play();
+			_particleFire.Play();
 			if(explosionPrefab != null)
 			{
 				Instantiate(explosionPrefab, this.transform.position, this.transform.rotation);
@@ -76,12 +77,12 @@ namespace H3VRUtils.Vehicles
 			vehicle.ToggleEngine(false);
 		}
 
-		public override void whileDead()
+		public override void WhileDead()
 		{
 
 		}
 
-		public override void whileUndead()
+		public override void WhileUndead()
 		{
 
 		}
@@ -96,15 +97,15 @@ namespace H3VRUtils.Vehicles
 			base.HealPercent(percentHeal);
 		}
 
-		public override void onUndeath()
+		public override void ONUndeath()
 		{
-			particleFire.Stop();
+			_particleFire.Stop();
 			vehicle.ToggleEngine(true);
 		}
 
 		public override void Damage(Damage dmg)
 		{
-			float takenDamage = getDamage(dmg);
+			float takenDamage = GETDamage(dmg);
 			Debug.Log("Engine taken " + takenDamage + " of type " + dmg.Class.ToString());
 			health -= takenDamage;
 		}

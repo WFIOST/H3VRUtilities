@@ -4,25 +4,26 @@ using System.Linq;
 using System.Text;
 using FistVR;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils.UniqueCode
 {
 	class OpenBoltLockOnSafe : MonoBehaviour
 	{
-		public Collider Bolt;
-		public GameObject SafetySwitch;
-		public cullOnZLoc.dirType SafetyRotDir;
-		public float AngleWhenSafe;
+		[FormerlySerializedAs("Bolt")] public Collider bolt;
+		[FormerlySerializedAs("SafetySwitch")] public GameObject safetySwitch;
+		[FormerlySerializedAs("SafetyRotDir")] public CullOnZLoc.DirType safetyRotDir;
+		[FormerlySerializedAs("AngleWhenSafe")] public float angleWhenSafe;
 		
 		public void FixedUpdate()
 		{
-			if(SafetySwitch.transform.localEulerAngles[(int)SafetyRotDir] == AngleWhenSafe)
+			if(safetySwitch.transform.localEulerAngles[(int)safetyRotDir] == angleWhenSafe)
 			{
-				Bolt.enabled = false;
+				bolt.enabled = false;
 			}
 			else
 			{
-				Bolt.enabled = true;
+				bolt.enabled = true;
 			}
 		}
 	}

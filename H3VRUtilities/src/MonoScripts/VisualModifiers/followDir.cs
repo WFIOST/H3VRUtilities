@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
-	public class followDir : MonoBehaviour
+	public class FollowDir : MonoBehaviour
 	{
 		public GameObject leader;
 		public GameObject follower;
-		public cullOnZLoc.dirType FollowDirection;
+		[FormerlySerializedAs("FollowDirection")] public CullOnZLoc.DirType followDirection;
 
 		public Vector3 followerpos;
 		public Vector3 leaderpos;

@@ -22,13 +22,13 @@ public class ComponentCulling : MonoBehaviour
     public float cullingRadius = 10;
 
     // Unity's culling group
-    CullingGroup m_CullingGroup;
+    CullingGroup _mCullingGroup;
 
     [Tooltip("The Behaviours we want to enable/disable")]
     public Behaviour[] sources;
 
     // Used for culling initialization
-    UnityEngine.Camera cameraMain;
+    UnityEngine.Camera _cameraMain;
 
     void Update()
     {
@@ -39,11 +39,11 @@ public class ComponentCulling : MonoBehaviour
         // to play.
         // 
         // Wait until we have a valid camera/player
-        if (cameraMain == null)
+        if (_cameraMain == null)
         {
-            cameraMain = UnityEngine.Camera.main;
+            _cameraMain = UnityEngine.Camera.main;
 
-            if (cameraMain != null)
+            if (_cameraMain != null)
             {
                 // Ready
                 Init();
@@ -54,35 +54,35 @@ public class ComponentCulling : MonoBehaviour
     void Init()
     {
         // Hook the Unity occlusion culling system and set a callback function
-        if (m_CullingGroup == null)
+        if (_mCullingGroup == null)
         {
-            m_CullingGroup = new CullingGroup();
-            m_CullingGroup.targetCamera = UnityEngine.Camera.main;
-            m_CullingGroup.SetBoundingSpheres(new[] { new BoundingSphere(transform.position, cullingRadius) });
-            m_CullingGroup.SetBoundingSphereCount(1);
-            m_CullingGroup.onStateChanged += OnStateChanged;
+            _mCullingGroup = new CullingGroup();
+            _mCullingGroup.targetCamera = UnityEngine.Camera.main;
+            _mCullingGroup.SetBoundingSpheres(new[] { new BoundingSphere(transform.position, cullingRadius) });
+            _mCullingGroup.SetBoundingSphereCount(1);
+            _mCullingGroup.onStateChanged += OnStateChanged;
 
             // We need to start in a culled state
-            EnableComponent(m_CullingGroup.IsVisible(0));
+            EnableComponent(_mCullingGroup.IsVisible(0));
         }
 
-        m_CullingGroup.enabled = true;
+        _mCullingGroup.enabled = true;
     }
 
     void OnEnable()
     {
-        if (m_CullingGroup != null)
+        if (_mCullingGroup != null)
         {
-            m_CullingGroup.enabled = true;
+            _mCullingGroup.enabled = true;
             EnableComponent(true);
         }
     }
 
     void OnDisable()
     {
-        if (m_CullingGroup != null)
+        if (_mCullingGroup != null)
         {
-            m_CullingGroup.enabled = false;
+            _mCullingGroup.enabled = false;
             EnableComponent(false);
         }
     }
@@ -92,8 +92,8 @@ public class ComponentCulling : MonoBehaviour
     /// </summary>
     void OnDestroy()
     {
-        if (m_CullingGroup != null)
-            m_CullingGroup.Dispose();
+        if (_mCullingGroup != null)
+            _mCullingGroup.Dispose();
     }
 
     /// <summary>
@@ -126,7 +126,7 @@ public class ComponentCulling : MonoBehaviour
         {
             // Draw gizmos to show the culling sphere.
             Color col = Color.yellow;
-            if (m_CullingGroup != null && !m_CullingGroup.IsVisible(0))
+            if (_mCullingGroup != null && !_mCullingGroup.IsVisible(0))
                 col = Color.gray;
 
             Gizmos.color = col;

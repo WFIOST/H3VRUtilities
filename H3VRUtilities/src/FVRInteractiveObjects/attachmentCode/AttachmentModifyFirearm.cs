@@ -4,18 +4,19 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
 	class AttachmentModifyFirearm : MonoBehaviour
 	{
-		private FVRFireArmAttachment attachment;
-		private FVRFireArm weapon;
+		private FVRFireArmAttachment _attachment;
+		private FVRFireArm _weapon;
 
-		public enum actionType
+		public enum ActionType
 		{
-			attach,
-			detach
+			Attach,
+			Detach
 		}
 		public enum CapType
 		{
@@ -23,44 +24,44 @@ namespace H3VRUtils
 			SetTo
 		}
 
-		[Header("Recoil Modifier")]
-		public bool ChangesRecoil;
-		private FVRFireArmRecoilProfile originalRecoil;
+		[FormerlySerializedAs("ChangesRecoil")] [Header("Recoil Modifier")]
+		public bool changesRecoil;
+		private FVRFireArmRecoilProfile _originalRecoil;
 		public FVRFireArmRecoilProfile modifiedRecoil;
 
-		[Header("Magazine Modifer")]
-		public bool ChangesMagCapacity;
-		private int prevCapacity;
-		public CapType CapacityModifierType;
+		[FormerlySerializedAs("ChangesMagCapacity")] [Header("Magazine Modifer")]
+		public bool changesMagCapacity;
+		private int _prevCapacity;
+		[FormerlySerializedAs("CapacityModifierType")] public CapType capacityModifierType;
 		[Tooltip("Keep it off unless you're sure it should apply to non-internal mags.")]
 		public bool applyToNonInternalMags;
 		public int setCapacityTo;
 
-		[Header("Bolt Speed Modifier")]
-		public bool ChangesBoltSpeed;
-		public bool ChangesBoltSpeedForward;
-		public bool ChangesBoltSpeedRearward;
-		public bool ChangesBoltSpeedStiffness;
-		public CapType BoltSpeedModifierType;
-		public float BoltSpeedForward;
-		private float prevBoltSpeedForward;
-		public float BoltSpeedBackwards;
-		private float prevBoltSpeedBackwards;
-		public float BoltSpringStiffness;
-		private float prevBoltSpringStiffness;
+		[FormerlySerializedAs("ChangesBoltSpeed")] [Header("Bolt Speed Modifier")]
+		public bool changesBoltSpeed;
+		[FormerlySerializedAs("ChangesBoltSpeedForward")] public bool changesBoltSpeedForward;
+		[FormerlySerializedAs("ChangesBoltSpeedRearward")] public bool changesBoltSpeedRearward;
+		[FormerlySerializedAs("ChangesBoltSpeedStiffness")] public bool changesBoltSpeedStiffness;
+		[FormerlySerializedAs("BoltSpeedModifierType")] public CapType boltSpeedModifierType;
+		[FormerlySerializedAs("BoltSpeedForward")] public float boltSpeedForward;
+		private float _prevBoltSpeedForward;
+		[FormerlySerializedAs("BoltSpeedBackwards")] public float boltSpeedBackwards;
+		private float _prevBoltSpeedBackwards;
+		[FormerlySerializedAs("BoltSpringStiffness")] public float boltSpringStiffness;
+		private float _prevBoltSpringStiffness;
 
 //		[Header("Spread Modifier")]
-		[HideInInspector]
-		public bool ChangesSpread;
+		[FormerlySerializedAs("ChangesSpread")] [HideInInspector]
+		public bool changesSpread;
 		[HideInInspector]
 		public float spreadmult;
 
-		[Header("GrabPos Modifier")]
-		public bool ChangesGrabPos;
-		public Transform NewPoseOverride;
-		private Transform oldPoseOverride;
-		public Transform NewPoseOverrideTouch;
-		private Transform oldPoseOverrideTouch;
+		[FormerlySerializedAs("ChangesGrabPos")] [Header("GrabPos Modifier")]
+		public bool changesGrabPos;
+		[FormerlySerializedAs("NewPoseOverride")] public Transform newPoseOverride;
+		private Transform _oldPoseOverride;
+		[FormerlySerializedAs("NewPoseOverrideTouch")] public Transform newPoseOverrideTouch;
+		private Transform _oldPoseOverrideTouch;
 
 
 		/*[Header("Weapon Fire Selector Modifier")]
@@ -76,73 +77,73 @@ namespace H3VRUtils
 
 		public void Start()
 		{
-			attachment = GetComponent<FVRFireArmAttachment>();
+			_attachment = GetComponent<FVRFireArmAttachment>();
 		}
 
 		void FixedUpdate()
 		{
-			if (attachment.curMount != null) { if (weapon == null) OnAttach(); }
-			else if (weapon != null) OnDetach();
-			if (ChangesSpread) ChangeSpread();
+			if (_attachment.curMount != null) { if (_weapon == null) OnAttach(); }
+			else if (_weapon != null) OnDetach();
+			if (changesSpread) ChangeSpread();
 		}
 
 		public void OnAttach()
 		{
-			weapon = attachment.curMount.Parent.GetComponent<FVRFireArm>();
-			if (ChangesRecoil) RecoilModifier(actionType.attach);
-			if (ChangesMagCapacity) MagSizeModifier(actionType.attach);
-			if (ChangesBoltSpeed) BoltSpeedModifier(actionType.attach);
+			_weapon = _attachment.curMount.Parent.GetComponent<FVRFireArm>();
+			if (changesRecoil) RecoilModifier(ActionType.Attach);
+			if (changesMagCapacity) MagSizeModifier(ActionType.Attach);
+			if (changesBoltSpeed) BoltSpeedModifier(ActionType.Attach);
 			//if (ChangesFireSelector) FireSelectorModifier(actionType.attach);
-			if (ChangesGrabPos) ChangeGrabPos(actionType.attach);
+			if (changesGrabPos) ChangeGrabPos(ActionType.Attach);
 		}
 
 		public void OnDetach()
 		{
-			if (ChangesRecoil) RecoilModifier(actionType.detach);
-			if (ChangesMagCapacity) MagSizeModifier(actionType.detach);
-			if (ChangesBoltSpeed) BoltSpeedModifier(actionType.detach);
+			if (changesRecoil) RecoilModifier(ActionType.Detach);
+			if (changesMagCapacity) MagSizeModifier(ActionType.Detach);
+			if (changesBoltSpeed) BoltSpeedModifier(ActionType.Detach);
 			//if (ChangesFireSelector) FireSelectorModifier(actionType.detach);
-			if (ChangesGrabPos) ChangeGrabPos(actionType.detach);
-			weapon = null;
+			if (changesGrabPos) ChangeGrabPos(ActionType.Detach);
+			_weapon = null;
 		}
 
-		public void ChangeGrabPos(actionType ActType)
+		public void ChangeGrabPos(ActionType actType)
 		{
-			if (ActType == actionType.attach)
+			if (actType == ActionType.Attach)
 			{
-				oldPoseOverride = weapon.PoseOverride;
-				weapon.PoseOverride = NewPoseOverride;
-				oldPoseOverrideTouch = weapon.PoseOverride_Touch;
-				weapon.PoseOverride_Touch = NewPoseOverrideTouch;
+				_oldPoseOverride = _weapon.PoseOverride;
+				_weapon.PoseOverride = newPoseOverride;
+				_oldPoseOverrideTouch = _weapon.PoseOverride_Touch;
+				_weapon.PoseOverride_Touch = newPoseOverrideTouch;
 			}
-			if (ActType == actionType.detach)
+			if (actType == ActionType.Detach)
 			{
-				weapon.PoseOverride = oldPoseOverride;
-				weapon.PoseOverride_Touch = oldPoseOverrideTouch;
+				_weapon.PoseOverride = _oldPoseOverride;
+				_weapon.PoseOverride_Touch = _oldPoseOverrideTouch;
 			}
 		}
 
 		public void ChangeSpread()
 		{
 			FVRFireArmRound rnd = null;
-			if (weapon is OpenBoltReceiver)
+			if (_weapon is OpenBoltReceiver)
 			{
-				var wep = weapon as OpenBoltReceiver;
+				OpenBoltReceiver wep = _weapon as OpenBoltReceiver;
 				rnd = wep.Chamber.GetRound();
 			}
-			else if (weapon is ClosedBoltWeapon)
+			else if (_weapon is ClosedBoltWeapon)
 			{
-				var wep = weapon as ClosedBoltWeapon;
+				ClosedBoltWeapon wep = _weapon as ClosedBoltWeapon;
 				rnd = wep.Chamber.GetRound();
 			}
-			else if (weapon is Handgun)
+			else if (_weapon is Handgun)
 			{
-				var wep = weapon as Handgun;
+				Handgun wep = _weapon as Handgun;
 				rnd = wep.Chamber.GetRound();
 			}
-			else if (weapon is TubeFedShotgun)
+			else if (_weapon is TubeFedShotgun)
 			{
-				var wep = weapon as TubeFedShotgun;
+				TubeFedShotgun wep = _weapon as TubeFedShotgun;
 				rnd = wep.Chamber.GetRound();
 			}
 
@@ -155,149 +156,149 @@ namespace H3VRUtils
 			}
 		}
 
-		public void RecoilModifier(actionType ActType)
+		public void RecoilModifier(ActionType actType)
 		{
-			if (ActType == actionType.attach)
+			if (actType == ActionType.Attach)
 			{
-				originalRecoil = weapon.RecoilProfile;
-				weapon.RecoilProfile = modifiedRecoil;
+				_originalRecoil = _weapon.RecoilProfile;
+				_weapon.RecoilProfile = modifiedRecoil;
 			}
-			if (ActType == actionType.detach)
+			if (actType == ActionType.Detach)
 			{
-				weapon.RecoilProfile = originalRecoil;
+				_weapon.RecoilProfile = _originalRecoil;
 			}
 		}
 
-		public void MagSizeModifier(actionType ActType)
+		public void MagSizeModifier(ActionType actType)
 		{
-			if (weapon.Magazine == null) return;
-			if (ActType == actionType.attach)
+			if (_weapon.Magazine == null) return;
+			if (actType == ActionType.Attach)
 			{
-				if (weapon.Magazine.IsIntegrated == true || applyToNonInternalMags)
+				if (_weapon.Magazine.IsIntegrated == true || applyToNonInternalMags)
 				{
-					prevCapacity = weapon.Magazine.m_capacity;
-					if (CapacityModifierType == CapType.AddTo) weapon.Magazine.m_capacity += setCapacityTo;
-					if (CapacityModifierType == CapType.SetTo) weapon.Magazine.m_capacity = setCapacityTo;
+					_prevCapacity = _weapon.Magazine.m_capacity;
+					if (capacityModifierType == CapType.AddTo) _weapon.Magazine.m_capacity += setCapacityTo;
+					if (capacityModifierType == CapType.SetTo) _weapon.Magazine.m_capacity = setCapacityTo;
 				}
 			}
-			if (ActType == actionType.detach)
+			if (actType == ActionType.Detach)
 			{
-				if (weapon.Magazine.IsIntegrated == true || applyToNonInternalMags) weapon.Magazine.m_capacity = prevCapacity;
+				if (_weapon.Magazine.IsIntegrated == true || applyToNonInternalMags) _weapon.Magazine.m_capacity = _prevCapacity;
 			}
 		}
 
-		public void BoltSpeedModifier(actionType ActType)
+		public void BoltSpeedModifier(ActionType actType)
 		{
 			int wepType = 0;
-			OpenBoltReceiver _OpenBoltWep = null;
-			ClosedBoltWeapon _ClosedBoltWep = null;
-			Handgun _HandgunWep = null;
-			TubeFedShotgun _TFWep = null;
+			OpenBoltReceiver openBoltWep = null;
+			ClosedBoltWeapon closedBoltWep = null;
+			Handgun handgunWep = null;
+			TubeFedShotgun tfWep = null;
 
-			if (weapon is OpenBoltReceiver)
+			if (_weapon is OpenBoltReceiver)
 			{
-				_OpenBoltWep = weapon as OpenBoltReceiver;
+				openBoltWep = _weapon as OpenBoltReceiver;
 				wepType = 1;
 			}
-			else if (weapon is ClosedBoltWeapon)
+			else if (_weapon is ClosedBoltWeapon)
 			{
-				_ClosedBoltWep = weapon as ClosedBoltWeapon;
+				closedBoltWep = _weapon as ClosedBoltWeapon;
 				wepType = 2;
 			}
-			else if (weapon is Handgun)
+			else if (_weapon is Handgun)
 			{
-				_HandgunWep = weapon as Handgun;
+				handgunWep = _weapon as Handgun;
 				wepType = 3;
 			}
-			else if (weapon is TubeFedShotgun)
+			else if (_weapon is TubeFedShotgun)
 			{
-				_TFWep = weapon as TubeFedShotgun;
+				tfWep = _weapon as TubeFedShotgun;
 				wepType = 4;
 			}
 
-			float _boltSpeedBack = 0;
-			float _boltSpeedForward = 0;
-			float _boltSpringStiffness = 0;
+			float boltSpeedBack = 0;
+			float boltSpeedForward = 0;
+			float boltSpringStiffness = 0;
 
 			switch (wepType)
 			{
 				case 1:
-					_boltSpeedBack = _OpenBoltWep.Bolt.BoltSpeed_Rearward;
-					_boltSpeedForward = _OpenBoltWep.Bolt.BoltSpeed_Forward;
-					_boltSpringStiffness = _OpenBoltWep.Bolt.BoltSpringStiffness;
+					boltSpeedBack = openBoltWep.Bolt.BoltSpeed_Rearward;
+					boltSpeedForward = openBoltWep.Bolt.BoltSpeed_Forward;
+					boltSpringStiffness = openBoltWep.Bolt.BoltSpringStiffness;
 					break;
 				case 2:
-					_boltSpeedBack = _ClosedBoltWep.Bolt.Speed_Rearward;
-					_boltSpeedForward = _ClosedBoltWep.Bolt.Speed_Forward;
-					_boltSpringStiffness = _ClosedBoltWep.Bolt.SpringStiffness;
+					boltSpeedBack = closedBoltWep.Bolt.Speed_Rearward;
+					boltSpeedForward = closedBoltWep.Bolt.Speed_Forward;
+					boltSpringStiffness = closedBoltWep.Bolt.SpringStiffness;
 					break;
 				case 3:
-					_boltSpeedBack = _HandgunWep.Slide.Speed_Forward;
-					_boltSpeedForward = _HandgunWep.Slide.Speed_Rearward;
-					_boltSpringStiffness = _HandgunWep.Slide.SpringStiffness;
+					boltSpeedBack = handgunWep.Slide.Speed_Forward;
+					boltSpeedForward = handgunWep.Slide.Speed_Rearward;
+					boltSpringStiffness = handgunWep.Slide.SpringStiffness;
 					break;
 			}
 
-			if (ActType == actionType.attach)
+			if (actType == ActionType.Attach)
 			{
-				prevBoltSpeedBackwards = _boltSpeedBack;
-				prevBoltSpeedForward = _boltSpeedForward;
-				prevBoltSpringStiffness = _boltSpringStiffness;
+				_prevBoltSpeedBackwards = boltSpeedBack;
+				_prevBoltSpeedForward = boltSpeedForward;
+				_prevBoltSpringStiffness = boltSpringStiffness;
 
-				if (BoltSpeedModifierType == CapType.SetTo)
+				if (boltSpeedModifierType == CapType.SetTo)
 				{
-					_boltSpeedBack = BoltSpeedBackwards;
-					_boltSpeedForward = BoltSpeedForward;
-					_boltSpringStiffness = BoltSpringStiffness;
+					boltSpeedBack = boltSpeedBackwards;
+					boltSpeedForward = boltSpeedForward;
+					boltSpringStiffness = boltSpringStiffness;
 				}
-				if (BoltSpeedModifierType == CapType.AddTo)
+				if (boltSpeedModifierType == CapType.AddTo)
 				{
-					_boltSpeedBack += BoltSpeedBackwards;
-					_boltSpeedForward += BoltSpeedForward;
-					_boltSpringStiffness += BoltSpringStiffness;
+					boltSpeedBack += boltSpeedBackwards;
+					boltSpeedForward += boltSpeedForward;
+					boltSpringStiffness += boltSpringStiffness;
 				}
 			}
-			if (ActType == actionType.detach)
+			if (actType == ActionType.Detach)
 			{
-				_boltSpeedBack = prevBoltSpeedBackwards;
-				_boltSpeedForward = prevBoltSpeedForward;
-				_boltSpringStiffness = prevBoltSpringStiffness;
+				boltSpeedBack = _prevBoltSpeedBackwards;
+				boltSpeedForward = _prevBoltSpeedForward;
+				boltSpringStiffness = _prevBoltSpringStiffness;
 			}
 
-			if (ChangesBoltSpeedRearward) switch (wepType)
+			if (changesBoltSpeedRearward) switch (wepType)
 			{
 				case 1:
-					_OpenBoltWep.Bolt.BoltSpeed_Rearward = _boltSpeedBack;
+					openBoltWep.Bolt.BoltSpeed_Rearward = boltSpeedBack;
 					break;
 				case 2:
-					_ClosedBoltWep.Bolt.Speed_Rearward = _boltSpeedBack;
+					closedBoltWep.Bolt.Speed_Rearward = boltSpeedBack;
 					break;
 				case 3:
-					_HandgunWep.Slide.Speed_Forward = _boltSpeedBack;
+					handgunWep.Slide.Speed_Forward = boltSpeedBack;
 					break;
 			}
-			if (ChangesBoltSpeedForward) switch (wepType)
+			if (changesBoltSpeedForward) switch (wepType)
 			{
 				case 1:
-					_OpenBoltWep.Bolt.BoltSpeed_Forward = _boltSpeedForward;
+					openBoltWep.Bolt.BoltSpeed_Forward = boltSpeedForward;
 					break;
 				case 2:
-					_ClosedBoltWep.Bolt.Speed_Forward = _boltSpeedForward;
+					closedBoltWep.Bolt.Speed_Forward = boltSpeedForward;
 					break;
 				case 3:
-					_HandgunWep.Slide.Speed_Rearward = _boltSpeedForward;
+					handgunWep.Slide.Speed_Rearward = boltSpeedForward;
 					break;
 			}
-			if (ChangesBoltSpeedStiffness) switch (wepType)
+			if (changesBoltSpeedStiffness) switch (wepType)
 			{
 				case 1:
-					_OpenBoltWep.Bolt.BoltSpringStiffness = _boltSpringStiffness;
+					openBoltWep.Bolt.BoltSpringStiffness = boltSpringStiffness;
 					break;
 				case 2:
-					_ClosedBoltWep.Bolt.SpringStiffness = _boltSpringStiffness;
+					closedBoltWep.Bolt.SpringStiffness = boltSpringStiffness;
 					break;
 				case 3:
-					_HandgunWep.Slide.SpringStiffness = _boltSpringStiffness;
+					handgunWep.Slide.SpringStiffness = boltSpringStiffness;
 					break;
 			}
 

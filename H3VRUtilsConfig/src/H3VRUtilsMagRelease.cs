@@ -73,7 +73,7 @@ namespace H3VRUtils
             dir = Vector2.up;
 
             //config override
-            if (UtilsBepInExLoader.paddleMagReleaseDir.Value != UtilsBepInExLoader.TouchpadDirTypePT.BasedOnWeapon)
+            if (UtilsBepInExLoader.paddleMagReleaseDir.Value != UtilsBepInExLoader.TouchpadDirTypePt.BasedOnWeapon)
                 touchpadDir = (TouchpadDirType) (int) UtilsBepInExLoader.paddleMagReleaseDir.Value;
 
             switch (touchpadDir)
@@ -154,7 +154,7 @@ namespace H3VRUtils
         {
             base.UpdateInteraction(hand);
 
-            var flag = false;
+            bool flag = false;
             FVRFireArmMagazine prevmag = null;
             if (_mag != null)
             {
@@ -180,8 +180,8 @@ namespace H3VRUtils
 
             if (_mag != null)
             {
-                var flag2 = Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown &&
-                            hand.Input.TouchpadAxes.magnitude > 0.2f;
+                bool flag2 = Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown &&
+                             hand.Input.TouchpadAxes.magnitude > 0.2f;
 
 
                 if (

@@ -20,7 +20,7 @@ namespace H3VRUtils.Mapping.Camera
         [Tooltip("Set this to the MAXIMUM distance you want the player to see.")]
         public float cameraViewDistance = 1500f;
 
-        private UnityEngine.Camera cam = null;
+        private UnityEngine.Camera _cam = null;
 
         // NOTE : performance on this kinda sucks as
         // calling Camera.main is notoriously heavy.
@@ -32,11 +32,11 @@ namespace H3VRUtils.Mapping.Camera
         void Update()
         {
             // Setup camera view distance for this map
-            cam = UnityEngine.Camera.main;
+            _cam = UnityEngine.Camera.main;
 
-            if (cam != null)
+            if (_cam != null)
             {
-                cam.farClipPlane = cameraViewDistance;
+                _cam.farClipPlane = cameraViewDistance;
 
                 // Done, turn the component (script) off
                 // so it's not running for the whole game.

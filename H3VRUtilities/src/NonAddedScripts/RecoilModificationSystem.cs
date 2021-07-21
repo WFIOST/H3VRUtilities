@@ -10,8 +10,8 @@ namespace H3VRUtils.NonAddedScripts
 	class RecoilModificationSystem : MonoBehaviour
 	{
 		public FVRFireArm firearm;
-		private FVRFireArmRecoilProfile modifiedRecoil;
-		private FVRFireArmRecoilProfile baseRecoil;
+		private FVRFireArmRecoilProfile _modifiedRecoil;
+		private FVRFireArmRecoilProfile _baseRecoil;
 
 
 		public void Start()

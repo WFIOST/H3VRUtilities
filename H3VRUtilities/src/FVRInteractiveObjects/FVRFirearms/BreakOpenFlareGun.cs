@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FistVR;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
@@ -13,46 +14,46 @@ namespace H3VRUtils
 		public override void Awake()
 		{
 			base.Awake();
-			if (this.CanUnlatch)
+			if (this.canUnlatch)
 			{
-				this.Chamber.IsAccessible = false;
+				this.chamber.IsAccessible = false;
 			}
 			else
 			{
-				this.Chamber.IsAccessible = true;
+				this.chamber.IsAccessible = true;
 			}
 		}
 
 		// Token: 0x06003435 RID: 13365 RVA: 0x0016D0A4 File Offset: 0x0016B4A4
 		public override void FVRUpdate()
 		{
-			if (this.HasVisibleHammer)
+			if (this.hasVisibleHammer)
 			{
-				if (this.m_isHammerCocked)
+				if (this._mIsHammerCocked)
 				{
-					this.m_hammerXRot = Mathf.Lerp(this.m_hammerXRot, this.HammerMaxRot, Time.deltaTime * 12f);
+					this._mHammerXRot = Mathf.Lerp(this._mHammerXRot, this.hammerMaxRot, Time.deltaTime * 12f);
 				}
 				else
 				{
-					this.m_hammerXRot = Mathf.Lerp(this.m_hammerXRot, 0f, Time.deltaTime * 25f);
+					this._mHammerXRot = Mathf.Lerp(this._mHammerXRot, 0f, Time.deltaTime * 25f);
 				}
-				this.Hammer.localEulerAngles = new Vector3(this.m_hammerXRot, 0f, 0f);
+				this.hammer.localEulerAngles = new Vector3(this._mHammerXRot, 0f, 0f);
 			}
-			if (!this.m_isLatched && Vector3.Angle(Vector3.up, this.Chamber.transform.forward) < 70f && this.Chamber.IsFull && this.Chamber.IsSpent)
+			if (!this._mIsLatched && Vector3.Angle(Vector3.up, this.chamber.transform.forward) < 70f && this.chamber.IsFull && this.chamber.IsSpent)
 			{
 				base.PlayAudioEvent(FirearmAudioEventType.MagazineEjectRound, 1f);
-				this.Chamber.EjectRound(this.Chamber.transform.position + this.Chamber.transform.forward * -0.06f, this.Chamber.transform.forward * -0.01f, Vector3.right, false);
+				this.chamber.EjectRound(this.chamber.transform.position + this.chamber.transform.forward * -0.06f, this.chamber.transform.forward * -0.01f, Vector3.right, false);
 			}
 		}
 
 		// Token: 0x06003436 RID: 13366 RVA: 0x0016D1E6 File Offset: 0x0016B5E6
 		private void ToggleLatchState()
 		{
-			if (this.m_isLatched)
+			if (this._mIsLatched)
 			{
 				this.Unlatch();
 			}
-			else if (!this.m_isLatched)
+			else if (!this._mIsLatched)
 			{
 				this.Latch();
 			}
@@ -63,7 +64,7 @@ namespace H3VRUtils
 		{
 			base.UpdateInteraction(hand);
 			float num = 0f;
-			FVRPhysicalObject.Axis hingeAxis = this.HingeAxis;
+			FVRPhysicalObject.Axis hingeAxis = this.hingeAxis;
 			if (hingeAxis != FVRPhysicalObject.Axis.X)
 			{
 				if (hingeAxis != FVRPhysicalObject.Axis.Y)
@@ -82,108 +83,108 @@ namespace H3VRUtils
 			{
 				num = base.transform.InverseTransformDirection(hand.Input.VelAngularWorld).x;
 			}
-			if (num > 15f && this.CanUnlatch)
+			if (num > 15f && this.canUnlatch)
 			{
 				this.Unlatch();
 			}
-			else if (num < -15f && this.CanUnlatch)
+			else if (num < -15f && this.canUnlatch)
 			{
 				this.Latch();
 			}
 			if (hand.Input.TouchpadDown && !this.IsAltHeld)
 			{
 				Vector2 touchpadAxes = hand.Input.TouchpadAxes;
-				if (touchpadAxes.magnitude > 0.2f && Vector2.Angle(touchpadAxes, Vector2.down) < 45f && this.CanCockHammer)
+				if (touchpadAxes.magnitude > 0.2f && Vector2.Angle(touchpadAxes, Vector2.down) < 45f && this.canCockHammer)
 				{
 					this.CockHammer();
 				}
-				else if (touchpadAxes.magnitude > 0.2f && (Vector2.Angle(touchpadAxes, Vector2.left) < 45f || Vector2.Angle(touchpadAxes, Vector2.right) < 45f) && this.CanUnlatch)
+				else if (touchpadAxes.magnitude > 0.2f && (Vector2.Angle(touchpadAxes, Vector2.left) < 45f || Vector2.Angle(touchpadAxes, Vector2.right) < 45f) && this.canUnlatch)
 				{
 					this.ToggleLatchState();
 				}
 			}
-			if (this.m_isDestroyed)
+			if (this._mIsDestroyed)
 			{
 				return;
 			}
 			if (this.m_hasTriggeredUpSinceBegin && !this.IsAltHeld)
 			{
-				this.TriggerFloat = hand.Input.TriggerFloat;
+				this._triggerFloat = hand.Input.TriggerFloat;
 			}
 			else
 			{
-				this.TriggerFloat = 0f;
+				this._triggerFloat = 0f;
 			}
-			float x = Mathf.Lerp(this.TriggerForwardBackRots.x, this.TriggerForwardBackRots.y, this.TriggerFloat);
-			this.Trigger.localEulerAngles = new Vector3(x, 0f, 0f);
-			if (this.TriggerFloat > 0.7f)
+			float x = Mathf.Lerp(this.triggerForwardBackRots.x, this.triggerForwardBackRots.y, this._triggerFloat);
+			this.trigger.localEulerAngles = new Vector3(x, 0f, 0f);
+			if (this._triggerFloat > 0.7f)
 			{
-				if (this.m_isTriggerReset && this.m_isHammerCocked)
+				if (this._mIsTriggerReset && this._mIsHammerCocked)
 				{
-					this.m_isTriggerReset = false;
-					this.m_isHammerCocked = false;
-					if (this.Hammer != null)
+					this._mIsTriggerReset = false;
+					this._mIsHammerCocked = false;
+					if (this.hammer != null)
 					{
-						base.SetAnimatedComponent(this.Hammer, this.HammerMinRot, this.HammerInterp, this.HammerAxis);
+						base.SetAnimatedComponent(this.hammer, this.hammerMinRot, this.hammerInterp, this.hammerAxis);
 					}
 					base.PlayAudioEvent(FirearmAudioEventType.HammerHit, 1f);
 					this.Fire();
 				}
 			}
-			else if (this.TriggerFloat < 0.2f && !this.m_isTriggerReset)
+			else if (this._triggerFloat < 0.2f && !this._mIsTriggerReset)
 			{
-				this.m_isTriggerReset = true;
+				this._mIsTriggerReset = true;
 			}
 		}
 
 		private void Fire()
 		{
-			if (!this.m_isLatched)
+			if (!this._mIsLatched)
 			{
 				return;
 			}
-			if (!this.Chamber.Fire())
+			if (!this.chamber.Fire())
 			{
 				return;
 			}
-			base.Fire(this.Chamber, this.GetMuzzle(), true, 1f);
+			base.Fire(this.chamber, this.GetMuzzle(), true, 1f);
 			this.FireMuzzleSmoke();
 			bool twoHandStabilized = this.IsTwoHandStabilized();
 			bool foregripStabilized = base.AltGrip != null;
 			bool shoulderStabilized = this.IsShoulderStabilized();
-			if (this.Chamber.GetRound().IsHighPressure && !this.IsHighPressureTolerant)
+			if (this.chamber.GetRound().IsHighPressure && !this.isHighPressureTolerant)
 			{
 				this.Recoil(twoHandStabilized, foregripStabilized, shoulderStabilized, null, 1f);
 				this.Destroy();
 			}
-			else if (this.IsHighPressureTolerant)
+			else if (this.isHighPressureTolerant)
 			{
 				this.Recoil(twoHandStabilized, foregripStabilized, shoulderStabilized, null, 1f);
 			}
-			base.PlayAudioGunShot(this.Chamber.GetRound(), GM.CurrentPlayerBody.GetCurrentSoundEnvironment(), 1f);
+			base.PlayAudioGunShot(this.chamber.GetRound(), GM.CurrentPlayerBody.GetCurrentSoundEnvironment(), 1f);
 			if (GM.CurrentSceneSettings.IsAmmoInfinite || GM.CurrentPlayerBody.IsInfiniteAmmo)
 			{
-				this.Chamber.IsSpent = false;
-				this.Chamber.UpdateProxyDisplay();
+				this.chamber.IsSpent = false;
+				this.chamber.UpdateProxyDisplay();
 			}
-			else if (this.Chamber.GetRound().IsCaseless)
+			else if (this.chamber.GetRound().IsCaseless)
 			{
-				this.Chamber.SetRound(null);
+				this.chamber.SetRound(null);
 			}
-			if (this.DeletesCartridgeOnFire)
+			if (this.deletesCartridgeOnFire)
 			{
-				this.Chamber.SetRound(null);
+				this.chamber.SetRound(null);
 			}
 		}
 
 		public void Unlatch()
 		{
-			if (this.m_isLatched)
+			if (this._mIsLatched)
 			{
 				base.PlayAudioEvent(FirearmAudioEventType.BreachOpen, 1f);
-				this.m_isLatched = false;
-				this.Chamber.IsAccessible = true;
-				if (this.CocksOnOpen)
+				this._mIsLatched = false;
+				this.chamber.IsAccessible = true;
+				if (this.cocksOnOpen)
 				{
 					this.CockHammer();
 				}
@@ -192,48 +193,48 @@ namespace H3VRUtils
 
 		public void Latch()
 		{
-			if (!this.m_isLatched)
+			if (!this._mIsLatched)
 			{
 				base.PlayAudioEvent(FirearmAudioEventType.BreachClose, 1f);
-				this.m_isLatched = true;
-				this.Chamber.IsAccessible = false;
+				this._mIsLatched = true;
+				this.chamber.IsAccessible = false;
 			}
 		}
 
 		private void CockHammer()
 		{
-			if (!this.m_isHammerCocked)
+			if (!this._mIsHammerCocked)
 			{
 				base.PlayAudioEvent(FirearmAudioEventType.Prefire, 1f);
-				this.m_isHammerCocked = true;
-				if (this.Hammer != null)
+				this._mIsHammerCocked = true;
+				if (this.hammer != null)
 				{
-					base.SetAnimatedComponent(this.Hammer, this.HammerMaxRot, this.HammerInterp, this.HammerAxis);
+					base.SetAnimatedComponent(this.hammer, this.hammerMaxRot, this.hammerInterp, this.hammerAxis);
 				}
 			}
 		}
 
 		private void Destroy()
 		{
-			if (!this.m_isDestroyed)
+			if (!this._mIsDestroyed)
 			{
-				this.m_isDestroyed = true;
-				this.DestroyPSystem.Emit(25);
-				for (int i = 0; i < this.GunUndamaged.Length; i++)
+				this._mIsDestroyed = true;
+				this.destroyPSystem.Emit(25);
+				for (int i = 0; i < this.gunUndamaged.Length; i++)
 				{
-					this.GunUndamaged[i].enabled = false;
-					this.GunDamaged[i].enabled = true;
+					this.gunUndamaged[i].enabled = false;
+					this.gunDamaged[i].enabled = true;
 				}
 			}
 		}
 
 		public override List<FireArmRoundClass> GetChamberRoundList()
 		{
-			if (this.Chamber.IsFull && !this.Chamber.IsSpent)
+			if (this.chamber.IsFull && !this.chamber.IsSpent)
 			{
 				return new List<FireArmRoundClass>
 				{
-					this.Chamber.GetRound().RoundClass
+					this.chamber.GetRound().RoundClass
 				};
 			}
 			return null;
@@ -243,7 +244,7 @@ namespace H3VRUtils
 		{
 			if (rounds.Count > 0)
 			{
-				this.Chamber.Autochamber(rounds[0]);
+				this.chamber.Autochamber(rounds[0]);
 			}
 		}
 
@@ -256,61 +257,61 @@ namespace H3VRUtils
 		{
 		}
 
-		[Header("Flaregun Params")]
-		public Renderer[] GunUndamaged;
+		[FormerlySerializedAs("GunUndamaged")] [Header("Flaregun Params")]
+		public Renderer[] gunUndamaged;
 
-		public Renderer[] GunDamaged;
+		[FormerlySerializedAs("GunDamaged")] public Renderer[] gunDamaged;
 
-		public FVRFireArmChamber Chamber;
+		[FormerlySerializedAs("Chamber")] public FVRFireArmChamber chamber;
 
-		public FVRPhysicalObject.Axis HingeAxis;
+		[FormerlySerializedAs("HingeAxis")] public FVRPhysicalObject.Axis hingeAxis;
 
-		public Transform Hinge;
+		[FormerlySerializedAs("Hinge")] public Transform hinge;
 
-		public float RotOut = 35f;
+		[FormerlySerializedAs("RotOut")] public float rotOut = 35f;
 
-		public bool CanUnlatch = true;
+		[FormerlySerializedAs("CanUnlatch")] public bool canUnlatch = true;
 
-		public bool IsHighPressureTolerant;
+		[FormerlySerializedAs("IsHighPressureTolerant")] public bool isHighPressureTolerant;
 
-		private bool m_isHammerCocked;
+		private bool _mIsHammerCocked;
 
-		private bool m_isTriggerReset = true;
+		private bool _mIsTriggerReset = true;
 
-		private bool m_isLatched = true;
+		private bool _mIsLatched = true;
 
-		private bool m_isDestroyed;
+		private bool _mIsDestroyed;
 
-		private float TriggerFloat;
+		private float _triggerFloat;
 
-		public Transform Hammer;
+		[FormerlySerializedAs("Hammer")] public Transform hammer;
 
-		public bool HasVisibleHammer = true;
+		[FormerlySerializedAs("HasVisibleHammer")] public bool hasVisibleHammer = true;
 
-		public bool CanCockHammer = true;
+		[FormerlySerializedAs("CanCockHammer")] public bool canCockHammer = true;
 
-		public bool CocksOnOpen;
+		[FormerlySerializedAs("CocksOnOpen")] public bool cocksOnOpen;
 
-		private float m_hammerXRot;
+		private float _mHammerXRot;
 
-		public FVRPhysicalObject.Axis HammerAxis;
+		[FormerlySerializedAs("HammerAxis")] public FVRPhysicalObject.Axis hammerAxis;
 
-		public FVRPhysicalObject.InterpStyle HammerInterp = FVRPhysicalObject.InterpStyle.Rotation;
+		[FormerlySerializedAs("HammerInterp")] public FVRPhysicalObject.InterpStyle hammerInterp = FVRPhysicalObject.InterpStyle.Rotation;
 
-		public float HammerMinRot;
+		[FormerlySerializedAs("HammerMinRot")] public float hammerMinRot;
 
-		public float HammerMaxRot = -70f;
+		[FormerlySerializedAs("HammerMaxRot")] public float hammerMaxRot = -70f;
 
-		public Transform Trigger;
+		[FormerlySerializedAs("Trigger")] public Transform trigger;
 
-		public Vector2 TriggerForwardBackRots;
+		[FormerlySerializedAs("TriggerForwardBackRots")] public Vector2 triggerForwardBackRots;
 
-		public Transform Muzzle;
+		[FormerlySerializedAs("Muzzle")] public Transform muzzle;
 
-		public ParticleSystem SmokePSystem;
+		[FormerlySerializedAs("SmokePSystem")] public ParticleSystem smokePSystem;
 
-		public ParticleSystem DestroyPSystem;
+		[FormerlySerializedAs("DestroyPSystem")] public ParticleSystem destroyPSystem;
 
-		public bool DeletesCartridgeOnFire;
+		[FormerlySerializedAs("DeletesCartridgeOnFire")] public bool deletesCartridgeOnFire;
 	}
 }

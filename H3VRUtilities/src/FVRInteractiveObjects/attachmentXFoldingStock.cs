@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace H3VRUtils
 {
-    internal class attachmentXFoldingStock : FVRFoldingStockXAxis
+    internal class AttachmentXFoldingStock : FVRFoldingStockXAxis
     {
         public FVRFireArmAttachment attachment;
 
-        private float rotAngle;
+        private float _rotAngle;
 
         public void FixedUpdate()
         {
@@ -16,8 +16,8 @@ namespace H3VRUtils
             {
                 if (FireArm == null)
                 {
-                    var _firearm = attachment.curMount.Parent.GetComponent<FVRFireArm>();
-                    FireArm = _firearm;
+                    FVRFireArm firearm = attachment.curMount.Parent.GetComponent<FVRFireArm>();
+                    FireArm = firearm;
                     Console.WriteLine("attachmentYFoldingStock has connected itself to " + FireArm);
                 }
             }

@@ -4,26 +4,27 @@ using System.Linq;
 using System.Text;
 using FistVR;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
 	public class H3VRUtilsMagRelease : FVRInteractiveObject
 	{
 
-		public ClosedBoltWeapon ClosedBoltReceiver;
-		public OpenBoltReceiver OpenBoltWeapon;
-		public Handgun HandgunReceiver;
-		public BoltActionRifle BoltActionWeapon;
+		[FormerlySerializedAs("ClosedBoltReceiver")] public ClosedBoltWeapon closedBoltReceiver;
+		[FormerlySerializedAs("OpenBoltWeapon")] public OpenBoltReceiver openBoltWeapon;
+		[FormerlySerializedAs("HandgunReceiver")] public Handgun handgunReceiver;
+		[FormerlySerializedAs("BoltActionWeapon")] public BoltActionRifle boltActionWeapon;
 
-		[HideInInspector] public int WepType;
+		[FormerlySerializedAs("WepType")] [HideInInspector] public int wepType;
 
-		[HideInInspector] public bool DisallowEjection;
+		[FormerlySerializedAs("DisallowEjection")] [HideInInspector] public bool disallowEjection;
 
-		private FVRFireArmMagazine mag;
+		private FVRFireArmMagazine _mag;
 
-		private Collider col;
+		private Collider _col;
 
-		public bool PressDownToRelease;
+		[FormerlySerializedAs("PressDownToRelease")] public bool pressDownToRelease;
 		public enum TouchpadDirType
 		{
 			Up,
@@ -33,7 +34,7 @@ namespace H3VRUtils
 			Trigger,
 			NoDirection
 		}
-		public TouchpadDirType TouchpadDir;
+		[FormerlySerializedAs("TouchpadDir")] public TouchpadDirType touchpadDir;
 
 		public Vector2 dir;
 
@@ -41,24 +42,24 @@ namespace H3VRUtils
 		public override void Awake()
 		{
 			base.Awake();
-			setWepType();
-			col = GetComponent<Collider>();
+			SetWepType();
+			_col = GetComponent<Collider>();
 		}
 
-		public void setWepType()
+		public void SetWepType()
 		{
-			if (ClosedBoltReceiver != null) WepType = 1;
-			if (OpenBoltWeapon != null) WepType = 2;
-			if (HandgunReceiver != null) WepType = 3;
-			if (BoltActionWeapon != null) WepType = 4;
+			if (closedBoltReceiver != null) wepType = 1;
+			if (openBoltWeapon != null) wepType = 2;
+			if (handgunReceiver != null) wepType = 3;
+			if (boltActionWeapon != null) wepType = 4;
 		}
 
 		public override bool IsInteractable()
 		{
-			if (WepType == 1) return !(this.ClosedBoltReceiver.Magazine == null);
-			if (WepType == 2) return !(this.OpenBoltWeapon.Magazine == null);
-			if (WepType == 3) return !(this.HandgunReceiver.Magazine == null);
-			return !(this.BoltActionWeapon.Magazine == null);
+			if (wepType == 1) return !(this.closedBoltReceiver.Magazine == null);
+			if (wepType == 2) return !(this.openBoltWeapon.Magazine == null);
+			if (wepType == 3) return !(this.handgunReceiver.Magazine == null);
+			return !(this.boltActionWeapon.Magazine == null);
 		}
 
 		public override void FVRFixedUpdate()
@@ -67,17 +68,17 @@ namespace H3VRUtils
 			dir = Vector2.up;
 
 			//config override
-			if (UtilsBepInExLoader.paddleMagReleaseDir.Value != UtilsBepInExLoader.TouchpadDirTypePT.BasedOnWeapon)
+			if (UtilsBepInExLoader.paddleMagReleaseDir.Value != UtilsBepInExLoader.TouchpadDirTypePt.BasedOnWeapon)
 			{
-				TouchpadDir = (TouchpadDirType)(int)UtilsBepInExLoader.paddleMagReleaseDir.Value;
+				touchpadDir = (TouchpadDirType)(int)UtilsBepInExLoader.paddleMagReleaseDir.Value;
 			}
 
-			if (TouchpadDir == TouchpadDirType.Up) dir = Vector2.up;
-			if (TouchpadDir == TouchpadDirType.Down) dir = Vector2.down;
-			if (TouchpadDir == TouchpadDirType.Left) dir = Vector2.left;
-			if (TouchpadDir == TouchpadDirType.Right) dir = Vector2.right;
-			if (TouchpadDir == TouchpadDirType.Trigger) this.IsSimpleInteract = true; else this.IsSimpleInteract = false;
-			col.enabled = !DisallowEjection;
+			if (touchpadDir == TouchpadDirType.Up) dir = Vector2.up;
+			if (touchpadDir == TouchpadDirType.Down) dir = Vector2.down;
+			if (touchpadDir == TouchpadDirType.Left) dir = Vector2.left;
+			if (touchpadDir == TouchpadDirType.Right) dir = Vector2.right;
+			if (touchpadDir == TouchpadDirType.Trigger) this.IsSimpleInteract = true; else this.IsSimpleInteract = false;
+			_col.enabled = !disallowEjection;
 		}
 
 		public override void BeginInteraction(FVRViveHand hand)
@@ -88,39 +89,39 @@ namespace H3VRUtils
 		public override void SimpleInteraction(FVRViveHand hand)
 		{
 			base.SimpleInteraction(hand);
-			if (TouchpadDir == TouchpadDirType.Trigger)
-				dropmag(hand);
+			if (touchpadDir == TouchpadDirType.Trigger)
+				Dropmag(hand);
 		}
 
-		public void dropmag(FVRViveHand hand, bool _override = false)
+		public void Dropmag(FVRViveHand hand, bool @override = false)
 		{
-			if (DisallowEjection && !_override) return;
+			if (disallowEjection && !@override) return;
 			FVRFireArmMagazine magazine = null;
 
-			if (WepType == 1)
+			if (wepType == 1)
 			{
-				magazine = this.ClosedBoltReceiver.Magazine;
-				this.ClosedBoltReceiver.ReleaseMag();
+				magazine = this.closedBoltReceiver.Magazine;
+				this.closedBoltReceiver.ReleaseMag();
 			}
-			if (WepType == 2)
+			if (wepType == 2)
 			{
-				magazine = this.OpenBoltWeapon.Magazine;
-				this.OpenBoltWeapon.ReleaseMag();
+				magazine = this.openBoltWeapon.Magazine;
+				this.openBoltWeapon.ReleaseMag();
 			}
-			if (WepType == 3)
+			if (wepType == 3)
 			{
-				magazine = this.HandgunReceiver.Magazine;
-				this.HandgunReceiver.ReleaseMag();
+				magazine = this.handgunReceiver.Magazine;
+				this.handgunReceiver.ReleaseMag();
 			}
-			if (WepType == 4)
+			if (wepType == 4)
 			{
-				magazine = this.BoltActionWeapon.Magazine;
-				this.BoltActionWeapon.ReleaseMag();
+				magazine = this.boltActionWeapon.Magazine;
+				this.boltActionWeapon.ReleaseMag();
 			}
-			movemagtohand(hand, magazine);
+			Movemagtohand(hand, magazine);
 		}
 
-		public void movemagtohand(FVRViveHand hand, FVRFireArmMagazine magazine)
+		public void Movemagtohand(FVRViveHand hand, FVRFireArmMagazine magazine)
 		{
 			//puts mag in hand
 			if (hand != null) { hand.ForceSetInteractable(magazine); }
@@ -134,28 +135,28 @@ namespace H3VRUtils
 
 			bool flag = false;
 			FVRFireArmMagazine prevmag = null;
-			if (mag != null) { flag = true; prevmag = mag; } //check if mag was previously loaded
+			if (_mag != null) { flag = true; prevmag = _mag; } //check if mag was previously loaded
 
-			if (WepType == 1) { mag = this.ClosedBoltReceiver.Magazine; }
-			if (WepType == 2) { mag = this.OpenBoltWeapon.Magazine; }
-			if (WepType == 3) { mag = this.HandgunReceiver.Magazine; }
-			if (WepType == 4) { mag = this.BoltActionWeapon.Magazine; }
+			if (wepType == 1) { _mag = this.closedBoltReceiver.Magazine; }
+			if (wepType == 2) { _mag = this.openBoltWeapon.Magazine; }
+			if (wepType == 3) { _mag = this.handgunReceiver.Magazine; }
+			if (wepType == 4) { _mag = this.boltActionWeapon.Magazine; }
 
-			if (mag != null)
+			if (_mag != null)
 			{
 				bool flag2 = false;
 				if (Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.2f) flag2 = true;
 
 
 				if (
-					   !PressDownToRelease //if it's not a paddle release anyway
+					   !pressDownToRelease //if it's not a paddle release anyway
 					|| !UtilsBepInExLoader.paddleMagRelease.Value //if paddle release is disabled
-					|| (TouchpadDir == TouchpadDirType.NoDirection && !UtilsBepInExLoader.magDropRequiredRelease.Value) //if mag drop required and mag drop is disabled
+					|| (touchpadDir == TouchpadDirType.NoDirection && !UtilsBepInExLoader.magDropRequiredRelease.Value) //if mag drop required and mag drop is disabled
 					|| flag2 //if it is enabled, and user is pressing all the right buttons
 					|| (hand.IsInStreamlinedMode && hand.Input.AXButtonPressed)) //if it is enabled, and user is pressing streamlined button (and is in steamlined mode)
 				{
-					if (TouchpadDir == TouchpadDirType.NoDirection && UtilsBepInExLoader.magDropRequiredRelease.Value) return;
-					dropmag(hand);
+					if (touchpadDir == TouchpadDirType.NoDirection && UtilsBepInExLoader.magDropRequiredRelease.Value) return;
+					Dropmag(hand);
 					this.EndInteraction(hand);
 				}
 			}
@@ -163,7 +164,7 @@ namespace H3VRUtils
 			{
 				if (flag) //if mag was previously loaded, but is now not
 				{
-					movemagtohand(hand, prevmag);
+					Movemagtohand(hand, prevmag);
 				}
 				this.EndInteraction(hand);
 			}

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils.Mapping.Audio
 {
@@ -23,13 +24,13 @@ public class AudioCulling : MonoBehaviour
     public float cullingRadius = 10;
 
     // Unity's culling group
-    CullingGroup m_CullingGroup;
+    CullingGroup _mCullingGroup;
 
-    [Tooltip("The Behaviours we want to enable/disable")]
-    public AudioSource[] m_Sources;
+    [FormerlySerializedAs("m_Sources")] [Tooltip("The Behaviours we want to enable/disable")]
+    public AudioSource[] mSources;
 
     // Used for culling initialization
-    UnityEngine.Camera cameraMain;
+    UnityEngine.Camera _cameraMain;
 
     void Update()
     {
@@ -40,11 +41,11 @@ public class AudioCulling : MonoBehaviour
         // to play.
         // 
         // Wait until we have a valid camera/player
-        if (cameraMain == null)
+        if (_cameraMain == null)
         {
-            cameraMain = UnityEngine.Camera.main;
+            _cameraMain = UnityEngine.Camera.main;
 
-            if (cameraMain != null)
+            if (_cameraMain != null)
             {
                 // Ready
                 Init();
@@ -55,35 +56,35 @@ public class AudioCulling : MonoBehaviour
     void Init()
     {
         // Create the group
-        if (m_CullingGroup == null)
+        if (_mCullingGroup == null)
         {
-            m_CullingGroup = new CullingGroup();
-            m_CullingGroup.targetCamera = UnityEngine.Camera.main;
-            m_CullingGroup.SetBoundingSpheres(new[] { new BoundingSphere(transform.position, cullingRadius) });
-            m_CullingGroup.SetBoundingSphereCount(1);
-            m_CullingGroup.onStateChanged += OnStateChanged;
+            _mCullingGroup = new CullingGroup();
+            _mCullingGroup.targetCamera = UnityEngine.Camera.main;
+            _mCullingGroup.SetBoundingSpheres(new[] { new BoundingSphere(transform.position, cullingRadius) });
+            _mCullingGroup.SetBoundingSphereCount(1);
+            _mCullingGroup.onStateChanged += OnStateChanged;
 
             // We need to start in a culled state
-            EnableAudio(m_CullingGroup.IsVisible(0));
+            EnableAudio(_mCullingGroup.IsVisible(0));
         }
 
-        m_CullingGroup.enabled = true;
+        _mCullingGroup.enabled = true;
     }
 
     void OnEnable()
     {
-        if (m_CullingGroup != null)
+        if (_mCullingGroup != null)
         {
-            m_CullingGroup.enabled = true;
+            _mCullingGroup.enabled = true;
             EnableAudio(true);
         }
     }
 
     void OnDisable()
     {
-        if (m_CullingGroup != null)
+        if (_mCullingGroup != null)
         {
-            m_CullingGroup.enabled = false;
+            _mCullingGroup.enabled = false;
             EnableAudio(false);
         }
     }
@@ -94,8 +95,8 @@ public class AudioCulling : MonoBehaviour
     /// </summary>
     void OnDestroy()
     {
-        if (m_CullingGroup != null)
-            m_CullingGroup.Dispose();
+        if (_mCullingGroup != null)
+            _mCullingGroup.Dispose();
     }
 
     /// <summary>
@@ -113,11 +114,11 @@ public class AudioCulling : MonoBehaviour
     /// <param name="enable"></param>
     void EnableAudio(bool enable)
     {
-        if (m_Sources != null)
+        if (mSources != null)
         {
-            for ( int i = m_Sources.Length-1; i > -1; --i)
+            for ( int i = mSources.Length-1; i > -1; --i)
             {
-                m_Sources[i].enabled = enable;
+                mSources[i].enabled = enable;
             }
         }
     }
@@ -128,7 +129,7 @@ public class AudioCulling : MonoBehaviour
         {
             // Draw gizmos to show the culling sphere.
             Color col = Color.yellow;
-            if (m_CullingGroup != null && !m_CullingGroup.IsVisible(0))
+            if (_mCullingGroup != null && !_mCullingGroup.IsVisible(0))
                 col = Color.gray;
 
             Gizmos.color = col;

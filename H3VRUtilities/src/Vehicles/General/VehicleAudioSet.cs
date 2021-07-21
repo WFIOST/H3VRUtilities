@@ -4,32 +4,33 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils.Vehicles
 {
 	[CreateAssetMenu(fileName = "New Vehicle Audio Set", menuName = "Vehicles/AudioSet", order = 0)]
-	class VehicleAudioSet : ScriptableObject
+	public class VehicleAudioSet : ScriptableObject
 	{
-		private static AudioEvent defaultAE = new AudioEvent()
+		private static AudioEvent _defaultAe = new AudioEvent()
 		{
 			PitchRange = new Vector2(0.98f, 1.04f),
 			VolumeRange = new Vector2(0.98f, 1.04f),
 			ClipLengthRange = new Vector2(1,1)
 		};
-		public AudioEvent VehicleStart;
-		public AudioEvent VehicleIdle;
-		public AudioEvent VehicleStop;
+		[FormerlySerializedAs("VehicleStart")] public AudioEvent vehicleStart;
+		[FormerlySerializedAs("VehicleIdle")] public AudioEvent vehicleIdle;
+		[FormerlySerializedAs("VehicleStop")] public AudioEvent vehicleStop;
 
-		public AudioEvent HandbrakeUp;
-		public AudioEvent HandbrakeDown;
+		[FormerlySerializedAs("HandbrakeUp")] public AudioEvent handbrakeUp;
+		[FormerlySerializedAs("HandbrakeDown")] public AudioEvent handbrakeDown;
 
-		public AudioEvent ShiftDownGear;
-		public AudioEvent RevLoop;
-		public AudioEvent ShiftUpGear;
+		[FormerlySerializedAs("ShiftDownGear")] public AudioEvent shiftDownGear;
+		[FormerlySerializedAs("RevLoop")] public AudioEvent revLoop;
+		[FormerlySerializedAs("ShiftUpGear")] public AudioEvent shiftUpGear;
 
-		public AudioEvent Brake;
-		public AudioEvent BrakeLong;
+		[FormerlySerializedAs("Brake")] public AudioEvent brake;
+		[FormerlySerializedAs("BrakeLong")] public AudioEvent brakeLong;
 
-		public AudioEvent PedalSwitchSound;
+		[FormerlySerializedAs("PedalSwitchSound")] public AudioEvent pedalSwitchSound;
 	}
 }

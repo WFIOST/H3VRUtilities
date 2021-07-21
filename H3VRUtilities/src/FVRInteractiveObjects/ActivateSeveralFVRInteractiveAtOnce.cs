@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
-	class ActivateSeveralFVRInteractiveAtOnce : FVRInteractiveObject
+	class ActivateSeveralFvrInteractiveAtOnce : FVRInteractiveObject
 	{
-		public List<FVRInteractiveObject> InteractiveObjects;
+		[FormerlySerializedAs("InteractiveObjects")] public List<FVRInteractiveObject> interactiveObjects;
 
 		public override void BeginInteraction(FVRViveHand hand)
 		{
 			base.BeginInteraction(hand);
-			foreach (FVRInteractiveObject obj in InteractiveObjects)
+			foreach (FVRInteractiveObject obj in interactiveObjects)
 			{
 				obj.BeginInteraction(hand);
 			}
@@ -23,7 +24,7 @@ namespace H3VRUtils
 		public override void EndInteraction(FVRViveHand hand)
 		{
 			base.EndInteraction(hand);
-			foreach (FVRInteractiveObject obj in InteractiveObjects)
+			foreach (FVRInteractiveObject obj in interactiveObjects)
 			{
 				obj.EndInteraction(hand);
 			}
@@ -32,7 +33,7 @@ namespace H3VRUtils
 		public override void SimpleInteraction(FVRViveHand hand)
 		{
 			base.SimpleInteraction(hand);
-			foreach (FVRInteractiveObject obj in InteractiveObjects)
+			foreach (FVRInteractiveObject obj in interactiveObjects)
 			{
 				obj.SimpleInteraction(hand);
 			}
@@ -41,7 +42,7 @@ namespace H3VRUtils
 		public override void UpdateInteraction(FVRViveHand hand)
 		{
 			base.UpdateInteraction(hand);
-			foreach (FVRInteractiveObject obj in InteractiveObjects)
+			foreach (FVRInteractiveObject obj in interactiveObjects)
 			{
 				obj.UpdateInteraction(hand);
 			}

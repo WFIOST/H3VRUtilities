@@ -4,41 +4,42 @@ using System.Linq;
 using System.Text;
 using FistVR;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace H3VRUtils
 {
-	class CustomRDShaderHandler : FVRFireArmAttachment
+	class CustomRdShaderHandler : FVRFireArmAttachment
 	{
 		public bool enableMagnificationSettings;
-		public MeshRenderer Reticle;
-		public MeshRenderer Magnifier;
-		public Canvas SettingsTextCanvas;
-		public Text ReticleYOffsetText;
-		public Text ReticleXOffsetText;
-		public Text MagnifierMagnificationText;
-		public Transform HighlightPosOffsetX;
-		public Transform HighlightPosOffsetY;
-		public Transform HighlightPosMagnification;
-		public List<float> OffsetXNums;
-		public List<string> OffsetXNames;
-		public List<float> OffsetYNums;
-		public List<string> OffsetYNames;
-		public List<float> Magnification;
-		public List<string> MagnificationNames;
-		private Material matReticle;
-		private Material matMagnifier;
-		private Shader scopeShader;
-		private Shader redDotShader;
-		private int selectedtxt;
+		[FormerlySerializedAs("Reticle")] public MeshRenderer reticle;
+		[FormerlySerializedAs("Magnifier")] public MeshRenderer magnifier;
+		[FormerlySerializedAs("SettingsTextCanvas")] public Canvas settingsTextCanvas;
+		[FormerlySerializedAs("ReticleYOffsetText")] public Text reticleYOffsetText;
+		[FormerlySerializedAs("ReticleXOffsetText")] public Text reticleXOffsetText;
+		[FormerlySerializedAs("MagnifierMagnificationText")] public Text magnifierMagnificationText;
+		[FormerlySerializedAs("HighlightPosOffsetX")] public Transform highlightPosOffsetX;
+		[FormerlySerializedAs("HighlightPosOffsetY")] public Transform highlightPosOffsetY;
+		[FormerlySerializedAs("HighlightPosMagnification")] public Transform highlightPosMagnification;
+		[FormerlySerializedAs("OffsetXNums")] public List<float> offsetXNums;
+		[FormerlySerializedAs("OffsetXNames")] public List<string> offsetXNames;
+		[FormerlySerializedAs("OffsetYNums")] public List<float> offsetYNums;
+		[FormerlySerializedAs("OffsetYNames")] public List<string> offsetYNames;
+		[FormerlySerializedAs("Magnification")] public List<float> magnification;
+		[FormerlySerializedAs("MagnificationNames")] public List<string> magnificationNames;
+		private Material _matReticle;
+		private Material _matMagnifier;
+		private Shader _scopeShader;
+		private Shader _redDotShader;
+		private int _selectedtxt;
 
 		public void Start()
 		{
-			redDotShader = Shader.Find("RedDot(Unlit)");
-			scopeShader = Shader.Find("Magnification");
-			matReticle = Reticle.material;
-			matMagnifier = Magnifier.material;
-			matReticle.SetFloat("_OffsetX", 4f);
+			_redDotShader = Shader.Find("RedDot(Unlit)");
+			_scopeShader = Shader.Find("Magnification");
+			_matReticle = reticle.material;
+			_matMagnifier = magnifier.material;
+			_matReticle.SetFloat("_OffsetX", 4f);
 		}
 
 		public static bool IfPressedInDir(FVRViveHand hand, Vector2 dir)
@@ -50,7 +51,7 @@ namespace H3VRUtils
 		public override void BeginInteraction(FVRViveHand hand)
 		{
 			base.BeginInteraction(hand);
-			SettingsTextCanvas.enabled = true;
+			settingsTextCanvas.enabled = true;
 		}
 
 		public override void UpdateInteraction(FVRViveHand hand)
@@ -59,7 +60,7 @@ namespace H3VRUtils
 
 			if (IfPressedInDir(hand, Vector2.up))
 			{
-				selectedtxt++;
+				_selectedtxt++;
 			}
 			if (IfPressedInDir(hand, Vector2.left))
 			{
@@ -67,13 +68,13 @@ namespace H3VRUtils
 			}
 			int val = 1;
 			if (enableMagnificationSettings) val++;
-			if (selectedtxt > val) selectedtxt = 0;
+			if (_selectedtxt > val) _selectedtxt = 0;
 		}
 
 		public override void EndInteraction(FVRViveHand hand)
 		{
 			base.EndInteraction(hand);
-			SettingsTextCanvas.enabled = false;
+			settingsTextCanvas.enabled = false;
 		}
 
 	}

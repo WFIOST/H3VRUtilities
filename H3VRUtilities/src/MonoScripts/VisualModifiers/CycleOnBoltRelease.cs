@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils.MonoScripts.VisualModifiers
 {
@@ -11,21 +12,21 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 	{
 		public FVRFireArmChamber chamber;
 		public GameObject muzzle;
-		public List<Transform> Locs;
+		[FormerlySerializedAs("Locs")] public List<Transform> locs;
 
-		private int pointer;
-		private bool wasFull;
+		private int _pointer;
+		private bool _wasFull;
 
 		public void Update()
 		{
-			if(wasFull && !chamber.IsFull)
+			if(_wasFull && !chamber.IsFull)
 			{
-				pointer++;
-				if (pointer > Locs.Count) pointer = 0;
-				muzzle.transform.position = Locs[pointer].position;
-				muzzle.transform.rotation = Locs[pointer].rotation;
+				_pointer++;
+				if (_pointer > locs.Count) _pointer = 0;
+				muzzle.transform.position = locs[_pointer].position;
+				muzzle.transform.rotation = locs[_pointer].rotation;
 			}
-			wasFull = chamber.IsFull;
+			_wasFull = chamber.IsFull;
 		}
 	}
 }

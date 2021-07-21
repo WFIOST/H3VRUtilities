@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using FistVR;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
 	class DisplayOnAttached : MonoBehaviour
 	{
 		public GameObject displayOnAttach;
-		public FVRFireArmAttachmentMount AttachmentMount;
+		[FormerlySerializedAs("AttachmentMount")] public FVRFireArmAttachmentMount attachmentMount;
 		public void FixedUpdate()
 		{
-			if (AttachmentMount.HasAttachmentsOnIt() == true)
+			if (attachmentMount.HasAttachmentsOnIt() == true)
 			{
 				displayOnAttach.SetActive(true);
 			}

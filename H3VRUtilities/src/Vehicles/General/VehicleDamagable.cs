@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace H3VRUtils.Vehicles
 {
-	class VehicleDamagable : MonoBehaviour, IFVRDamageable
+	public class VehicleDamagable : MonoBehaviour, IFVRDamageable
 	{
 		public float health;
 		public float maxHealth;
@@ -20,7 +20,7 @@ namespace H3VRUtils.Vehicles
 		public float environmentMult;
 		public Vehicle vehicle;
 		public bool dead;
-		private float prevhealth;
+		private float _prevhealth;
 
 		public virtual void FixedUpdate()
 		{
@@ -28,36 +28,36 @@ namespace H3VRUtils.Vehicles
 			{
 				if (!dead)
 				{
-					onDeath();
+					ONDeath();
 					dead = true;
 				}
-				whileDead();
+				WhileDead();
 			}
 			else
 			{
 				if (dead)
 				{
-					onUndeath();
+					ONUndeath();
 					dead = false;
 				}
-				whileUndead();
+				WhileUndead();
 			}
 			if (health < minHealth)
 			{
 				health = minHealth;
 			}
 
-			if (health != prevhealth)
-				onHealthChange();
-			prevhealth = health;
+			if (health != _prevhealth)
+				ONHealthChange();
+			_prevhealth = health;
 		}
 
-		public virtual void onHealthChange()
+		public virtual void ONHealthChange()
 		{
 
 		}
 
-		public bool HPLessThan(float num)
+		public bool HpLessThan(float num)
 		{
 			if (health < num)
 			{
@@ -66,7 +66,7 @@ namespace H3VRUtils.Vehicles
 			return false;
 		}
 
-		public bool HPLessThanPercent(float num)
+		public bool HpLessThanPercent(float num)
 		{
 			if(health < num * maxHealth)
 			{
@@ -75,22 +75,22 @@ namespace H3VRUtils.Vehicles
 			return false;
 		}
 
-		public virtual void onDeath()
+		public virtual void ONDeath()
 		{
 
 		}
 
-		public virtual void whileDead()
+		public virtual void WhileDead()
 		{
 
 		}
 
-		public virtual void whileUndead()
+		public virtual void WhileUndead()
 		{
 
 		}
 
-		public virtual void onUndeath()
+		public virtual void ONUndeath()
 		{
 
 		}
@@ -112,7 +112,7 @@ namespace H3VRUtils.Vehicles
 
 		}
 
-		public float getDamage(Damage dmg)
+		public float GETDamage(Damage dmg)
 		{
 			float takenDamage = dmg.Dam_Blunt * bluntMult;
 			takenDamage += dmg.Dam_Piercing * piercingMult;

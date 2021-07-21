@@ -16,12 +16,12 @@ namespace H3VRUtils.UniqueCode
 		public H3VRUtilsMagRelease magrelease;
 		public FVRFireArmReloadTriggerWell magreloadtrigger;
 
-		private float velocity;
+		private float _velocity;
 
-		private bool unlocked;
+		private bool _unlocked;
 
-		private Collider col;
-		private Collider mrtcol;
+		private Collider _col;
+		private Collider _mrtcol;
 
 		public enum ChangePositionType
 		{
@@ -30,22 +30,22 @@ namespace H3VRUtils.UniqueCode
 			Lock
 		}
 
-		public enum locktype
+		public enum Locktype
 		{
 			MagLocking,
 			BoltLocking
 		}
 
-		public locktype locker;
+		public Locktype locker;
 
 		public override void Awake()
 		{
 			base.Awake();
 			IsSimpleInteract = true;
-			col = wep.Bolt.GetComponent<Collider>();
+			_col = wep.Bolt.GetComponent<Collider>();
 			ChangePosition(ChangePositionType.Lock);
-			velocity = wep.Chamber.ChamberVelocityMultiplier;
-			if (locker == locktype.MagLocking) mrtcol = magreloadtrigger.GetComponent<Collider>();
+			_velocity = wep.Chamber.ChamberVelocityMultiplier;
+			if (locker == Locktype.MagLocking) _mrtcol = magreloadtrigger.GetComponent<Collider>();
 		}
 
 		public override void SimpleInteraction(FVRViveHand hand)
@@ -65,26 +65,26 @@ namespace H3VRUtils.UniqueCode
 		public override void FVRUpdate()
 		{
 			base.FVRUpdate();
-			if (locker == locktype.BoltLocking)
+			if (locker == Locktype.BoltLocking)
 			{
 				if (wep.Bolt.CurPos == ClosedBolt.BoltPos.ForwardToMid) ChangePosition(ChangePositionType.Lock);
 				if (wep.Bolt.CurPos == ClosedBolt.BoltPos.Locked) ChangePosition(ChangePositionType.Unlock);
-				if (unlocked) wep.Chamber.ChamberVelocityMultiplier = 0.1f; else wep.Chamber.ChamberVelocityMultiplier = velocity;
+				if (_unlocked) wep.Chamber.ChamberVelocityMultiplier = 0.1f; else wep.Chamber.ChamberVelocityMultiplier = _velocity;
 			}
-			if (locker == locktype.MagLocking)
+			if (locker == Locktype.MagLocking)
 			{
-				if (wep.Bolt.CurPos == ClosedBolt.BoltPos.ForwardToMid && unlocked) magrelease.dropmag(null, true);
+				if (wep.Bolt.CurPos == ClosedBolt.BoltPos.ForwardToMid && _unlocked) magrelease.Dropmag(null, true);
 			}
 		}
 
 
 		public void ChangePosition(ChangePositionType ct)
 		{
-			if (ct == ChangePositionType.Swap) unlocked = !unlocked;
-			if (ct == ChangePositionType.Unlock) unlocked = true;
-			if (ct == ChangePositionType.Lock) unlocked = false;
+			if (ct == ChangePositionType.Swap) _unlocked = !_unlocked;
+			if (ct == ChangePositionType.Unlock) _unlocked = true;
+			if (ct == ChangePositionType.Lock) _unlocked = false;
 
-			if (unlocked)
+			if (_unlocked)
 			{
 				lockingpiece.transform.localPosition = lockingpieceunlocked.localPosition;
 				lockingpiece.transform.localRotation = lockingpieceunlocked.localRotation;
@@ -94,11 +94,11 @@ namespace H3VRUtils.UniqueCode
 				lockingpiece.transform.localPosition = lockingpiecelocked.localPosition;
 				lockingpiece.transform.localRotation = lockingpiecelocked.localRotation;
 			}
-			if (locker == locktype.BoltLocking) col.enabled = unlocked;
-			if (locker == locktype.MagLocking)
+			if (locker == Locktype.BoltLocking) _col.enabled = _unlocked;
+			if (locker == Locktype.MagLocking)
 			{
-				magrelease.DisallowEjection = !unlocked;
-				mrtcol.enabled = unlocked;
+				magrelease.disallowEjection = !_unlocked;
+				_mrtcol.enabled = _unlocked;
 			}
 		}
 	}

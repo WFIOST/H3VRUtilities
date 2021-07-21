@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using FistVR;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils.MonoScripts.UIModifiers
 {
@@ -12,51 +13,51 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 	{
 		public FVRFireArm firearm;
 		public FVRFireArmMagazine magazine;
-		public Text UItext;
+		[FormerlySerializedAs("UItext")] public Text uItext;
 		public string textWhenNoMag;
-		[Tooltip("When there is no mag, the text will remain whatever it was before.")]
-		public bool KeepLastRoundInfoOnNoMag;
-		public bool AddMinCharLength;
-		public int MinCharLength;
-		[Header("Alternate Usages")]
-		public bool EnabledObjects;
-		public GameObject ObjectWhenEmpty;
-		public List<GameObject> Objects;
-		public bool EnableAllUnderAmount;
+		[FormerlySerializedAs("KeepLastRoundInfoOnNoMag")] [Tooltip("When there is no mag, the text will remain whatever it was before.")]
+		public bool keepLastRoundInfoOnNoMag;
+		[FormerlySerializedAs("AddMinCharLength")] public bool addMinCharLength;
+		[FormerlySerializedAs("MinCharLength")] public int minCharLength;
+		[FormerlySerializedAs("EnabledObjects")] [Header("Alternate Usages")]
+		public bool enabledObjects;
+		[FormerlySerializedAs("ObjectWhenEmpty")] public GameObject objectWhenEmpty;
+		[FormerlySerializedAs("Objects")] public List<GameObject> objects;
+		[FormerlySerializedAs("EnableAllUnderAmount")] public bool enableAllUnderAmount;
 
 
-		private bool WasFull;
-		private bool WasLoaded;
-		private FVRFireArmChamber chamber;
-		private string txt;
-		private int amt;
+		private bool _wasFull;
+		private bool _wasLoaded;
+		private FVRFireArmChamber _chamber;
+		private string _txt;
+		private int _amt;
 
 		public void Start()
 		{
 			if (firearm is ClosedBoltWeapon)
 			{
-				var wep = firearm as ClosedBoltWeapon;
-				chamber = wep.Chamber;
+				ClosedBoltWeapon wep = firearm as ClosedBoltWeapon;
+				_chamber = wep.Chamber;
 			}
 			if (firearm is OpenBoltReceiver)
 			{
-				var wep = firearm as OpenBoltReceiver;
-				chamber = wep.Chamber;
+				OpenBoltReceiver wep = firearm as OpenBoltReceiver;
+				_chamber = wep.Chamber;
 			}
 			if (firearm is Handgun)
 			{
-				var wep = firearm as Handgun;
-				chamber = wep.Chamber;
+				Handgun wep = firearm as Handgun;
+				_chamber = wep.Chamber;
 			}
 		}
 
 		public void FixedUpdate()
 		{
-			txt = "";
+			_txt = "";
 
 			if (firearm == null) //magcode
 			{
-				amt = magazine.m_numRounds;
+				_amt = magazine.m_numRounds;
 				SetText();
 			}
 			else
@@ -64,75 +65,75 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			//guncode
 			if (firearm.Magazine != null)
 			{
-				amt = firearm.Magazine.m_numRounds;
+				_amt = firearm.Magazine.m_numRounds;
 
-				if ((WasFull && !chamber.IsFull) || !WasLoaded) //was chamber loaded but no longer, or was not loaded and now is
+				if ((_wasFull && !_chamber.IsFull) || !_wasLoaded) //was chamber loaded but no longer, or was not loaded and now is
 				{
-					if (!WasLoaded)
+					if (!_wasLoaded)
 					{
-						if (chamber.IsFull)
+						if (_chamber.IsFull)
 						{
-							amt++; //check if mag loaded + 1
+							_amt++; //check if mag loaded + 1
 						}
 					}
 					SetText();
-					WasLoaded = true;
+					_wasLoaded = true;
 				}
 
-				WasFull = chamber.IsFull;
+				_wasFull = _chamber.IsFull;
 			}
 			else
 			{
-				if (!KeepLastRoundInfoOnNoMag)
+				if (!keepLastRoundInfoOnNoMag)
 				{
-					amt = 0;
+					_amt = 0;
 					SetText();
 				}
-				WasLoaded = false;
+				_wasLoaded = false;
 			}
 		}
 
 		public void SetText()
 		{
-			txt = amt.ToString();
-			if (UItext != null)
+			_txt = _amt.ToString();
+			if (uItext != null)
 			{
-				if (AddMinCharLength)
+				if (addMinCharLength)
 				{
-					int lengthneedtoadd = MinCharLength - txt.Length;
-					for (int i = 0; i < lengthneedtoadd; i++) txt = "0" + txt;
+					int lengthneedtoadd = minCharLength - _txt.Length;
+					for (int i = 0; i < lengthneedtoadd; i++) _txt = "0" + _txt;
 				}
-				UItext.text = txt;
+				uItext.text = _txt;
 				if(firearm.Magazine == null)
 				{
-					UItext.text = textWhenNoMag;
+					uItext.text = textWhenNoMag;
 				}
 			}
 
-			if (EnabledObjects)
+			if (enabledObjects)
 			{
-				for (int i = 0; i < Objects.Count; i++) //set all to false
+				for (int i = 0; i < objects.Count; i++) //set all to false
 				{
-					Objects[i].SetActive(false);
-					ObjectWhenEmpty.SetActive(false);
+					objects[i].SetActive(false);
+					objectWhenEmpty.SetActive(false);
 				}
 
-				if(firearm.Magazine == null && ObjectWhenEmpty != null) //turn on the no-mag object
+				if(firearm.Magazine == null && objectWhenEmpty != null) //turn on the no-mag object
 				{
-					ObjectWhenEmpty.SetActive(true);
+					objectWhenEmpty.SetActive(true);
 				} else 
-				for (int i = 0; i < Objects.Count; i++) //now do the actual turn-ons
+				for (int i = 0; i < objects.Count; i++) //now do the actual turn-ons
 				{
-					if (i < amt)
+					if (i < _amt)
 					{
-						if (EnableAllUnderAmount)
+						if (enableAllUnderAmount)
 						{
-							Objects[i].SetActive(true);
+							objects[i].SetActive(true);
 						}
 					}
-					else if (i == amt)
+					else if (i == _amt)
 					{
-						Objects[i].SetActive(true);
+						objects[i].SetActive(true);
 					}
 				}
 			}

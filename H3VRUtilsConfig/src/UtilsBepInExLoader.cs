@@ -24,9 +24,9 @@ namespace H3VRUtils
 		public static ConfigEntry<bool> VehicleLockXRot;
 		public static ConfigEntry<bool> VehicleLockYRot;
 		public static ConfigEntry<bool> VehicleLockZRot;
-		public static ConfigEntry<TouchpadDirTypePT> paddleMagReleaseDir;
+		public static ConfigEntry<TouchpadDirTypePt> paddleMagReleaseDir;
 
-		public enum TouchpadDirTypePT
+		public enum TouchpadDirTypePt
 		{
 			Up,
 			Down,
@@ -42,7 +42,7 @@ namespace H3VRUtils
 			paddleMagRelease = Config.Bind("General Settings", "Enable Paddle Release", false, "Allows custom guns to utilize the feature to require a direction press on the touchpad to release the mag, usually to simulate a paddle release.");
 			magDropRequiredRelease = Config.Bind("General Settings", "Enable Mandatory Mag Drop", false, "Allows custom guns to utilize the feature to require the mag to be dropped by your primary hand, even if your other hand is gripping the magazine.");
 
-			paddleMagReleaseDir = Config.Bind("Fine Tuning", "Enhanced Mag Release Direction", TouchpadDirTypePT.BasedOnWeapon, "Based On Weapon is the default direction chosen by the modmaker. Others are overrides.");
+			paddleMagReleaseDir = Config.Bind("Fine Tuning", "Enhanced Mag Release Direction", TouchpadDirTypePt.BasedOnWeapon, "Based On Weapon is the default direction chosen by the modmaker. Others are overrides.");
 
 			VehicleLockXRot = Config.Bind("Vehicles", "Lock X Rotation", false, "Rotates your X rotation based on the vehicles rotation. Induces VR sickness.");
 			VehicleLockYRot = Config.Bind("Vehicles", "Lock Y Rotation", false, "Rotates your Y rotation based on the vehicles rotation. Induces VR sickness.");
@@ -64,7 +64,7 @@ namespace H3VRUtils
 	
 	public class UtilsOptionsPanel : MonoBehaviour
 	{
-		private LockablePanel _UtilsPanel;
+		private LockablePanel _utilsPanel;
 
 		public UtilsOptionsPanel()
 		{
@@ -73,17 +73,17 @@ namespace H3VRUtils
 			}));
 
 			//setup panel
-			_UtilsPanel = new LockablePanel();
-			_UtilsPanel.Configure += ConfigureUtilsPanel;
-			_UtilsPanel.TextureOverride = SodaliteUtils.LoadTextureFromBytes(Assembly.GetExecutingAssembly().GetResource("UtilsPanel.png"));
+			_utilsPanel = new LockablePanel();
+			_utilsPanel.Configure += ConfigureUtilsPanel;
+			_utilsPanel.TextureOverride = SodaliteUtils.LoadTextureFromBytes(Assembly.GetExecutingAssembly().GetResource("UtilsPanel.png"));
 		}
 
-		ButtonWidget paddleMagReleaseButton;
-		ButtonWidget MagDropRequiredReleaseButton;
+		ButtonWidget _paddleMagReleaseButton;
+		ButtonWidget _magDropRequiredReleaseButton;
 
-		ButtonWidget VehicleLockXRotButton;
-		ButtonWidget VehicleLockYRotButton;
-		ButtonWidget VehicleLockZRotButton;
+		ButtonWidget _vehicleLockXRotButton;
+		ButtonWidget _vehicleLockYRotButton;
+		ButtonWidget _vehicleLockZRotButton;
 
 
 		public static string GetTerm(bool value)
@@ -138,14 +138,14 @@ namespace H3VRUtils
 				widget.AddChild((ButtonWidget button) => {
 					button.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Paddle Release";
 					button.AddButtonListener(TogglePaddleRelease);
-					paddleMagReleaseButton = button;
+					_paddleMagReleaseButton = button;
 					button.RectTransform.localRotation = Quaternion.identity;
 					});
 
 				widget.AddChild((ButtonWidget button) => {
 					button.ButtonText.text = GetTerm(UtilsBepInExLoader.magDropRequiredRelease.Value) + " Mag Drop Required Release";
 					button.AddButtonListener(ToggleMagRelease);
-					MagDropRequiredReleaseButton = button;
+					_magDropRequiredReleaseButton = button;
 					button.RectTransform.localRotation = Quaternion.identity;
 				});
 
@@ -183,27 +183,27 @@ namespace H3VRUtils
 
 		private void TogglePaddleRelease() {
 			UtilsBepInExLoader.paddleMagRelease.Value = !UtilsBepInExLoader.paddleMagRelease.Value;
-			paddleMagReleaseButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Paddle Release";
+			_paddleMagReleaseButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Paddle Release";
 		}
 		private void ToggleMagRelease() {
 			UtilsBepInExLoader.magDropRequiredRelease.Value = !UtilsBepInExLoader.magDropRequiredRelease.Value;
-			MagDropRequiredReleaseButton.ButtonText.text = GetTerm(UtilsBepInExLoader.magDropRequiredRelease.Value) + " Mag Drop Required Release";
+			_magDropRequiredReleaseButton.ButtonText.text = GetTerm(UtilsBepInExLoader.magDropRequiredRelease.Value) + " Mag Drop Required Release";
 		}
 
-		private void lockXRot()
+		private void LockXRot()
 		{
 			UtilsBepInExLoader.VehicleLockXRot.Value = !UtilsBepInExLoader.paddleMagRelease.Value;
-			VehicleLockXRotButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Vehicle X Lock";
+			_vehicleLockXRotButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Vehicle X Lock";
 		}
-		private void lockYRot()
+		private void LockYRot()
 		{
 			UtilsBepInExLoader.VehicleLockYRot.Value = !UtilsBepInExLoader.paddleMagRelease.Value;
-			VehicleLockYRotButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Vehicle Y Lock";
+			_vehicleLockYRotButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Vehicle Y Lock";
 		}
-		private void lockZRot()
+		private void LockZRot()
 		{
 			UtilsBepInExLoader.VehicleLockZRot.Value = !UtilsBepInExLoader.paddleMagRelease.Value;
-			VehicleLockZRotButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Vehicle Z Lock";
+			_vehicleLockZRotButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Vehicle Z Lock";
 		}
 
 		private void ReloadVanillaMagRelease()
@@ -216,7 +216,7 @@ namespace H3VRUtils
 		{
 			FVRWristMenu wristMenu = WristMenuAPI.Instance;
 			if (wristMenu is null || !wristMenu) return;
-			GameObject panel = _UtilsPanel.GetOrCreatePanel();
+			GameObject panel = _utilsPanel.GetOrCreatePanel();
 			wristMenu.m_currentHand.RetrieveObject(panel.GetComponent<FVRPhysicalObject>());
 		}
 	}

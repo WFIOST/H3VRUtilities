@@ -15,7 +15,7 @@ namespace H3VRUtils.FVRInteractiveObjects
 		public void Start()
 		{
 			//we do a slightly unavoidable amount of trolling
-			var objs = FindObjectsOfType<Sosig>();
+			Sosig[] objs = FindObjectsOfType<Sosig>();
 			Debug.Log("Found " + objs.Length + " sosigs!");
 			for (int i = 0; i < objs.Length; i++)
 			{

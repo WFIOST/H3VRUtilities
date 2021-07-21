@@ -4,28 +4,29 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace H3VRUtils.Vehicles
 {
-	class VehicleSeat : MonoBehaviour
+	public class VehicleSeat : MonoBehaviour
 	{
 		public FVRViveHand hand;
-		public GameObject SitPos;
-		public GameObject EjectPos;
+		[FormerlySerializedAs("SitPos")] public GameObject sitPos;
+		[FormerlySerializedAs("EjectPos")] public GameObject ejectPos;
 		public void Update()
 		{
 			if (hand != null)
 			{
 				//this is NOT a good way to do it, pls find an alternative soon lol
-				hand.MovementManager.transform.position = SitPos.transform.position;
+				hand.MovementManager.transform.position = sitPos.transform.position;
 				//hand.MovementManager.TeleportToPoint(SitPos.transform.position, false);
 
 				//rotation locks
-				var rot = hand.MovementManager.transform.rotation;
-				if (UtilsBepInExLoader.VehicleLockXRot.Value) rot.x = SitPos.transform.rotation.x;
-				if (UtilsBepInExLoader.VehicleLockYRot.Value) rot.y = SitPos.transform.rotation.y;
-				if (UtilsBepInExLoader.VehicleLockZRot.Value) rot.z = SitPos.transform.rotation.z;
+				Quaternion rot = hand.MovementManager.transform.rotation;
+				if (UtilsBepInExLoader.VehicleLockXRot.Value) rot.x = sitPos.transform.rotation.x;
+				if (UtilsBepInExLoader.VehicleLockYRot.Value) rot.y = sitPos.transform.rotation.y;
+				if (UtilsBepInExLoader.VehicleLockZRot.Value) rot.z = sitPos.transform.rotation.z;
 				hand.MovementManager.transform.rotation = rot;
 
 				//kick player if dead

@@ -10,24 +10,24 @@ namespace H3VRUtils.FVRInteractiveObjects
 	class AutoRackOnMagLoad : MonoBehaviour
 	{
 		public FVRFireArm weapon;
-		private Handgun hg;
-		private ClosedBoltWeapon cbw;
-		private OpenBoltReceiver obr;
-		private bool WasLoaded;
+		private Handgun _hg;
+		private ClosedBoltWeapon _cbw;
+		private OpenBoltReceiver _obr;
+		private bool _wasLoaded;
 
 		public void Start()
 		{
 			if (weapon is Handgun)
 			{
-				hg = weapon as Handgun;
+				_hg = weapon as Handgun;
 			}
 			if (weapon is ClosedBoltWeapon)
 			{
-				cbw = weapon as ClosedBoltWeapon;
+				_cbw = weapon as ClosedBoltWeapon;
 			}
 			if (weapon is Handgun)
 			{
-				obr = weapon as OpenBoltReceiver;
+				_obr = weapon as OpenBoltReceiver;
 			}
 		}
 
@@ -35,26 +35,26 @@ namespace H3VRUtils.FVRInteractiveObjects
 		{
 			if (weapon.Magazine != null)
 			{
-				if (WasLoaded == false)
+				if (_wasLoaded == false)
 				{
-					if (hg != null)
+					if (_hg != null)
 					{
-						hg.Slide.ImpartFiringImpulse();
+						_hg.Slide.ImpartFiringImpulse();
 					}
-					if (cbw != null)
+					if (_cbw != null)
 					{
-						cbw.Bolt.ImpartFiringImpulse();
+						_cbw.Bolt.ImpartFiringImpulse();
 					}
-					if (obr != null)
+					if (_obr != null)
 					{
-						obr.Bolt.ImpartFiringImpulse();
+						_obr.Bolt.ImpartFiringImpulse();
 					}
 				}
-				WasLoaded = true;
+				_wasLoaded = true;
 			}
 			else
 			{
-				WasLoaded = false;
+				_wasLoaded = false;
 			}
 		}
 	}

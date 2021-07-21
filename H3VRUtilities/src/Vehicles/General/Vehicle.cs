@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace H3VRUtils.Vehicles
 {
-	class Vehicle : MonoBehaviour
+	public class Vehicle : MonoBehaviour
 	{
-		private Rigidbody rb;
 		[Tooltip("The maximum acheivable speed of the car. Not used yet.")]
 		public float maxSpeed;
 		[Tooltip("The maximum acheivable acceleration of the car.")]
@@ -27,16 +27,16 @@ namespace H3VRUtils.Vehicles
 		[Tooltip("The passive damping force on drive gear.")]
 		public float dampDriveGear;
 
-		public List<WheelInfo> TireGroups;
+		[FormerlySerializedAs("TireGroups")] public List<WheelInfo> tireGroups;
 
 		public bool debug;
-		public DriveShift.DriveShiftPosition ShiftPos;
-		public float Rotation;
-		public float Acceleration;
+		[FormerlySerializedAs("ShiftPos")] public DriveShift.DriveShiftPosition shiftPos;
+		[FormerlySerializedAs("Rotation")] public float rotation;
+		[FormerlySerializedAs("Acceleration")] public float acceleration;
 		public float sidePushBack;
-		public float BrakingForce;
+		[FormerlySerializedAs("BrakingForce")] public float brakingForce;
 
-		public VehicleAudioSet AudioSet;
+		[FormerlySerializedAs("AudioSet")] public VehicleAudioSet audioSet;
 
 		public GameObject springloc;
 		public float springlocHeight;
@@ -50,39 +50,40 @@ namespace H3VRUtils.Vehicles
 			Imperial,
 			Metric
 		}
-		public MeasurementSystems MeasurementType;
+		[FormerlySerializedAs("MeasurementType")] public MeasurementSystems measurementType;
 
-		public GameObject AudioCentre;
-		public float PitchIdle;
-		public float PitchMaxSpeed;
-		public float VolIdle;
-		public float VolMaxSpeed;
-		private AudioSource idleAudioSource;
-		//private AudioSource interimAudioSource;
-		private AudioSource brakeAudioSource;
+		[FormerlySerializedAs("AudioCentre")] public GameObject audioCentre;
+		[FormerlySerializedAs("PitchIdle")] public float pitchIdle;
+		[FormerlySerializedAs("PitchMaxSpeed")] public float pitchMaxSpeed;
+		[FormerlySerializedAs("VolIdle")] public float volIdle;
+		[FormerlySerializedAs("VolMaxSpeed")] public float volMaxSpeed;
 		public float maxDistListen = 50f;
-
-		private float distFromPlayer;
-		private float prevDistFromPlayer;
-		private bool isEngineForcedShutOff;
+		
+		private AudioSource _idleAudioSource;
+		//private AudioSource interimAudioSource;
+		private AudioSource _brakeAudioSource;
+		private Rigidbody _rb;
+		private float _distFromPlayer;
+		private float _prevDistFromPlayer;
+		private bool _isEngineForcedShutOff;
 
 		void Start()
 		{
-			rb = GetComponent<Rigidbody>();
-			idleAudioSource = AudioCentre.AddComponent<AudioSource>();
-			idleAudioSource = setAudioSource(idleAudioSource);
-			idleAudioSource.clip = AudioSet.RevLoop.Clips[0];
+			_rb = GetComponent<Rigidbody>();
+			_idleAudioSource = audioCentre.AddComponent<AudioSource>();
+			_idleAudioSource = SetAudioSource(_idleAudioSource);
+			_idleAudioSource.clip = audioSet.revLoop.Clips[0];
 
 			/*interimAudioSource = AudioCentre.AddComponent<AudioSource>();
 			interimAudioSource = setAudioSource(interimAudioSource);
 			interimAudioSource.clip = AudioSet.RevLoop.Clips[0];*/
 
-			brakeAudioSource = AudioCentre.AddComponent<AudioSource>();
-			brakeAudioSource = setAudioSource(brakeAudioSource);
-			brakeAudioSource.clip = AudioSet.Brake.Clips[0];
+			_brakeAudioSource = audioCentre.AddComponent<AudioSource>();
+			_brakeAudioSource = SetAudioSource(_brakeAudioSource);
+			_brakeAudioSource.clip = audioSet.brake.Clips[0];
 		}
 
-		AudioSource setAudioSource(AudioSource audsrc)
+		AudioSource SetAudioSource(AudioSource audsrc)
 		{
 			audsrc.loop = true;
 			audsrc.playOnAwake = false;
@@ -111,20 +112,20 @@ namespace H3VRUtils.Vehicles
 
 		public float GetSpeed()
 		{
-			return GetSpeed(MeasurementType);
+			return GetSpeed(measurementType);
 		}
 
 		public float GetSpeed(MeasurementSystems mt)
 		{
-			var _cir = Mathf.PI * 2 * spedometerMeasurer.radius; //get circumference in metres
-			var _rpm = spedometerMeasurer.rpm; //yoink rpm
-			var _mpm = _rpm * _cir; //metres per minute
-			var _kmh = (_mpm / 1000) * 60; //metres per minute / 1000 to km per minute, * 60 to km per hour
+			float cir = Mathf.PI * 2 * spedometerMeasurer.radius; //get circumference in metres
+			float rpm = spedometerMeasurer.rpm; //yoink rpm
+			float mpm = rpm * cir; //metres per minute
+			float kmh = (mpm / 1000) * 60; //metres per minute / 1000 to km per minute, * 60 to km per hour
 			if (mt == MeasurementSystems.Imperial)
 			{
-				_kmh *= 0.6213712f; //miles per hour
+				kmh *= 0.6213712f; //miles per hour
 			} //yes, all the fucking measurements measure in mph if you select this, cry about it
-			return _kmh;
+			return kmh;
 		}
 
 		public void Update()
@@ -132,7 +133,7 @@ namespace H3VRUtils.Vehicles
 			//anti-tipping. i'm not even sure what it does myself lol
 			springloc.transform.position = new Vector3(transform.position.x, transform.position.y + springlocHeight, transform.position.z);
 
-			var speed = GetSpeed();
+			float speed = GetSpeed();
 
 			//spedometer
 			try
@@ -149,17 +150,17 @@ namespace H3VRUtils.Vehicles
 			//engine rev pitch
 
 
-			idleAudioSource.pitch = GetEnginePitch();
+			_idleAudioSource.pitch = GetEnginePitch();
 
-			idleAudioSource.volume = GetEngineVolume();
+			_idleAudioSource.volume = GetEngineVolume();
 		}
 
 		public float GetEngineVolume()
 		{
-			var voldistmult = Mathf.InverseLerp(maxDistListen, 0, distFromPlayer); //volume mult based on distance
-			var volspeedmult = Mathf.Lerp(VolIdle, VolMaxSpeed, Mathf.InverseLerp(0, maxSpeed, Mathf.Abs(GetSpeed()))); //volume mult based on speed
-			var voloverride = 1f;
-			if (isEngineForcedShutOff) voloverride = 0f; //if engine is off multiply engine volume by 0
+			float voldistmult = Mathf.InverseLerp(maxDistListen, 0, _distFromPlayer); //volume mult based on distance
+			float volspeedmult = Mathf.Lerp(volIdle, volMaxSpeed, Mathf.InverseLerp(0, maxSpeed, Mathf.Abs(GetSpeed()))); //volume mult based on speed
+			float voloverride = 1f;
+			if (_isEngineForcedShutOff) voloverride = 0f; //if engine is off multiply engine volume by 0
 			return voldistmult * volspeedmult * voloverride;
 		}
 
@@ -167,21 +168,21 @@ namespace H3VRUtils.Vehicles
 		public float GetEnginePitch()
 		{
 			//get doppler effect
-			float diff = (distFromPlayer - prevDistFromPlayer) * 50f; //difference between two frames in m/s
+			float diff = (_distFromPlayer - _prevDistFromPlayer) * 50f; //difference between two frames in m/s
 			diff = diff * 3.6f; //conversion from ms to kmh
 			float doppleraffectmult = 0.4f;
 			float pitchdiffmult = (diff * -0.005f * doppleraffectmult) + 1f; // * 0.05 ensures a max of +/- 100% pitch at 200kmh; the - inverts the result
 			pitchdiffmult = Mathf.Clamp(pitchdiffmult, 0.05f, 2f);
 			//get speed effect
-			float pitchspeedmult = Mathf.Lerp(PitchIdle, PitchMaxSpeed, Mathf.InverseLerp(0, maxSpeed, Mathf.Abs(GetSpeed())));
+			float pitchspeedmult = Mathf.Lerp(pitchIdle, pitchMaxSpeed, Mathf.InverseLerp(0, maxSpeed, Mathf.Abs(GetSpeed())));
 			return pitchspeedmult * pitchdiffmult;
 		}
 
 		public void FixedUpdate()
 		{
 			//get player distance
-			prevDistFromPlayer = distFromPlayer;
-			distFromPlayer = Vector3.Distance(transform.position, GM.CurrentPlayerBody.transform.position);
+			_prevDistFromPlayer = _distFromPlayer;
+			_distFromPlayer = Vector3.Distance(transform.position, GM.CurrentPlayerBody.transform.position);
 
 			//enable complete kinematic locking
 			//this is mainly to allow machine guns to lock to it
@@ -202,66 +203,66 @@ namespace H3VRUtils.Vehicles
 			}*/
 
 			//ensure that the rotation isn't out of bounds. i would use mathf.clamp but i'm too paranoid
-			if (Rotation > maxRotation)
+			if (rotation > maxRotation)
 			{
-				Rotation = maxRotation;
+				rotation = maxRotation;
 			}
-			else if (Rotation < -maxRotation)
+			else if (rotation < -maxRotation)
 			{
-				Rotation = -maxRotation;
+				rotation = -maxRotation;
 			}
 
 			//get applied dampening and acceleration
-			float AppliedDampening = 0f;
-			float AppliedAcceleration = Acceleration;
-			switch (ShiftPos)
+			float appliedDampening = 0f;
+			float appliedAcceleration = acceleration;
+			switch (shiftPos)
 			{
 				case DriveShift.DriveShiftPosition.Park:
-					AppliedDampening = dampParkingGear;
+					appliedDampening = dampParkingGear;
 					break;
 				case DriveShift.DriveShiftPosition.Reverse:
-					AppliedDampening = dampDriveGear;
-					AppliedAcceleration = -AppliedAcceleration;
+					appliedDampening = dampDriveGear;
+					appliedAcceleration = -appliedAcceleration;
 					break;
 				case DriveShift.DriveShiftPosition.Neutral:
-					AppliedDampening = dampNeutralGear;
-					AppliedAcceleration = 0f;
+					appliedDampening = dampNeutralGear;
+					appliedAcceleration = 0f;
 					break;
 				case DriveShift.DriveShiftPosition.Drive:
-					AppliedDampening = dampDriveGear;
+					appliedDampening = dampDriveGear;
 					break;
 			}
-			AppliedDampening = AppliedDampening + BrakingForce;
+			appliedDampening = appliedDampening + brakingForce;
 
 
 			//i feel like this should be in update but idc
-			foreach (var tiregroup in TireGroups)
+			foreach (WheelInfo tiregroup in tireGroups)
 			{
-				foreach (var tire in tiregroup.Tires)
+				foreach (WheelCollider tire in tiregroup.tires)
 				{
 					if (tiregroup.drives)
 					{
-						if (!isEngineForcedShutOff)
+						if (!_isEngineForcedShutOff)
 						{ //apply acceleration unless engine off
-							tire.motorTorque = AppliedAcceleration;
+							tire.motorTorque = appliedAcceleration;
 						}
 
-						tire.wheelDampingRate = AppliedDampening;
+						tire.wheelDampingRate = appliedDampening;
 
 						//brakes if moving in reverse and in drive
-						if (spedometerMeasurer.rpm < 0 && ShiftPos == DriveShift.DriveShiftPosition.Drive)
+						if (spedometerMeasurer.rpm < 0 && shiftPos == DriveShift.DriveShiftPosition.Drive)
 						{
-							tire.wheelDampingRate = AppliedDampening + maxDampBreak;
+							tire.wheelDampingRate = appliedDampening + maxDampBreak;
 						}
 					}
 					if (tiregroup.steers)
 					{
-						tire.steerAngle = Rotation;
+						tire.steerAngle = rotation;
 					}
 
-					if (tiregroup.locks && ShiftPos == DriveShift.DriveShiftPosition.Park)
+					if (tiregroup.locks && shiftPos == DriveShift.DriveShiftPosition.Park)
 					{
-						tire.wheelDampingRate = AppliedDampening;
+						tire.wheelDampingRate = appliedDampening;
 					}
 					else
 					{
@@ -273,49 +274,49 @@ namespace H3VRUtils.Vehicles
 			}
 		}
 
-		public void setRotation(float rotation)
+		public void SetRotation(float rotation)
 		{
 			if (debug) return;
-			Rotation = rotation;
+			this.rotation = rotation;
 		}
 
-		public void setDriveShift(DriveShift.DriveShiftPosition dsp)
+		public void SetDriveShift(DriveShift.DriveShiftPosition dsp)
 		{
 			if (debug) return;
-			if (ShiftPos == DriveShift.DriveShiftPosition.Park && dsp != DriveShift.DriveShiftPosition.Park)
+			if (shiftPos == DriveShift.DriveShiftPosition.Park && dsp != DriveShift.DriveShiftPosition.Park)
 			{
-				if (isEngineForcedShutOff) SM.PlayGenericSound(AudioSet.VehicleStart, transform.position);
-				idleAudioSource.Play();
+				if (_isEngineForcedShutOff) SM.PlayGenericSound(audioSet.vehicleStart, transform.position);
+				_idleAudioSource.Play();
 			}
-			if (ShiftPos != DriveShift.DriveShiftPosition.Park && dsp == DriveShift.DriveShiftPosition.Park)
+			if (shiftPos != DriveShift.DriveShiftPosition.Park && dsp == DriveShift.DriveShiftPosition.Park)
 			{
-				if (isEngineForcedShutOff) SM.PlayGenericSound(AudioSet.VehicleStop, transform.position);
-				idleAudioSource.Stop();
+				if (_isEngineForcedShutOff) SM.PlayGenericSound(audioSet.vehicleStop, transform.position);
+				_idleAudioSource.Stop();
 			}
-			ShiftPos = dsp;
+			shiftPos = dsp;
 		}
 
-		public void setAcceleration(float acceleration)
+		public void SetAcceleration(float acceleration)
 		{
 			if (debug) return;
-			Acceleration = acceleration;
+			this.acceleration = acceleration;
 		}
 
-		public void setBraking(float braking)
+		public void SetBraking(float braking)
 		{
 			if (debug) return;
-			BrakingForce = braking;
+			brakingForce = braking;
 		}
 
 		public void ToggleEngine(bool set)
 		{
 			if (!set) //if engine is set off
 			{
-				isEngineForcedShutOff = true;
+				_isEngineForcedShutOff = true;
 			}
 			else //if engine is set on
 			{
-				isEngineForcedShutOff = false;
+				_isEngineForcedShutOff = false;
 			}
 		}
 	}
@@ -323,7 +324,7 @@ namespace H3VRUtils.Vehicles
 	[System.Serializable]
 	public class WheelInfo
 	{
-		public List<WheelCollider> Tires;
+		[FormerlySerializedAs("Tires")] public List<WheelCollider> tires;
 		public bool drives;
 		public bool steers;
 		public bool locks;

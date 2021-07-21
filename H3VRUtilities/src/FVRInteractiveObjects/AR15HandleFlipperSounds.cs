@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using FistVR;
+using UnityEngine.Serialization;
 
 namespace FistVR
 {
@@ -14,11 +15,11 @@ namespace FistVR
 		public override void SimpleInteraction(FVRViveHand hand)
 		{
 			base.SimpleInteraction(hand);
-			this.m_isLargeAperture = !this.m_isLargeAperture;
+			this._mIsLargeAperture = !this._mIsLargeAperture;
 			try
 			{
-				if (!m_isLargeAperture) SM.PlayGenericSound(AudClipOpen, transform.position);
-				else SM.PlayGenericSound(AudClipClose, transform.position);
+				if (!_mIsLargeAperture) SM.PlayGenericSound(audClipOpen, transform.position);
+				else SM.PlayGenericSound(audClipClose, transform.position);
 			}
 			catch
 			{
@@ -29,52 +30,52 @@ namespace FistVR
 		public override void FVRUpdate()
 		{
 			base.FVRUpdate();
-			if (this.m_isLargeAperture)
+			if (this._mIsLargeAperture)
 			{
-				this.m_tarFlipLerp = 0f;
+				this._mTarFlipLerp = 0f;
 			}
 			else
 			{
-				this.m_tarFlipLerp = 1f;
+				this._mTarFlipLerp = 1f;
 			}
-			this.m_curFlipLerp = Mathf.MoveTowards(this.m_curFlipLerp, this.m_tarFlipLerp, Time.deltaTime * 4f);
-			if (Mathf.Abs(this.m_curFlipLerp - this.m_lastFlipLerp) > 0.01f)
+			this._mCurFlipLerp = Mathf.MoveTowards(this._mCurFlipLerp, this._mTarFlipLerp, Time.deltaTime * 4f);
+			if (Mathf.Abs(this._mCurFlipLerp - this._mLastFlipLerp) > 0.01f)
 			{
-				this.m_flipsightCurRotX = Mathf.Lerp(this.m_flipsightStartRotX, this.m_flipsightEndRotX, this.m_curFlipLerp);
-				AR15HandleSightFlipper.Axis rotAxis = this.RotAxis;
+				this._mFlipsightCurRotX = Mathf.Lerp(this.mFlipsightStartRotX, this.mFlipsightEndRotX, this._mCurFlipLerp);
+				AR15HandleSightFlipper.Axis rotAxis = this.rotAxis;
 				if (rotAxis != AR15HandleSightFlipper.Axis.X)
 				{
 					if (rotAxis != AR15HandleSightFlipper.Axis.Y)
 					{
 						if (rotAxis == AR15HandleSightFlipper.Axis.Z)
 						{
-							this.Flipsight.localEulerAngles = new Vector3(0f, 0f, this.m_flipsightCurRotX);
+							this.flipsight.localEulerAngles = new Vector3(0f, 0f, this._mFlipsightCurRotX);
 						}
 					}
 					else
 					{
-						this.Flipsight.localEulerAngles = new Vector3(0f, this.m_flipsightCurRotX, 0f);
+						this.flipsight.localEulerAngles = new Vector3(0f, this._mFlipsightCurRotX, 0f);
 					}
 				}
 				else
 				{
-					this.Flipsight.localEulerAngles = new Vector3(this.m_flipsightCurRotX, 0f, 0f);
+					this.flipsight.localEulerAngles = new Vector3(this._mFlipsightCurRotX, 0f, 0f);
 				}
 			}
-			this.m_lastFlipLerp = this.m_curFlipLerp;
+			this._mLastFlipLerp = this._mCurFlipLerp;
 		}
 
-		private bool m_isLargeAperture = true;
-		public Transform Flipsight;
-		public float m_flipsightStartRotX;
-		public float m_flipsightEndRotX = -90f;
-		private float m_flipsightCurRotX;
-		public AR15HandleSightFlipper.Axis RotAxis;
-		private float m_curFlipLerp;
-		private float m_tarFlipLerp;
-		private float m_lastFlipLerp;
-		public AudioEvent AudClipOpen;
-		public AudioEvent AudClipClose;
+		private bool _mIsLargeAperture = true;
+		[FormerlySerializedAs("Flipsight")] public Transform flipsight;
+		[FormerlySerializedAs("m_flipsightStartRotX")] public float mFlipsightStartRotX;
+		[FormerlySerializedAs("m_flipsightEndRotX")] public float mFlipsightEndRotX = -90f;
+		private float _mFlipsightCurRotX;
+		[FormerlySerializedAs("RotAxis")] public AR15HandleSightFlipper.Axis rotAxis;
+		private float _mCurFlipLerp;
+		private float _mTarFlipLerp;
+		private float _mLastFlipLerp;
+		[FormerlySerializedAs("AudClipOpen")] public AudioEvent audClipOpen;
+		[FormerlySerializedAs("AudClipClose")] public AudioEvent audClipClose;
 		public enum Axis
 		{
 			X,

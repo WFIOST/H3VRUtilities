@@ -22,7 +22,7 @@ namespace H3VRUtils.Vehicles
 			{
 				vehicleSeat.hand = hand;
 
-				hand.MovementManager.TeleportToPoint(vehicleSeat.SitPos.transform.position, false, vehicleSeat.SitPos.transform.localEulerAngles);
+				hand.MovementManager.TeleportToPoint(vehicleSeat.sitPos.transform.position, false, vehicleSeat.sitPos.transform.localEulerAngles);
 
 				//var rot = hand.Head.transform.rotation;
 				
@@ -35,9 +35,9 @@ namespace H3VRUtils.Vehicles
 				if (hand == vehicleSeat.hand)
 				{
 					vehicleSeat.hand = null;
-					if (vehicleSeat.EjectPos != null)
+					if (vehicleSeat.ejectPos != null)
 					{
-						hand.MovementManager.transform.position = vehicleSeat.EjectPos.transform.position;
+						hand.MovementManager.transform.position = vehicleSeat.ejectPos.transform.position;
 					}
 				}
 			}

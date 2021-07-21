@@ -4,7 +4,7 @@ using FistVR;
 
 namespace H3VRUtils.Vehicles
 {
-	class SteeringWheel : FVRInteractiveObject
+	public class SteeringWheel : FVRInteractiveObject
 	{
 		public Vehicle vehicle;
 		public float resetLerpSpeed;
@@ -27,7 +27,7 @@ namespace H3VRUtils.Vehicles
 			base.BeginInteraction(hand);
 
 			//disconnect model
-			var child = transform.GetChild(0);
+			Transform child = transform.GetChild(0);
 			child.parent = null;
 
 			//look at hands
@@ -45,7 +45,7 @@ namespace H3VRUtils.Vehicles
 			//undo BeginInteraction
 
 			//dc model
-			var child = transform.GetChild(0);
+			Transform child = transform.GetChild(0);
 			child.parent = null;
 
 			//zero rotation of wheel
@@ -87,18 +87,18 @@ namespace H3VRUtils.Vehicles
 
 			if(Vector2.Angle(hand.Input.TouchpadAxes, -Vector2.up) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.3f){
 				isBraking = !isBraking;
-				SM.PlayGenericSound(vehicle.AudioSet.PedalSwitchSound, transform.position);
+				SM.PlayGenericSound(vehicle.audioSet.pedalSwitchSound, transform.position);
 			}
 
 			if (isBraking)
 			{
-				vehicle.setAcceleration(0);
-				vehicle.setBraking(vehicle.maxDampBreak * hand.Input.TriggerFloat);
+				vehicle.SetAcceleration(0);
+				vehicle.SetBraking(vehicle.maxDampBreak * hand.Input.TriggerFloat);
 			}
 			else
 			{
-				vehicle.setAcceleration(hand.Input.TriggerFloat * vehicle.maxAcceleration);
-				vehicle.setBraking(0);
+				vehicle.SetAcceleration(hand.Input.TriggerFloat * vehicle.maxAcceleration);
+				vehicle.SetBraking(0);
 			}
 		}
 
@@ -106,12 +106,12 @@ namespace H3VRUtils.Vehicles
 		{
 			if (base.m_hand == null)
 			{
-				var rLS = resetLerpSpeed;
-				if (rotAmt > 0) rLS = -rLS;
-				rotAmt += rLS;
-				transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y + rLS, transform.localEulerAngles.z);
-				vehicle.setAcceleration(0);
-				vehicle.setBraking(0);
+				float rLs = resetLerpSpeed;
+				if (rotAmt > 0) rLs = -rLs;
+				rotAmt += rLs;
+				transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y + rLs, transform.localEulerAngles.z);
+				vehicle.SetAcceleration(0);
+				vehicle.SetBraking(0);
 				SetRot();
 			}
 		}
@@ -131,7 +131,7 @@ namespace H3VRUtils.Vehicles
 
 			if (reverseRot) lerp = -lerp;
 
-			vehicle.setRotation(lerp);
+			vehicle.SetRotation(lerp);
 		}
 	}
 }

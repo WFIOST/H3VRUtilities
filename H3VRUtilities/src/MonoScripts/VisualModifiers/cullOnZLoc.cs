@@ -7,39 +7,39 @@ using UnityEngine;
 namespace H3VRUtils
 {
 
-	public class cullOnZLoc : MonoBehaviour
+	public class CullOnZLoc : MonoBehaviour
 	{
-		public enum cutOffType
+		public enum CutOffType
 		{
-			above,
-			below
+			Above,
+			Below
 		}
-		public cutOffType cutoff;
+		public CutOffType cutoff;
 		public double loc;
 		public GameObject objTarget;
-		public enum dirType
+		public enum DirType
 		{
-			x = 0,
-			y = 1,
-			z = 2
+			X = 0,
+			Y = 1,
+			Z = 2
 		}
-		public dirType dir;
-		private MeshRenderer objMeshRenderer;
+		public DirType dir;
+		private MeshRenderer _objMeshRenderer;
 
 
 		void Start()
 		{
-			objMeshRenderer = gameObject.GetComponent<MeshRenderer>();
+			_objMeshRenderer = gameObject.GetComponent<MeshRenderer>();
 		}
 
 		void Update()
 		{
 			switch (cutoff) {
-				case cutOffType.below:
-					objMeshRenderer.enabled = objTarget.transform.localPosition[(int)dir] > loc;
+				case CutOffType.Below:
+					_objMeshRenderer.enabled = objTarget.transform.localPosition[(int)dir] > loc;
 					break;
-				case cutOffType.above:
-					objMeshRenderer.enabled = objTarget.transform.localPosition[(int)dir] < loc;
+				case CutOffType.Above:
+					_objMeshRenderer.enabled = objTarget.transform.localPosition[(int)dir] < loc;
 					break;
 			}
 		}

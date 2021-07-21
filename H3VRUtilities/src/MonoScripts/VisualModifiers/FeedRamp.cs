@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
+using UnityEngine.Serialization;
 
 namespace H3VRUtils.MonoScripts.VisualModifiers
 {
 	class FeedRamp : MonoBehaviour
 	{
-		public GameObject Carrier;
+		[FormerlySerializedAs("Carrier")] public GameObject carrier;
 		public FVRFireArm firearm;
-		public float CarrierDetectDistance;
-		public Vector2 CarrierRots;
-		public Transform CarrierComparePoint1;
-		public Transform CarrierComparePoint2;
-		private float m_curCarrierRot;
-		private float m_tarCarrierRot;
+		[FormerlySerializedAs("CarrierDetectDistance")] public float carrierDetectDistance;
+		[FormerlySerializedAs("CarrierRots")] public Vector2 carrierRots;
+		[FormerlySerializedAs("CarrierComparePoint1")] public Transform carrierComparePoint1;
+		[FormerlySerializedAs("CarrierComparePoint2")] public Transform carrierComparePoint2;
+		private float _mCurCarrierRot;
+		private float _mTarCarrierRot;
 
 		public void Update()
 		{
@@ -26,34 +27,34 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 					{
 						if (firearm.m_hand.OtherHand.CurrentInteractable is FVRFireArmRound)
 						{
-							float num = Vector3.Distance(firearm.m_hand.OtherHand.CurrentInteractable.transform.position, firearm.GetClosestValidPoint(this.CarrierComparePoint1.position, this.CarrierComparePoint2.position, firearm.m_hand.OtherHand.CurrentInteractable.transform.position));
-							if (num < this.CarrierDetectDistance)
+							float num = Vector3.Distance(firearm.m_hand.OtherHand.CurrentInteractable.transform.position, firearm.GetClosestValidPoint(this.carrierComparePoint1.position, this.carrierComparePoint2.position, firearm.m_hand.OtherHand.CurrentInteractable.transform.position));
+							if (num < this.carrierDetectDistance)
 							{
-								this.m_tarCarrierRot = this.CarrierRots.y;
+								this._mTarCarrierRot = this.carrierRots.y;
 							}
 							else
 							{
-								this.m_tarCarrierRot = this.CarrierRots.x;
+								this._mTarCarrierRot = this.carrierRots.x;
 							}
 						}
 						else
 						{
-							this.m_tarCarrierRot = this.CarrierRots.x;
+							this._mTarCarrierRot = this.carrierRots.x;
 						}
 					}
 					else
 					{
-						this.m_tarCarrierRot = this.CarrierRots.x;
+						this._mTarCarrierRot = this.carrierRots.x;
 					}
 				}
 				else
 				{
-					this.m_tarCarrierRot = this.CarrierRots.x;
+					this._mTarCarrierRot = this.carrierRots.x;
 				}
-				if (Mathf.Abs(this.m_curCarrierRot - this.m_tarCarrierRot) > 0.001f)
+				if (Mathf.Abs(this._mCurCarrierRot - this._mTarCarrierRot) > 0.001f)
 				{
-					this.m_curCarrierRot = Mathf.MoveTowards(this.m_curCarrierRot, this.m_tarCarrierRot, 270f * Time.deltaTime);
-					this.Carrier.transform.localEulerAngles = new Vector3(this.m_curCarrierRot, 0f, 0f);
+					this._mCurCarrierRot = Mathf.MoveTowards(this._mCurCarrierRot, this._mTarCarrierRot, 270f * Time.deltaTime);
+					this.carrier.transform.localEulerAngles = new Vector3(this._mCurCarrierRot, 0f, 0f);
 				}
 			}
 		}
