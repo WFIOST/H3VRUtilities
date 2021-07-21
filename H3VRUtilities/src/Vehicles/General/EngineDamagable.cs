@@ -86,6 +86,16 @@ namespace H3VRUtils.Vehicles
 
 		}
 
+		public override void Heal(float heal)
+		{
+			base.Heal(heal);
+		}
+
+		public override void HealPercent(float percentHeal)
+		{
+			base.HealPercent(percentHeal);
+		}
+
 		public override void onUndeath()
 		{
 			particleFire.Stop();

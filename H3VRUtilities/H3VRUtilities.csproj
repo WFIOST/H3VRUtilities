@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>H3VRUtils</RootNamespace>
-    <AssemblyName>Assembly-CSharp.H3VRUtilities.mm</AssemblyName>
+    <AssemblyName>Assembly-CSharp.mm</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -106,6 +106,7 @@
     <Compile Include="src\FVRInteractiveObjects\H3VRUtilsMagRelease.cs" />
     <Compile Include="src\FVRInteractiveObjects\H3VRUtilsPhysBoltRelease.cs" />
     <Compile Include="src\FVRInteractiveObjects\HandgunSecondarySwitch.cs" />
+    <Compile Include="src\FVRInteractiveObjects\lockToHead.cs" />
     <Compile Include="src\FVRInteractiveObjects\NadeCupLauncher.cs" />
     <Compile Include="src\FVRInteractiveObjects\OpenBoltBurstFire.cs" />
     <Compile Include="src\Mapping\Audio\AudioCulling.cs" />
@@ -134,10 +135,13 @@
     <Compile Include="src\UniqueCode\RevolverChargingHandle.cs" />
     <Compile Include="src\UniqueCode\SelbstladerUnlockSystem.cs" />
     <Compile Include="src\Vehicles\General\DriveShift.cs" />
+    <Compile Include="src\Vehicles\General\EngineDamagable.cs" />
     <Compile Include="src\Vehicles\General\EnterVehicle.cs" />
     <Compile Include="src\Vehicles\General\SteeringWheel.cs" />
     <Compile Include="src\Vehicles\General\Vehicle.cs" />
     <Compile Include="src\Vehicles\General\VehicleAudioSet.cs" />
+    <Compile Include="src\Vehicles\General\VehicleDamagable.cs" />
+    <Compile Include="src\Vehicles\General\VehicleRepairTool.cs" />
     <Compile Include="src\Vehicles\General\VehicleSeat.cs" />
     <Compile Include="src\Vehicles\General\Wheel.cs" />
     <Compile Include="src\Vehicles\Unique\ForkliftLift.cs" />

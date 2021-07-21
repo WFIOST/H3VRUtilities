@@ -98,6 +98,7 @@ namespace H3VRUtils.Vehicles
 		public virtual void HealPercent(float percentHeal)
 		{
 			Heal(percentHeal * maxHealth);
+			Debug.Log("percenthealing for " + percentHeal);
 		}
 
 		public virtual void Heal(float heal)

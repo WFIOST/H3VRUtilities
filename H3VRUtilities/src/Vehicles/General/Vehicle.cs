@@ -33,8 +33,6 @@ namespace H3VRUtils.Vehicles
 		public DriveShift.DriveShiftPosition ShiftPos;
 		public float Rotation;
 		public float Acceleration;
-		public float downPressure;
-		public float dPmult;
 		public float sidePushBack;
 		public float BrakingForce;
 
@@ -273,10 +271,6 @@ namespace H3VRUtils.Vehicles
 					ApplyLocalPositionToVisuals(tire);
 				}
 			}
-
-			//attempted anti-tipping methods. not even sure if it works tbh
-			rb.AddRelativeForce(0, -(downPressure + dPmult * Acceleration), 0);
-			rb.AddRelativeTorque(0, 0, -(transform.localEulerAngles.z * sidePushBack));
 		}
 
 		public void setRotation(float rotation)
@@ -290,12 +284,12 @@ namespace H3VRUtils.Vehicles
 			if (debug) return;
 			if (ShiftPos == DriveShift.DriveShiftPosition.Park && dsp != DriveShift.DriveShiftPosition.Park)
 			{
-				SM.PlayGenericSound(AudioSet.VehicleStart, transform.position);
+				if (isEngineForcedShutOff) SM.PlayGenericSound(AudioSet.VehicleStart, transform.position);
 				idleAudioSource.Play();
 			}
 			if (ShiftPos != DriveShift.DriveShiftPosition.Park && dsp == DriveShift.DriveShiftPosition.Park)
 			{
-				SM.PlayGenericSound(AudioSet.VehicleStop, transform.position);
+				if (isEngineForcedShutOff) SM.PlayGenericSound(AudioSet.VehicleStop, transform.position);
 				idleAudioSource.Stop();
 			}
 			ShiftPos = dsp;
