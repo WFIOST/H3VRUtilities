@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
-	class OpenBoltBurstFire : MonoBehaviour
+	public class OpenBoltBurstFire : MonoBehaviour
 	{
 		[FormerlySerializedAs("Receiver")] public OpenBoltReceiver receiver;
 

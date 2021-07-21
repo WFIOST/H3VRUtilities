@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils.MonoScripts.VisualModifiers
 {
-	class FeedRamp : MonoBehaviour
+	public class FeedRamp : MonoBehaviour
 	{
 		[FormerlySerializedAs("Carrier")] public GameObject carrier;
 		public FVRFireArm firearm;

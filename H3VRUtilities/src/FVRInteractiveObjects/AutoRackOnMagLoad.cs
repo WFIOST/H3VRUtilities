@@ -7,7 +7,7 @@ using FistVR;
 
 namespace H3VRUtils.FVRInteractiveObjects
 {
-	class AutoRackOnMagLoad : MonoBehaviour
+	public class AutoRackOnMagLoad : MonoBehaviour
 	{
 		public FVRFireArm weapon;
 		private Handgun _hg;

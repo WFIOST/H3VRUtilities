@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
-	class BetterMagReleaseLatch : MonoBehaviour
+	public class BetterMagReleaseLatch : MonoBehaviour
 	{
 		[FormerlySerializedAs("FireArm")] public FVRFireArm fireArm;
 		[FormerlySerializedAs("Joint")] public HingeJoint joint;

@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils.Weapons
 {
-	class JungleMag : MonoBehaviour
+	public class JungleMag : MonoBehaviour
 	{
 		//We will break the shackles that are Monarchy.
 		public FVRFireArmMagazine masterMag;

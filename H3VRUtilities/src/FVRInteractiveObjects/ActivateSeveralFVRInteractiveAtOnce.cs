@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
-	class ActivateSeveralFvrInteractiveAtOnce : FVRInteractiveObject
+	public class ActivateSeveralFvrInteractiveAtOnce : FVRInteractiveObject
 	{
 		[FormerlySerializedAs("InteractiveObjects")] public List<FVRInteractiveObject> interactiveObjects;
 

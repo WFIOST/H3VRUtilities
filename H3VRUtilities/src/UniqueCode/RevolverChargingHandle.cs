@@ -7,7 +7,7 @@ using FistVR;
 
 namespace H3VRUtils.UniqueCode
 {
-	class RevolverChargingHandle : FVRInteractiveObject
+	public class RevolverChargingHandle : FVRInteractiveObject
 	{
 		public SingleActionRevolver wep;
 		public Transform frontMostPoint;

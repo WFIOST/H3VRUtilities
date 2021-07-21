@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
-	class AttachmentModifyFirearm : MonoBehaviour
+	public class AttachmentModifyFirearm : MonoBehaviour
 	{
 		private FVRFireArmAttachment _attachment;
 		private FVRFireArm _weapon;

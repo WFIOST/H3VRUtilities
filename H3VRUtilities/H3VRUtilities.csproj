@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <LangVersion>9</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -101,29 +102,28 @@
     <Compile Include="src\FVRInteractiveObjects\AutoRackOnMagLoad.cs" />
     <Compile Include="src\FVRInteractiveObjects\BetterMagReleaseLatch.cs" />
     <Compile Include="src\FVRInteractiveObjects\FVRFirearms\BreakOpenFlareGun.cs" />
-    <Compile Include="src\FVRInteractiveObjects\FVRFirearms\jungleMag.cs" />
+    <Compile Include="src\FVRInteractiveObjects\FVRFirearms\JungleMag.cs" />
     <Compile Include="src\FVRInteractiveObjects\GoToNearestSosig.cs" />
     <Compile Include="src\FVRInteractiveObjects\H3VRUtilsMagRelease.cs" />
     <Compile Include="src\FVRInteractiveObjects\H3VRUtilsPhysBoltRelease.cs" />
     <Compile Include="src\FVRInteractiveObjects\HandgunSecondarySwitch.cs" />
-    <Compile Include="src\FVRInteractiveObjects\lockToHead.cs" />
+    <Compile Include="src\FVRInteractiveObjects\LockToHead.cs" />
     <Compile Include="src\FVRInteractiveObjects\NadeCupLauncher.cs" />
     <Compile Include="src\FVRInteractiveObjects\OpenBoltBurstFire.cs" />
     <Compile Include="src\Mapping\Audio\AudioCulling.cs" />
     <Compile Include="src\Mapping\Camera\CameraSetup.cs" />
     <Compile Include="src\Mapping\Components\ComponentCulling.cs" />
-    <Compile Include="src\Mapping\Editor\ShowHiddenObjects.cs" />
     <Compile Include="src\MonoScripts\LoadHoloShader.cs" />
     <Compile Include="src\MonoScripts\UIModifiers\DispBulletAmount.cs" />
     <Compile Include="src\MonoScripts\VisualModifiers\AnimPlayOnGrab.cs" />
-    <Compile Include="src\MonoScripts\VisualModifiers\compressingSpring.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\CompressingSpring.cs" />
     <Compile Include="src\MonoScripts\VisualModifiers\ConstantSpin.cs" />
-    <Compile Include="src\MonoScripts\VisualModifiers\cullOnZLoc.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\CullOnZLoc.cs" />
     <Compile Include="src\MonoScripts\VisualModifiers\CycleOnBoltRelease.cs" />
     <Compile Include="src\MonoScripts\VisualModifiers\FeedRamp.cs" />
-    <Compile Include="src\MonoScripts\VisualModifiers\followDir.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\FollowDir.cs" />
     <Compile Include="src\MonoScripts\VisualModifiers\InvisibleMagOnLoad.cs" />
-    <Compile Include="src\MonoScripts\VisualModifiers\laser.cs" />
+    <Compile Include="src\MonoScripts\VisualModifiers\Laser.cs" />
     <Compile Include="src\MonoScripts\VisualModifiers\MagFollower.cs" />
     <Compile Include="src\MonoScripts\VisualModifiers\ManipulateObject.cs" />
     <Compile Include="src\MonoScripts\VisualModifiers\YFoldingStockEndPiece.cs" />

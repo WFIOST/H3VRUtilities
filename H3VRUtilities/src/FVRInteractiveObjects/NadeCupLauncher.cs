@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace H3VRUtils.Weapons.NadeCup
 {
-    internal class NadeCupLauncher : MonoBehaviour
+    public class NadeCupLauncher : MonoBehaviour
     {
         public FVRFireArmChamber mainChamber;
         public FVRFireArmChamber nadeCup;

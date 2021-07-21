@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils.MonoScripts.VisualModifiers
 {
-	class CycleOnBoltRelease : MonoBehaviour
+	public class CycleOnBoltRelease : MonoBehaviour
 	{
 		public FVRFireArmChamber chamber;
 		public GameObject muzzle;

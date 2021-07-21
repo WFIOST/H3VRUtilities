@@ -7,7 +7,7 @@ using FistVR;
 
 namespace H3VRUtils.UniqueCode
 {
-	class SelbstladerUnlockSystem : FVRInteractiveObject
+	public class SelbstladerUnlockSystem : FVRInteractiveObject
 	{
 		public GameObject lockingpiece;
 		public Transform lockingpieceunlocked;

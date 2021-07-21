@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
-	class DisplayOnAttached : MonoBehaviour
+	public class DisplayOnAttached : MonoBehaviour
 	{
 		public GameObject displayOnAttach;
 		[FormerlySerializedAs("AttachmentMount")] public FVRFireArmAttachmentMount attachmentMount;

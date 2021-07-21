@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils.UniqueCode
 {
-	class LebelCutoff : FVRInteractiveObject
+	public class LebelCutoff : FVRInteractiveObject
 	{
 		[FormerlySerializedAs("TubeMagazine")] public FVRFireArmMagazine tubeMagazine;
 		[FormerlySerializedAs("Firearm")] public FVRFireArm firearm;

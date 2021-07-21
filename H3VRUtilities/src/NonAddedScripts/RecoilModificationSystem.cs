@@ -17,7 +17,7 @@ namespace H3VRUtils.NonAddedScripts
 		public void Start()
 		{
 			firearm = GetComponent<FVRFireArm>();
-			if (firearm == null) { Console.WriteLine("Cannot find firearm!"); UnityEngine.Object.Destroy(this); }
+			if (firearm is null) { Console.WriteLine("Cannot find firearm!"); UnityEngine.Object.Destroy(this); }
 		}
 
 	}

@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils.MonoScripts.VisualModifiers
 {
-	class ManipulateObject : MonoBehaviour
+	public class ManipulateObject : MonoBehaviour
 	{
 		public enum Dirtype
 		{
@@ -201,7 +201,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			//SpecialFX - GunLoaded
 			if (readIfGunIsLoaded)
 			{
-				if (firearmToReadFrom.Magazine != null)
+				if (firearmToReadFrom.Magazine is not null)
 				{
 					invertlerp = 1;
 				}

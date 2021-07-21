@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace H3VRUtils.FVRInteractiveObjects
 {
-	class GoToNearestSosig : MonoBehaviour
+	public class GoToNearestSosig : MonoBehaviour
 	{
 		public float speed;
 		public Rigidbody rigidbody;

@@ -75,7 +75,7 @@ namespace H3VRUtils
 				{
 					return;
 				}
-				if (meshes[magazine.m_numRounds] == null)
+				if (meshes[magazine.m_numRounds] is null)
 				{
 					return;
 				}

@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils.MonoScripts.VisualModifiers
 {
-	class AnimPlayOnGrab : MonoBehaviour
+	public class AnimPlayOnGrab : MonoBehaviour
 	{
 		public Animation animation;
 		[FormerlySerializedAs("Object")] public FVRPhysicalObject @object;
@@ -20,7 +20,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		public void Update()
 		{
 			if (animation.isPlaying) return;
-			if (@object.m_hand != null) //held
+			if (@object.m_hand is not null) //held
 			{
 				if (!_isGrabbed) //was not held before
 				{

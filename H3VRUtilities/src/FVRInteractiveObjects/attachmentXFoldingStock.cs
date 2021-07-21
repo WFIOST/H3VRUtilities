@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace H3VRUtils
 {
-    internal class AttachmentXFoldingStock : FVRFoldingStockXAxis
+    public class AttachmentXFoldingStock : FVRFoldingStockXAxis
     {
         public FVRFireArmAttachment attachment;
 

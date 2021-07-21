@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace H3VRUtils
 {
-	class CompressingSpring : MonoBehaviour
+	public class CompressingSpring : MonoBehaviour
 	{
 		public GameObject compressor;
 		public GameObject spring;
@@ -28,7 +28,7 @@ namespace H3VRUtils
 		void Update()
 		{
 			Vector3 localScale = spring.transform.localScale;
-			float[] dir = new float[3];
+			var dir = new float[3];
 
 			dir[0] = localScale.x;
 			dir[1] = localScale.y;

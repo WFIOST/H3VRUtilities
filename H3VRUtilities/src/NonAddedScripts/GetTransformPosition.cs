@@ -12,7 +12,7 @@ namespace H3VRUtils.NonAddedScripts
         public GameObject[] GetCrates()
         {
             shatteredCratesObjects = new GameObject[shatteredCrates.Length];
-            for (int i = 0; i < shatteredCrates.Length; i++)
+            for (var i = 0; i < shatteredCrates.Length; i++)
             {
                 shatteredCratesObjects[i] = shatteredCrates[i].gameObject;
             }

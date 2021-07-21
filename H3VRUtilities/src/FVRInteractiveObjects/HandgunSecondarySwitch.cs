@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils
 {
-	class HandgunSecondarySwitch : FVRInteractiveObject
+	public class HandgunSecondarySwitch : FVRInteractiveObject
 	{
 		public new void Awake()
 		{

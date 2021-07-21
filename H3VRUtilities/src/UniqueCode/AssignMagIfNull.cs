@@ -7,7 +7,7 @@ using FistVR;
 
 namespace H3VRUtils.UniqueCode
 {
-	class AssignMagIfNull : MonoBehaviour
+	public class AssignMagIfNull : MonoBehaviour
 	{
 		public FVRFireArm firearm;
 		public FVRFireArmMagazine magazine;
@@ -15,7 +15,7 @@ namespace H3VRUtils.UniqueCode
 
 		public void FixedUpdate()
 		{
-			if (firearm.Magazine == null) { firearm.Magazine = magazine; }
+			if (firearm.Magazine is null) { firearm.Magazine = magazine; }
 		}
 	}
 }

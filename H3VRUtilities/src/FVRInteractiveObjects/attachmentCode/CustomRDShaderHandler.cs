@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace H3VRUtils
 {
-	class CustomRdShaderHandler : FVRFireArmAttachment
+	public class CustomRdShaderHandler : FVRFireArmAttachment
 	{
 		public bool enableMagnificationSettings;
 		[FormerlySerializedAs("Reticle")] public MeshRenderer reticle;

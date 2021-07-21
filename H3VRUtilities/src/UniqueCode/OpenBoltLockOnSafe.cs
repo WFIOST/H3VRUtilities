@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils.UniqueCode
 {
-	class OpenBoltLockOnSafe : MonoBehaviour
+	public class OpenBoltLockOnSafe : MonoBehaviour
 	{
 		[FormerlySerializedAs("Bolt")] public Collider bolt;
 		[FormerlySerializedAs("SafetySwitch")] public GameObject safetySwitch;

@@ -29,33 +29,36 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		private bool _wasFull;
 		private bool _wasLoaded;
 		private FVRFireArmChamber _chamber;
-		private string _txt;
+		private string txt;
 		private int _amt;
 
 		public void Start()
 		{
-			if (firearm is ClosedBoltWeapon)
+			switch (firearm)
 			{
-				ClosedBoltWeapon wep = firearm as ClosedBoltWeapon;
-				_chamber = wep.Chamber;
-			}
-			if (firearm is OpenBoltReceiver)
-			{
-				OpenBoltReceiver wep = firearm as OpenBoltReceiver;
-				_chamber = wep.Chamber;
-			}
-			if (firearm is Handgun)
-			{
-				Handgun wep = firearm as Handgun;
-				_chamber = wep.Chamber;
+				case ClosedBoltWeapon weapon:
+				{
+					_chamber = weapon.Chamber;
+					break;
+				}
+				case OpenBoltReceiver receiver:
+				{
+					_chamber = receiver.Chamber;
+					break;
+				}
+				case Handgun handgun:
+				{
+					_chamber = handgun.Chamber;
+					break;
+				}
 			}
 		}
 
 		public void FixedUpdate()
 		{
-			_txt = "";
+			txt = "";
 
-			if (firearm == null) //magcode
+			if (firearm is null) //magcode
 			{
 				_amt = magazine.m_numRounds;
 				SetText();
@@ -63,7 +66,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			else
 
 			//guncode
-			if (firearm.Magazine != null)
+			if (firearm.Magazine is not null)
 			{
 				_amt = firearm.Magazine.m_numRounds;
 
@@ -95,16 +98,16 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 
 		public void SetText()
 		{
-			_txt = _amt.ToString();
-			if (uItext != null)
+			txt = _amt.ToString();
+			if (uItext is not null)
 			{
 				if (addMinCharLength)
 				{
-					int lengthneedtoadd = minCharLength - _txt.Length;
-					for (int i = 0; i < lengthneedtoadd; i++) _txt = "0" + _txt;
+					int lengthneedtoadd = minCharLength - txt.Length;
+					for (var i = 0; i < lengthneedtoadd; i++) txt = "0" + txt;
 				}
-				uItext.text = _txt;
-				if(firearm.Magazine == null)
+				uItext.text = txt;
+				if(firearm.Magazine is null)
 				{
 					uItext.text = textWhenNoMag;
 				}
@@ -112,28 +115,31 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 
 			if (enabledObjects)
 			{
-				for (int i = 0; i < objects.Count; i++) //set all to false
+				foreach (GameObject obj in objects)
 				{
-					objects[i].SetActive(false);
+					obj.SetActive(false);
 					objectWhenEmpty.SetActive(false);
 				}
 
-				if(firearm.Magazine == null && objectWhenEmpty != null) //turn on the no-mag object
+				if(firearm.Magazine is null && objectWhenEmpty is not null) //turn on the no-mag object
 				{
 					objectWhenEmpty.SetActive(true);
-				} else 
-				for (int i = 0; i < objects.Count; i++) //now do the actual turn-ons
+				} 
+				else
 				{
-					if (i < _amt)
+					for (var i = 0; i < objects.Count; i++) //now do the actual turn-ons
 					{
-						if (enableAllUnderAmount)
+						if (i < _amt)
+						{
+							if (enableAllUnderAmount)
+							{
+								objects[i].SetActive(true);
+							}
+						}
+						else if (i == _amt)
 						{
 							objects[i].SetActive(true);
 						}
-					}
-					else if (i == _amt)
-					{
-						objects[i].SetActive(true);
 					}
 				}
 			}

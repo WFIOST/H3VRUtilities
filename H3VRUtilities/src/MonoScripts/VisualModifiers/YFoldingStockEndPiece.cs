@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 namespace H3VRUtils.FVRInteractiveObjects
 {
-	class YFoldingStockEndPiece : MonoBehaviour
+	public class YFoldingStockEndPiece : MonoBehaviour
 	{
 		[FormerlySerializedAs("MainPieceDir")] public CullOnZLoc.DirType mainPieceDir;
 		[FormerlySerializedAs("MainPiece")] public GameObject mainPiece;
@@ -23,7 +23,7 @@ namespace H3VRUtils.FVRInteractiveObjects
 		public void Update()
 		{
 			Vector3 localRot = endPiece.transform.localEulerAngles;
-			float[] dir = new float[3];
+			var dir = new float[3];
 
 			dir[0] = localRot.x;
 			dir[1] = localRot.y;

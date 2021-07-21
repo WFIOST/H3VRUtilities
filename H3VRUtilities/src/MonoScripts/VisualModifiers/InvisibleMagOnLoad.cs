@@ -7,20 +7,13 @@ using UnityEngine;
 
 namespace H3VRUtils
 {
-	class InvisibleMagOnLoad : MonoBehaviour
+	public class InvisibleMagOnLoad : MonoBehaviour
 	{
 		public FVRFireArmMagazine magazine;
 
 		public void Update()
 		{
-			if(magazine.FireArm != null)
-			{
-				magazine.Viz.gameObject.SetActive(false);
-			}
-			else
-			{
-				magazine.Viz.gameObject.SetActive(true);
-			}
+			magazine.Viz.gameObject.SetActive(magazine.FireArm is null);
 		}
 	}
 }

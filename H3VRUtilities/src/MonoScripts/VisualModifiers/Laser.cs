@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace H3VRUtils.MonoScripts.VisualModifiers
 {
-    class Laser : MonoBehaviour
+    public class Laser : MonoBehaviour
     {
         public GameObject endpoint;
 
