@@ -95,6 +95,7 @@
     <Compile Include="src\FVRInteractiveObjects\ActivateSeveralFVRInteractiveAtOnce.cs" />
     <Compile Include="src\FVRInteractiveObjects\AR15HandleFlipperSounds.cs" />
     <Compile Include="src\FVRInteractiveObjects\attachmentCode\AttachmentModifyFirearm.cs" />
+    <Compile Include="src\FVRInteractiveObjects\attachmentCode\AutoSearAttachment.cs" />
     <Compile Include="src\FVRInteractiveObjects\attachmentCode\CustomRDShaderHandler.cs" />
     <Compile Include="src\FVRInteractiveObjects\attachmentCode\DisplayOnAttached.cs" />
     <Compile Include="src\FVRInteractiveObjects\attachmentXFoldingStock.cs" />
