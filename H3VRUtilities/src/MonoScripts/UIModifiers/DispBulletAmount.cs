@@ -11,6 +11,8 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 	public class DispBulletAmount : MonoBehaviour
 	{
 		public FVRFireArm firearm;
+		public FVRFireArmChamber firearmChamber;
+		[Header("Fill out Magazine if your ammo counter is on the magazine, otherwise don't")]
 		public FVRFireArmMagazine magazine;
 		public Text UItext;
 		public string textWhenNoMag;
@@ -33,6 +35,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 
 		public void Start()
 		{
+			chamber = firearmChamber;
 			if (firearm is ClosedBoltWeapon)
 			{
 				var wep = firearm as ClosedBoltWeapon;
