@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
+using Valve.VR.InteractionSystem;
 
 namespace H3VRUtils.MonoScripts.VisualModifiers
 {
-	class ManipulateObject : MonoBehaviour
+	public class ManipulateObject : MonoBehaviour
 	{
 		public enum dirtype
 		{
@@ -50,8 +51,8 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		private float rememberLerpPoint = -999f;
 
 		[Header("Special Observations")]
-		[Tooltip("When the observed object reaches or exceeds the stopofobservation, the affected object will snap back to the startofaffected, and will only reset when the observed object reaches the startofobserved.")]
-
+		[Tooltip(
+			"When the observed object reaches or exceeds the stopofobservation, the affected object will snap back to the startofaffected, and will only reset when the observed object reaches the startofobserved.")]
 		[Header("Snap Forwards")]
 		public bool SnapForwardsOnMax;
 		public bool SnappedForwards;
@@ -88,13 +89,30 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		private int rememberAttached;
 		private float lastDecision;
 
+		[Header("Move If Object Held")] public bool MoveIfObjectHeld;
+		public FVRPhysicalObject HeldObject;
+		private bool _isObservedObjectNotNull;
+
+		[Header("Move If Grenade Armed")] public bool MoveIfGrenadeArmed;
+		public PinnedGrenade grenade;
+		
+		[Header("Special Affected Things")]
+		[Header("Move Attached Items")]
+		public bool MoveAttachedItems;
+		[Tooltip("NOTE: THIS ONLY APPLIES TO THE FIRST ATTACHMENT IN THE MOUNT.")]
+		public FVRFireArmAttachmentMount MAImount;
+
+			private void Start()
+		{
+			_isObservedObjectNotNull = ObservedObject != null;
+		}
+
 		public void Update()
 		{
 			invertlerp = 0;
 			//define which is farther from the centre
-			if (!(ReadHandTouchpadMovement || ReadIfGunIsLoaded || ReadIfBoltIsLocked || MoveIfSpecificAttachmentAttached))
+			if (_isObservedObjectNotNull)
 			{
-
 				switch (TransformationTypeOfObservedObject)
 				{
 					case transformtype.position:
@@ -253,43 +271,78 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 				//rememberAttached = AttachmentMount.AttachmentsList.Count;
 			}
 			//EndSpecialFX - MoveIfSpecificAttachmentAttached
-
+			
+			//StartSpecialObservations - MoveIfHeld
+			if (MoveIfObjectHeld)
+			{
+				if (HeldObject.m_hand != null)
+					invertlerp = 1;
+				else
+					invertlerp = 0;
+			}
+			//EndSpecialObservations - MoveIfHeld
+			
+			//StartSpecialObservations - MoveIfGrenadeArmed
+			if (MoveIfGrenadeArmed)
+			{
+				if (grenade.m_isLeverReleased)
+					invertlerp = 1;
+				else
+					invertlerp = 0;
+			}
 
 			lerppoint = Mathf.Lerp(StartOfAffected, StopOfAffected, invertlerp);
 
 			Vector3 v3;
 
 			//make sure lerp isnt same
-			if (rememberLerpPoint == lerppoint) return;
+			if (Math.Abs(rememberLerpPoint - lerppoint) < 0.00025) return;
 			rememberLerpPoint = lerppoint;
-
-			switch (TransformationTypeOfAffectedObject)
+			
+			//StartSpecialAffected - MoveAttachedObject
+			if (MoveAttachedItems)
 			{
-				case transformtype.position:
-					v3 = AffectedObject.transform.localPosition;
-					v3[(int)DirectionOfAffection] = lerppoint;
-					AffectedObject.transform.localPosition = v3;
-					break;
-				case transformtype.rotation:
-					v3 = AffectedObject.transform.localEulerAngles;
-					v3[(int)DirectionOfAffection] = lerppoint;
-					AffectedObject.transform.localEulerAngles = v3;
-					break;
-				case transformtype.scale:
-					v3 = AffectedObject.transform.localScale;
-					v3[(int)DirectionOfAffection] = lerppoint;
-					AffectedObject.transform.localScale = v3;
-					break;
-				case transformtype.quaternion:
-					Quaternion qt = AffectedObject.transform.rotation;
-					qt[(int)DirectionOfAffection] = lerppoint;
-					AffectedObject.transform.localRotation = qt;
-					break;
-				case transformtype.quaternionPresentedEuler:
-					v3 = AffectedObject.transform.localEulerAngles;
-					v3[(int)DirectionOfAffection] = lerppoint;
-					AffectedObject.transform.localEulerAngles = v3;
-					break;
+				if (MAImount.HasAttachmentsOnIt())
+				{
+					AffectedObject = MAImount.AttachmentsList[0].gameObject;
+				}
+				else
+				{
+					AffectedObject = null;
+				}
+			}
+			//EndSpecialAffect - MoveAttachedObject
+
+			if (AffectedObject != null)
+			{
+				switch (TransformationTypeOfAffectedObject)
+				{
+					case transformtype.position:
+						v3 = AffectedObject.transform.localPosition;
+						v3[(int) DirectionOfAffection] = lerppoint;
+						AffectedObject.transform.localPosition = v3;
+						break;
+					case transformtype.rotation:
+						v3 = AffectedObject.transform.localEulerAngles;
+						v3[(int) DirectionOfAffection] = lerppoint;
+						AffectedObject.transform.localEulerAngles = v3;
+						break;
+					case transformtype.scale:
+						v3 = AffectedObject.transform.localScale;
+						v3[(int) DirectionOfAffection] = lerppoint;
+						AffectedObject.transform.localScale = v3;
+						break;
+					case transformtype.quaternion:
+						Quaternion qt = AffectedObject.transform.rotation;
+						qt[(int) DirectionOfAffection] = lerppoint;
+						AffectedObject.transform.localRotation = qt;
+						break;
+					case transformtype.quaternionPresentedEuler:
+						v3 = AffectedObject.transform.localEulerAngles;
+						v3[(int) DirectionOfAffection] = lerppoint;
+						AffectedObject.transform.localEulerAngles = v3;
+						break;
+				}
 			}
 		}
 	}
