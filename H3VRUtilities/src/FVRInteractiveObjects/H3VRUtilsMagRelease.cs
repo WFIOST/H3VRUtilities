@@ -72,12 +72,20 @@ namespace H3VRUtils
 				TouchpadDir = (TouchpadDirType)(int)UtilsBepInExLoader.paddleMagReleaseDir.Value;
 			}
 
+			dir = TouchpadDirTypeToVector2(TouchpadDir);
+			if (dir == Vector2.zero) this.IsSimpleInteract = true; else this.IsSimpleInteract = false;
+			col.enabled = !DisallowEjection;
+		}
+
+		public static Vector2 TouchpadDirTypeToVector2(TouchpadDirType TouchpadDir)
+		{
+			Vector2 dir = new Vector2();
 			if (TouchpadDir == TouchpadDirType.Up) dir = Vector2.up;
 			if (TouchpadDir == TouchpadDirType.Down) dir = Vector2.down;
 			if (TouchpadDir == TouchpadDirType.Left) dir = Vector2.left;
 			if (TouchpadDir == TouchpadDirType.Right) dir = Vector2.right;
-			if (TouchpadDir == TouchpadDirType.Trigger) this.IsSimpleInteract = true; else this.IsSimpleInteract = false;
-			col.enabled = !DisallowEjection;
+			if (TouchpadDir == TouchpadDirType.Trigger) dir = Vector2.zero;
+			return dir;
 		}
 
 		public override void BeginInteraction(FVRViveHand hand)
