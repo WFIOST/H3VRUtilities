@@ -8,19 +8,17 @@ namespace H3VRUtils.Vehicles
 	{
 		public Vehicle vehicle;
 		public float resetLerpSpeed;
-		[HideInInspector]
-		public float rotAmt;
-
 		public float maxRot;
-
+		public bool isBraking;
+		public bool reverseRot;
+		
+		[Header("Debug Values")]
 		public float rot;
 		public float rh;
 		public float lr;
 		public float inlerp;
 		public float lerp;
-
-		public bool isBraking;
-		public bool reverseRot;
+		public float rotAmt;
 
 		public override void BeginInteraction(FVRViveHand hand)
 		{
@@ -61,58 +59,58 @@ namespace H3VRUtils.Vehicles
 			Vector3 lastrot = transform.localEulerAngles;
 			transform.LookAt(hand.transform);
 			Vector3 rothand = transform.localEulerAngles;
-
+			
 			//get diff between two angles
 			rot = Mathf.DeltaAngle((float)Math.Round(rothand.y), (float)Math.Round(lastrot.y));
 			rotAmt += rot;
-			if (rotAmt >= maxRot)
-			{
+			//clamp the rot. i know mathf.clamp exists; i dont care and neither do i trust it
+			if (rotAmt >= maxRot) {
 				rotAmt = maxRot;
 				transform.localEulerAngles = lastrot;
 			}
-			else
-			if (rotAmt <= -maxRot)
-			{
+			else if (rotAmt <= -maxRot) {
 				rotAmt = -maxRot;
 				transform.localEulerAngles = lastrot;
 			}
-			else //if within bounds
+			else //if it does not need to be clamped
 			{
 				transform.localEulerAngles = new Vector3(lastrot.x, rothand.y, lastrot.z);
 			}
 			rh = rothand.y;
 			lr = lastrot.y;
-
+			
 			SetRot();
-
+			
+			//check if switch breaking
 			if(Vector2.Angle(hand.Input.TouchpadAxes, -Vector2.up) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.3f){
 				isBraking = !isBraking;
 				SM.PlayGenericSound(vehicle.AudioSet.PedalSwitchSound, transform.position);
 			}
-
-			if (isBraking)
-			{
-				vehicle.setAcceleration(0);
-				vehicle.setBraking(vehicle.maxDampBreak * hand.Input.TriggerFloat);
-			}
-			else
-			{
-				vehicle.setAcceleration(hand.Input.TriggerFloat * vehicle.maxAcceleration);
-				vehicle.setBraking(0);
-			}
+			
+			//handle acceleration
+			var accelamt = hand.Input.TriggerFloat;
+			//if breaking, switch to negative acceleration
+			if (isBraking) accelamt = -accelamt;
+			//set acceleration
+			vehicle.setAcceleration(accelamt);
 		}
 
 		void FixedUpdate()
 		{
-			if (base.m_hand == null)
+			if (m_hand != null)
 			{
 				var rLS = resetLerpSpeed;
 				if (rotAmt > 0) rLS = -rLS;
-				rotAmt += rLS;
-				transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y + rLS, transform.localEulerAngles.z);
-				vehicle.setAcceleration(0);
-				vehicle.setBraking(0);
-				SetRot();
+				//prevent it from jigglign back n forth
+				if (rotAmt > rLS || rotAmt < -rLS)
+				{
+					rotAmt += rLS;
+					transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,
+						transform.localEulerAngles.y + rLS, transform.localEulerAngles.z);
+					vehicle.setAcceleration(0);
+					vehicle.setBraking(0);
+					SetRot();
+				}
 			}
 		}
 

@@ -8,7 +8,7 @@ using FistVR;
 namespace H3VRUtils.Vehicles
 {
 	[CreateAssetMenu(fileName = "New Vehicle Audio Set", menuName = "Vehicles/AudioSet", order = 0)]
-	class VehicleAudioSet : ScriptableObject
+	public class VehicleAudioSet : ScriptableObject
 	{
 		private static AudioEvent defaultAE = new AudioEvent()
 		{

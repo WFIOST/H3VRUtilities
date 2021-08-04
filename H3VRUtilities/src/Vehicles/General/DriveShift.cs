@@ -8,12 +8,12 @@ using FistVR;
 
 namespace H3VRUtils.Vehicles
 {
-	class DriveShift : FVRInteractiveObject
+	public class DriveShift : FVRInteractiveObject
 	{
 		public Vehicle vehicle;
 
 		public List<float> RotPositions;
-		public List<DriveShiftPosition> DriveShiftPos;
+		public List<int> GearNum;
 
 		public Text shiftpos;
 
@@ -28,13 +28,13 @@ namespace H3VRUtils.Vehicles
 
 		void Start()
 		{
-			vehicle.setDriveShift(DriveShiftPos[currentPosition]);
+			vehicle.setDriveShift(GearNum[currentPosition]);
 			transform.localEulerAngles = new Vector3(RotPositions[currentPosition], 0, 0);
 		}
 
 		public override void UpdateInteraction(FVRViveHand hand)
 		{
-			shiftpos.text = DriveShiftPos[currentPosition].ToString();
+			shiftpos.text = GearNum[currentPosition].ToString();
 			base.UpdateInteraction(hand);
 			//drive shift, looked towards hand rotation
 			transform.LookAt(hand.transform, this.transform.up);
@@ -45,13 +45,13 @@ namespace H3VRUtils.Vehicles
 			}
 
 			//if its not top
-			if (currentPosition != DriveShiftPos.Count - 1)
+			if (currentPosition != RotPositions.Count - 1)
 			{
 				//if it's closer to the drive shift one up than the current
 				if (transform.localEulerAngles.x > RotPositions[currentPosition + 1])
 				{
 					currentPosition++;
-					vehicle.setDriveShift(DriveShiftPos[currentPosition]);
+					vehicle.setDriveShift(GearNum[currentPosition]);
 					SM.PlayGenericSound(vehicle.AudioSet.HandbrakeDown, transform.position);
 				}
 			}
@@ -64,7 +64,7 @@ namespace H3VRUtils.Vehicles
 				if (transform.localEulerAngles.x < RotPositions[currentPosition - 1])
 				{
 					currentPosition--;
-					vehicle.setDriveShift(DriveShiftPos[currentPosition]);
+					vehicle.setDriveShift(GearNum[currentPosition]);
 					SM.PlayGenericSound(vehicle.AudioSet.HandbrakeUp, transform.position);
 				}
 			}
