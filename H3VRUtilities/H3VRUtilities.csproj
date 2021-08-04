@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>H3VRUtils</RootNamespace>
-    <AssemblyName>Assembly-CSharp.mm</AssemblyName>
+    <AssemblyName>Assembly-CSharp.H3VRUtilities.mm</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -16,7 +16,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -30,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony, Version=2.4.2.0, Culture=neutral, PublicKeyToken=null">
@@ -103,6 +104,7 @@
     <Compile Include="src\FVRInteractiveObjects\FVRFirearms\BreakOpenFlareGun.cs" />
     <Compile Include="src\FVRInteractiveObjects\FVRFirearms\jungleMag.cs" />
     <Compile Include="src\FVRInteractiveObjects\GoToNearestSosig.cs" />
+    <Compile Include="src\FVRInteractiveObjects\GrenadeOneHandArm.cs" />
     <Compile Include="src\FVRInteractiveObjects\H3VRUtilsMagRelease.cs" />
     <Compile Include="src\FVRInteractiveObjects\H3VRUtilsPhysBoltRelease.cs" />
     <Compile Include="src\FVRInteractiveObjects\HandgunSecondarySwitch.cs" />
@@ -129,7 +131,9 @@
     <Compile Include="src\MonoScripts\VisualModifiers\YFoldingStockEndPiece.cs" />
     <Compile Include="src\NonAddedScripts\GetTransformPosition.cs" />
     <Compile Include="src\NonAddedScripts\RecoilModificationSystem.cs" />
+    <Compile Include="src\QOL\ItemCaller.cs" />
     <Compile Include="src\UniqueCode\AssignMagIfNull.cs" />
+    <Compile Include="src\UniqueCode\BOMO.cs" />
     <Compile Include="src\UniqueCode\LebelCutoff.cs" />
     <Compile Include="src\UniqueCode\OpenBoltLockOnSafe.cs" />
     <Compile Include="src\UniqueCode\RevolverChargingHandle.cs" />
