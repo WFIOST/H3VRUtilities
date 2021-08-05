@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
+using HarmonyLib;
 
 namespace H3VRUtils
 {
@@ -61,8 +62,6 @@ namespace H3VRUtils
 		private Transform oldPoseOverride;
 		public Transform NewPoseOverrideTouch;
 		private Transform oldPoseOverrideTouch;
-
-
 		/*[Header("Weapon Fire Selector Modifier")]
 		public bool ChangesFireSelector;
 		public CapType FireSelectorModiferType;
@@ -74,6 +73,7 @@ namespace H3VRUtils
 		public ClosedBoltWeapon.FireSelectorModeType AddedModeType;
 		public int AddedBurstAmount = 3;*/
 
+
 		public void Start()
 		{
 			attachment = GetComponent<FVRFireArmAttachment>();
@@ -84,6 +84,15 @@ namespace H3VRUtils
 			if (attachment.curMount != null) { if (weapon == null) OnAttach(); }
 			else if (weapon != null) OnDetach();
 			if (ChangesSpread) ChangeSpread();
+		}
+
+		void Update()
+		{
+			if (ChangesGrabPos) {
+				if (attachment.curMount != null) {
+					ChangeGrabPos(actionType.attach);
+				}
+			}
 		}
 
 		public void OnAttach()
@@ -178,6 +187,7 @@ namespace H3VRUtils
 					prevCapacity = weapon.Magazine.m_capacity;
 					if (CapacityModifierType == CapType.AddTo) weapon.Magazine.m_capacity += setCapacityTo;
 					if (CapacityModifierType == CapType.SetTo) weapon.Magazine.m_capacity = setCapacityTo;
+					Array.Resize(ref weapon.Magazine.LoadedRounds, weapon.Magazine.m_capacity);
 				}
 			}
 			if (ActType == actionType.detach)
