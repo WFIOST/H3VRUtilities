@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,122 +9,154 @@ using FistVR;
 
 namespace H3VRUtils.MonoScripts.UIModifiers
 {
+	//thanks frityet for the rewrite!
 	public class DispBulletAmount : MonoBehaviour
 	{
 		public FVRFireArm firearm;
-		public FVRFireArmChamber firearmChamber;
-		[Header("Fill out Magazine if your ammo counter is on the magazine, otherwise don't")]
 		public FVRFireArmMagazine magazine;
-		public Text UItext;
-		public string textWhenNoMag;
-		[Tooltip("When there is no mag, the text will remain whatever it was before.")]
-		public bool KeepLastRoundInfoOnNoMag;
-		public bool AddMinCharLength;
-		public int MinCharLength;
-		[Header("Alternate Usages")]
+		public FVRFireArmAttachment attachment;
+		
+		[Header("Alternate Displays")]
 		public bool EnabledObjects;
 		public GameObject ObjectWhenEmpty;
 		public List<GameObject> Objects;
 		public bool EnableAllUnderAmount;
+		
+		[Header("Ammo Counter Settings")]
+		public Text UItext;
+		public Text MaxAmmoText;
+		public Text ammoTypeText;
+		public bool AddMinCharLength;
+		public int MinCharLength;
+		
+		private FVRFireArm _fa;
+		private FVRFireArmMagazine _mag;
 
-
-		private bool WasFull;
-		private bool WasLoaded;
-		private FVRFireArmChamber chamber;
-		private string txt;
-		private int amt;
-
-		public void Start()
+		private void GetFirearmAndMag()
 		{
-			chamber = firearmChamber;
-			if (firearm is ClosedBoltWeapon)
-			{
-				var wep = firearm as ClosedBoltWeapon;
-				chamber = wep.Chamber;
+			if (_isFireArmNull) {
+				_fa = firearm;
+				_mag = firearm.Magazine;
 			}
-			if (firearm is OpenBoltReceiver)
-			{
-				var wep = firearm as OpenBoltReceiver;
-				chamber = wep.Chamber;
+			else if (_isMagazineNull) {
+				_mag = magazine;
+				_fa = magazine.FireArm;
 			}
-			if (firearm is Handgun)
-			{
-				var wep = firearm as Handgun;
-				chamber = wep.Chamber;
+			else if (_isAttachmentNull) {
+				_fa = attachment.GetRootObject() as FVRFireArm;
+				if(_fa != null) _mag = firearm.Magazine;
 			}
 		}
-
-		public void FixedUpdate()
+		private int AmmoCount
 		{
-			txt = "";
-
-			if (firearm == null) //magcode
+			get
 			{
-				amt = magazine.m_numRounds;
-				SetText();
-			}
-			else
+				int count = 0;
+				
+				FVRFireArm _firearm = _fa;
+				FVRFireArmMagazine mag = _mag;
 
-			//guncode
-			if (firearm.Magazine != null)
-			{
-				amt = firearm.Magazine.m_numRounds;
+				if (mag == null) return count;
+				count += mag.m_numRounds;
 
-				if ((WasFull && !chamber.IsFull) || !WasLoaded) //was chamber loaded but no longer, or was not loaded and now is
+				if (_firearm != null)
 				{
-					if (!WasLoaded)
+					switch (_firearm)
 					{
-						if (chamber.IsFull)
+						//get BAW chambers
+						case BreakActionWeapon baw:
+							count += baw.Barrels.Count(barrel => barrel.Chamber.IsFull && !barrel.Chamber.IsSpent);
+							break;
+						
+						//get derringer chambers
+						case Derringer derringer:
+							count += derringer.Barrels.Count(barrel =>
+								barrel.Chamber.IsFull && !barrel.Chamber.IsSpent);
+							break;
+						
+						//get SAR chambers
+						case SingleActionRevolver revolver:
+							count += revolver.Cylinder.Chambers.Count(chamber => chamber.IsFull && !chamber.IsSpent);
+							break;
+					}
+
+					{
+						//get field named Chamber
+						FieldInfo chamberField = _firearm.GetType().GetField("Chamber");
+						if (chamberField != null)
 						{
-							amt++; //check if mag loaded + 1
+							//cast Chamber field to firearm as FVRFireArmChamber
+							var chamber = (FVRFireArmChamber)chamberField.GetValue(_firearm);
+							if (chamber.IsFull && !chamber.IsSpent)
+								count++;
+						} else
+						{
+							//if Chamber doesn't exist, try to get Chambers field
+							chamberField = _firearm.GetType().GetField("Chambers");
+							if (chamberField != null)
+							{
+								//cast chambers field to firearm as an array of chambers
+								var chambers = (FVRFireArmChamber[])chamberField.GetValue(_firearm);
+								count += chambers.Count(chamber => chamber.IsFull && !chamber.IsSpent);
+							}
 						}
 					}
-					SetText();
-					WasLoaded = true;
 				}
-
-				WasFull = chamber.IsFull;
+				return count;
 			}
-			else
+		}
+		private int MaxAmmoCount
+		{
+			get
 			{
-				if (!KeepLastRoundInfoOnNoMag)
-				{
-					amt = 0;
-					SetText();
-				}
-				WasLoaded = false;
+				if (_mag != null)
+					return _mag.m_capacity;
+				return 0;
+			}
+		}
+		//private string Time => DateTime.Now.ToString("HH:mm");
+
+		private string AmmoType
+		{
+			get
+			{
+				FVRPhysicalObject root = attachment.GetRootObject();
+
+				if (root is FVRFireArm fireArm)
+					return AM.GetFullRoundName(fireArm.RoundType, fireArm.GetChamberRoundList()[0]);
+
+				return String.Empty;
 			}
 		}
 
-		public void SetText()
+		private void Update()
 		{
-			txt = amt.ToString();
-			if (UItext != null)
+			GetFirearmAndMag();
+			var amtAmmo = AmmoCount;
+			string amtAmmoString = amtAmmo.ToString();
+			if (AddMinCharLength) { //most certainly a faster way but idc
+				int lengthneedtoadd = MinCharLength - amtAmmoString.Length;
+				for (int i = 0; i < lengthneedtoadd; i++) amtAmmoString = "0" + amtAmmoString;
+			}
+			UItext.text = amtAmmo.ToString();
+			MaxAmmoText.text = MaxAmmoCount.ToString();
+			ammoTypeText.text = AmmoType;
+			if(EnabledObjects) SetEnabledObjects(amtAmmo);
+		}
+
+		private void SetEnabledObjects(int amt)
+		{ //yoinked from old bit. TODO: rewrite this plz
+			for (int i = 0; i < Objects.Count; i++) //set all to false
 			{
-				if (AddMinCharLength)
-				{
-					int lengthneedtoadd = MinCharLength - txt.Length;
-					for (int i = 0; i < lengthneedtoadd; i++) txt = "0" + txt;
-				}
-				UItext.text = txt;
-				if(firearm.Magazine == null)
-				{
-					UItext.text = textWhenNoMag;
-				}
+				Objects[i].SetActive(false);
+				ObjectWhenEmpty.SetActive(false);
 			}
 
-			if (EnabledObjects)
+			if (firearm.Magazine == null && ObjectWhenEmpty != null) //turn on the no-mag object
 			{
-				for (int i = 0; i < Objects.Count; i++) //set all to false
-				{
-					Objects[i].SetActive(false);
-					ObjectWhenEmpty.SetActive(false);
-				}
-
-				if(firearm.Magazine == null && ObjectWhenEmpty != null) //turn on the no-mag object
-				{
-					ObjectWhenEmpty.SetActive(true);
-				} else 
+				ObjectWhenEmpty.SetActive(true);
+			}
+			else
 				for (int i = 0; i < Objects.Count; i++) //now do the actual turn-ons
 				{
 					if (i < amt)
@@ -138,7 +171,25 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 						Objects[i].SetActive(true);
 					}
 				}
-			}
+		}
+
+		private bool _isFireArmNull;
+		private bool _isMagazineNull;
+		private bool _isAttachmentNull;
+		private void Start()
+		{
+			_isFireArmNull = firearm != null;
+			_isMagazineNull = magazine != null;
+			_isAttachmentNull = attachment != null;
+			
+			//cast all three to int, add
+			int i   = (_isFireArmNull ? 1 : 0) 
+			        + (_isMagazineNull ? 1 : 0)
+					+ (_isAttachmentNull ? 1 : 0);
+			if (i > 2)
+				Debug.LogWarning("AmmoCounter has more than one field filled out! Is this supposed to be on a firearm, magazine, or attachment? Choose one!");
+			else if (i == 0)
+				Debug.LogWarning("AmmoCounter doesn't have any field filled out!");
 		}
 	}
 }
