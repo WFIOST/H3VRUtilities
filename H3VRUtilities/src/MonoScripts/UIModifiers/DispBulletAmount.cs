@@ -6,6 +6,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using FistVR;
+using H3VRUtils;
 
 namespace H3VRUtils.MonoScripts.UIModifiers
 {
@@ -47,99 +48,55 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 				if(_fa != null) _mag = firearm.Magazine;
 			}
 		}
-		private int AmmoCount
+
+		private int GetAmmoCount()
 		{
-			get
+			int count = 0;
+
+			FVRFireArm _firearm = _fa;
+			FVRFireArmMagazine mag = _mag;
+
+			if (mag == null) return count;
+			count += mag.m_numRounds;
+
+			if (_firearm != null)
 			{
-				int count = 0;
-				
-				FVRFireArm _firearm = _fa;
-				FVRFireArmMagazine mag = _mag;
-
-				if (mag == null) return count;
-				count += mag.m_numRounds;
-
-				if (_firearm != null)
-				{
-					switch (_firearm)
-					{
-						//get BAW chambers
-						case BreakActionWeapon baw:
-							count += baw.Barrels.Count(barrel => barrel.Chamber.IsFull && !barrel.Chamber.IsSpent);
-							break;
-						
-						//get derringer chambers
-						case Derringer derringer:
-							count += derringer.Barrels.Count(barrel =>
-								barrel.Chamber.IsFull && !barrel.Chamber.IsSpent);
-							break;
-						
-						//get SAR chambers
-						case SingleActionRevolver revolver:
-							count += revolver.Cylinder.Chambers.Count(chamber => chamber.IsFull && !chamber.IsSpent);
-							break;
-					}
-
-					{
-						//get field named Chamber
-						FieldInfo chamberField = _firearm.GetType().GetField("Chamber");
-						if (chamberField != null)
-						{
-							//cast Chamber field to firearm as FVRFireArmChamber
-							var chamber = (FVRFireArmChamber)chamberField.GetValue(_firearm);
-							if (chamber.IsFull && !chamber.IsSpent)
-								count++;
-						} else
-						{
-							//if Chamber doesn't exist, try to get Chambers field
-							chamberField = _firearm.GetType().GetField("Chambers");
-							if (chamberField != null)
-							{
-								//cast chambers field to firearm as an array of chambers
-								var chambers = (FVRFireArmChamber[])chamberField.GetValue(_firearm);
-								count += chambers.Count(chamber => chamber.IsFull && !chamber.IsSpent);
-							}
-						}
-					}
-				}
-				return count;
+				count += (int)GetFireArmDeets.GetFireArmChamber(_firearm)?.Count(chamber => chamber.IsFull && !chamber.IsSpent);
 			}
+			return count;
 		}
-		private int MaxAmmoCount
+		private int GetMaxAmmoCount()
 		{
-			get
-			{
-				if (_mag != null)
-					return _mag.m_capacity;
-				return 0;
-			}
+			if (_mag != null)
+				return _mag.m_capacity;
+			return 0;
 		}
 		//private string Time => DateTime.Now.ToString("HH:mm");
 
-		private string AmmoType
+		private string GetAmmoType()
 		{
-			get
-			{
-				if (_fa != null)
-				{
-					return AM.GetFullRoundName(_fa.RoundType, _fa.GetChamberRoundList()[0]);
-				}
-				return String.Empty;
+			if (_fa != null) {
+				return AM.GetFullRoundName(_fa.RoundType, _fa.GetChamberRoundList()[0]);
 			}
+
+			return String.Empty;
 		}
 
 		private void Update()
 		{
 			GetFirearmAndMag();
-			var amtAmmo = AmmoCount;
+			var amtAmmo = GetAmmoCount();
 			string amtAmmoString = amtAmmo.ToString();
 			if (AddMinCharLength) { //most certainly a faster way but idc
 				int lengthneedtoadd = MinCharLength - amtAmmoString.Length;
 				for (int i = 0; i < lengthneedtoadd; i++) amtAmmoString = "0" + amtAmmoString;
 			}
-			UItext.text = amtAmmo.ToString();
-			MaxAmmoText.text = MaxAmmoCount.ToString();
-			ammoTypeText.text = AmmoType;
+			if(UItext != null)
+				UItext.text = amtAmmo.ToString();
+			if(MaxAmmoText != null)
+				MaxAmmoText.text = GetMaxAmmoCount().ToString();
+			if(ammoTypeText != null)
+				ammoTypeText.text = GetAmmoType();
 			if(EnabledObjects) SetEnabledObjects(amtAmmo);
 		}
 
