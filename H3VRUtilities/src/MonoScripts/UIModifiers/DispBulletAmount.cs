@@ -120,11 +120,10 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		{
 			get
 			{
-				FVRPhysicalObject root = attachment.GetRootObject();
-
-				if (root is FVRFireArm fireArm)
-					return AM.GetFullRoundName(fireArm.RoundType, fireArm.GetChamberRoundList()[0]);
-
+				if (_fa != null)
+				{
+					return AM.GetFullRoundName(_fa.RoundType, _fa.GetChamberRoundList()[0]);
+				}
 				return String.Empty;
 			}
 		}
