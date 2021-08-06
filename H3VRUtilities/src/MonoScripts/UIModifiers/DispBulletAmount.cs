@@ -16,19 +16,23 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		public FVRFireArm firearm;
 		public FVRFireArmMagazine magazine;
 		public FVRFireArmAttachment attachment;
-		
-		[Header("Alternate Displays")]
-		public bool EnabledObjects;
-		public GameObject ObjectWhenEmpty;
-		public List<GameObject> Objects;
-		public bool EnableAllUnderAmount;
-		
+
 		[Header("Ammo Counter Settings")]
 		public Text UItext;
 		public Text MaxAmmoText;
 		public Text ammoTypeText;
 		public bool AddMinCharLength;
 		public int MinCharLength;
+
+		[Header("Alternate Displays")]
+		[Tooltip("Enables enabling/disabling objects based on rounds left in mag.")]
+		public bool EnabledObjects;
+		[Tooltip("Object enabled when there is no magazine.")]
+		public GameObject ObjectWhenEmpty;
+		[Tooltip("Element no. corresponds to rounds left. 0 means no rounds, 1 means one round. Enables the 5th object if there are 5 rounds, and so on.")]
+		public List<GameObject> Objects;
+		[Tooltip("Enables all objects under the round count. Enables the 0nd, 1st, 2nd, 3rd objects if there are 3 rounds left, and so on.")]
+		public bool EnableAllUnderAmount;
 		
 		private FVRFireArm _fa;
 		private FVRFireArmMagazine _mag;
