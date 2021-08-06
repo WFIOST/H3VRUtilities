@@ -94,7 +94,6 @@
   <ItemGroup>
     <Compile Include="src\FVRInteractiveObjects\ActivateSeveralFVRInteractiveAtOnce.cs" />
     <Compile Include="src\FVRInteractiveObjects\AR15HandleFlipperSounds.cs" />
-    <Compile Include="src\FVRInteractiveObjects\attachmentCode\AmmoCounter.cs" />
     <Compile Include="src\FVRInteractiveObjects\attachmentCode\AttachmentModifyFirearm.cs" />
     <Compile Include="src\FVRInteractiveObjects\attachmentCode\CustomRDShaderHandler.cs" />
     <Compile Include="src\FVRInteractiveObjects\attachmentCode\DisplayOnAttached.cs" />
@@ -112,6 +111,7 @@
     <Compile Include="src\FVRInteractiveObjects\lockToHead.cs" />
     <Compile Include="src\FVRInteractiveObjects\NadeCupLauncher.cs" />
     <Compile Include="src\FVRInteractiveObjects\OpenBoltBurstFire.cs" />
+    <Compile Include="src\GetFireArmDeets.cs" />
     <Compile Include="src\Mapping\Audio\AudioCulling.cs" />
     <Compile Include="src\Mapping\Camera\CameraSetup.cs" />
     <Compile Include="src\Mapping\Components\ComponentCulling.cs" />
