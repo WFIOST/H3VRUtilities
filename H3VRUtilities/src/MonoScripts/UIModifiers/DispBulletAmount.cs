@@ -39,17 +39,25 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 
 		private void GetFirearmAndMag()
 		{
-			if (_isFireArmNull) {
+			if (_isFireArmNotNull) {
 				_fa = firearm;
 				_mag = firearm.Magazine;
 			}
-			else if (_isMagazineNull) {
+			else if (_isMagazineNotNull) {
 				_mag = magazine;
 				_fa = magazine.FireArm;
 			}
-			else if (_isAttachmentNull) {
-				_fa = attachment.GetRootObject() as FVRFireArm;
-				if(_fa != null) _mag = firearm.Magazine;
+			else if (_isAttachmentNotNull) {
+				if (attachment.curMount != null) //if attached to a mount
+				{
+					if (_fa == null) //check first if _fa is not cached
+					{
+						//if it isn't, cache it
+						_fa = attachment.curMount.Parent as FVRFireArm;
+					}
+				}
+				else _fa = null; //if not attached to a mount, there is no firearm
+				if (_fa != null) _mag = _fa.Magazine;
 			}
 		}
 
@@ -133,19 +141,19 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 				}
 		}
 
-		private bool _isFireArmNull;
-		private bool _isMagazineNull;
-		private bool _isAttachmentNull;
+		private bool _isFireArmNotNull;
+		private bool _isMagazineNotNull;
+		private bool _isAttachmentNotNull;
 		private void Start()
 		{
-			_isFireArmNull = firearm != null;
-			_isMagazineNull = magazine != null;
-			_isAttachmentNull = attachment != null;
+			_isFireArmNotNull = firearm != null;
+			_isMagazineNotNull = magazine != null;
+			_isAttachmentNotNull = attachment != null;
 			
 			//cast all three to int, add
-			int i   = (_isFireArmNull ? 1 : 0) 
-			        + (_isMagazineNull ? 1 : 0)
-					+ (_isAttachmentNull ? 1 : 0);
+			int i   = (_isFireArmNotNull ? 1 : 0) 
+			        + (_isMagazineNotNull ? 1 : 0)
+					+ (_isAttachmentNotNull ? 1 : 0);
 			if (i > 2)
 				Debug.LogWarning("AmmoCounter has more than one field filled out! Is this supposed to be on a firearm, magazine, or attachment? Choose one!");
 			else if (i == 0)
