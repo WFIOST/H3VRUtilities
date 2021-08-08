@@ -7,14 +7,17 @@ using UnityEngine;
 
 namespace H3VRUtils
 {
+	//thanks to CityRobo for fixing this script and actually making it work!
+	//this script breaks without publicized assembly
 	class OpenBoltBurstFire : MonoBehaviour
 	{
 		public OpenBoltReceiver Receiver;
 
 		[Tooltip("Selector setting position that will be burst. Remember, selectors go pos: 0, 1 ,2, not 1, 2, 3")]
 		public int SelectorSetting;
-
-		public  int BurstAmt;
+		
+		[Tooltip("Amount of shots per burst.")]
+		public  int BurstAmt = 3;
 		private int BurstSoFar;
 
 		private bool wasLoaded;
@@ -27,6 +30,7 @@ namespace H3VRUtils
 		public void Update()
 		{
 			//if it's not the correct selector, just don't do anything
+			if (Receiver.m_hand == null) return;
 			if (Receiver.m_fireSelectorMode != SelectorSetting)
 			{
 				BurstSoFar = 0;
@@ -44,14 +48,14 @@ namespace H3VRUtils
 			if (BurstSoFar >= BurstAmt)
 			{
 				lockUp();
-				if(Receiver.m_triggerFloat <= Receiver.TriggerResetThreshold)
+				if(Receiver.m_hand.Input.TriggerFloat < Receiver.TriggerFiringThreshold)
 				{
 					unLock();
 				}
 			}
 
 			//reset amt if trigger is let go
-			if (Receiver.m_triggerFloat <= Receiver.TriggerResetThreshold)
+			if (Receiver.m_hand.Input.TriggerFloat < Receiver.TriggerFiringThreshold)
 			{
 				BurstSoFar = 0;
 			}
