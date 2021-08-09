@@ -85,6 +85,7 @@ namespace H3VRUtils
 			if (TouchpadDir == TouchpadDirType.Left) dir = Vector2.left;
 			if (TouchpadDir == TouchpadDirType.Right) dir = Vector2.right;
 			if (TouchpadDir == TouchpadDirType.Trigger) dir = Vector2.zero;
+			if (TouchpadDir == TouchpadDirType.NoDirection) dir = new Vector2(999, 999);
 			return dir;
 		}
 
