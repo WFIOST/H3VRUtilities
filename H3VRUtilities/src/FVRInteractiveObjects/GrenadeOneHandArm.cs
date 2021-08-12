@@ -25,14 +25,11 @@ namespace H3VRUtils.FVRInteractiveObjects
 			{
 				if (TestTouchpadDir(grenade.m_hand, dir))
 				{
-					if (TestTouchpadDir(grenade.m_hand, dir, true))
+					foreach (var ring in grenade.m_rings)
 					{
-						foreach (var ring in grenade.m_rings)
-						{
-							ring.PopOutRoutine();
-						}
-						if(kickOutLever) grenade.ReleaseLever();
+						ring.PopOutRoutine();
 					}
+					if (kickOutLever) grenade.ReleaseLever();
 				}
 			}
 		}
