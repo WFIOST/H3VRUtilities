@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace H3VRUtils.Vehicles
 {
-	class VehicleDamagable : MonoBehaviour, IFVRDamageable
+	public class VehicleDamagable : MonoBehaviour, IFVRDamageable
 	{
 		public float health;
 		public float maxHealth;

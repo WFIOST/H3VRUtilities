@@ -94,6 +94,7 @@ namespace H3VRUtils.Vehicles
 		public bool isOnGround;
 		public float angularDrag;
 		public bool isSlowerThanExpected;
+		public bool isHandbrakeOn;
 
 
 
@@ -236,20 +237,20 @@ namespace H3VRUtils.Vehicles
 			transmissionRpm = Mathf.Lerp(transmissionRpm, gearRpmThroughput, engineToTransmissionInfluence * 0.02f);
 			
 			//lower transmission RPM based on actual speed
-			float wheelCircumference = Mathf.PI * wheelDiameter;
+			//float wheelCircumference = Mathf.PI * wheelDiameter;
 			//TODO: see first todo
 			//60 seconds in a min * 50 steps in a sec = 3000
-			distmov = (transmissionRpm / 3000) * wheelCircumference;
-			if (_rigidBody.velocity.magnitude * 0.02 < distmov)
-			{
-				float newDistmov = Mathf.Lerp(_rigidBody.velocity.magnitude, distmov, 1 - (groundToTransmissionInfluence * 0.02f));
-				transmissionRpm = newDistmov / wheelCircumference * 3000;
-			}
+			//distmov = (transmissionRpm / 3000) * wheelCircumference;
+			//if (_rigidBody.velocity.magnitude * 0.02 < distmov)
+			//{
+			//	float newDistmov = Mathf.Lerp(_rigidBody.velocity.magnitude, distmov, 1 - (groundToTransmissionInfluence * 0.02f));
+			//	transmissionRpm = newDistmov / wheelCircumference * 3000;
+			//}
 			
 			//activate breaks
-			if (Acceleration < 0) {
-				transmissionTorque += -(Acceleration * (brakingForce / 50));
-			}
+			//if (Acceleration < 0) {
+			//	transmissionTorque += -(Acceleration * (brakingForce / 50));
+			//}
 			transmissionTorque = 7127 * engineHorsePower / transmissionRpm;
 		}
 		public void FixedUpdate()
@@ -260,12 +261,11 @@ namespace H3VRUtils.Vehicles
 			
 			//ensure that the rotation isn't out of bounds. i would use mathf.clamp but i'm too paranoid
 			//please check if we can mathf.clamp this sometime
-			if (Rotation > maxRotation) {
+			if (Rotation > maxRotation)
 				Rotation = maxRotation;
-			} else if (Rotation < -maxRotation) {
+			else if (Rotation < -maxRotation)
 				Rotation = -maxRotation;
-			}
-			
+
 			//debug bits
 			if (RPMtext != null)
 			{
@@ -283,7 +283,7 @@ namespace H3VRUtils.Vehicles
 			//vehicle movement handler deets
 			//TODO: rewrite this sometime please; i cannot imagine this being terribly efficient
 			//move forward + make sure is on ground
-			foreach (var wheelGroup in wheels)
+			/*foreach (var wheelGroup in wheels)
 			{
 				foreach (var wheel in wheelGroup.Tires)
 				{
@@ -332,7 +332,7 @@ namespace H3VRUtils.Vehicles
 				_rigidBody.MoveRotation(targetRot);
 
 				/*float rot = Rotation * _rigidBody.velocity.magnitude * 0.02f * rotationToTorque;
-				_rigidBody.AddRelativeTorque(new Vector3(0, rot, 0), ForceMode.Impulse);*/
+				_rigidBody.AddRelativeTorque(new Vector3(0, rot, 0), ForceMode.Impulse);*//*
 
 				//slerping forward momentum
 				_rigidBody.velocity = Vector3.SlerpUnclamped(_rigidBody.velocity, transform.forward * _rigidBody.velocity.magnitude, velocitySlerpSpeed);
@@ -345,7 +345,7 @@ namespace H3VRUtils.Vehicles
 			{
 				//unlock angular drag
 				_rigidBody.angularDrag = 0;
-			}
+			}*/
 		}
 
 		public void setRotation(float rotation)

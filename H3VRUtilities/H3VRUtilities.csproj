@@ -139,16 +139,17 @@
     <Compile Include="src\UniqueCode\OpenBoltLockOnSafe.cs" />
     <Compile Include="src\UniqueCode\RevolverChargingHandle.cs" />
     <Compile Include="src\UniqueCode\SelbstladerUnlockSystem.cs" />
+    <Compile Include="src\Vehicles\General\Core\Axle.cs" />
+    <Compile Include="src\Vehicles\General\Core\Vehicle.cs" />
+    <Compile Include="src\Vehicles\General\Core\Wheel.cs" />
     <Compile Include="src\Vehicles\General\DriveShift.cs" />
     <Compile Include="src\Vehicles\General\EngineDamagable.cs" />
     <Compile Include="src\Vehicles\General\EnterVehicle.cs" />
     <Compile Include="src\Vehicles\General\SteeringWheel.cs" />
-    <Compile Include="src\Vehicles\General\Vehicle.cs" />
     <Compile Include="src\Vehicles\General\VehicleAudioSet.cs" />
     <Compile Include="src\Vehicles\General\VehicleDamagable.cs" />
     <Compile Include="src\Vehicles\General\VehicleRepairTool.cs" />
     <Compile Include="src\Vehicles\General\VehicleSeat.cs" />
-    <Compile Include="src\Vehicles\General\Wheel.cs" />
     <Compile Include="src\Vehicles\Unique\ForkliftLift.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
