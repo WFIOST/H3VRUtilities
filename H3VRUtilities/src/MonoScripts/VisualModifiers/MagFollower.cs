@@ -15,7 +15,9 @@ namespace H3VRUtils
 
 		[Header("Translation Mag Follower")]
 		public bool UsesOneRoundPos;
+		[Tooltip("The round count where the follower starts moving (e.g 20)")]
 		public int StartAtRoundCount;
+		[Tooltip("The round count where the follower stops moving (e.g 0)")]
 		public int StopAtRoundCount;
 		[Tooltip("The position where the follower should be when the magazine is empty.")]
 		public GameObject StartPos;
@@ -50,6 +52,13 @@ namespace H3VRUtils
 		public void Start()
 		{
 			followerFilter = follower.GetComponent<MeshFilter>();
+			//fix if modder reverses vars
+			if (StopAtRoundCount > StartAtRoundCount)
+			{
+				var temp = StopAtRoundCount;
+				StopAtRoundCount = StartAtRoundCount;
+				StartAtRoundCount = temp;
+			}
 		}
 
 		public void UpdateDisp()
