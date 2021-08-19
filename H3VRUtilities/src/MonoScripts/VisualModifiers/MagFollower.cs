@@ -19,11 +19,11 @@ namespace H3VRUtils
 		public int StartAtRoundCount;
 		[Tooltip("The round count where the follower stops moving (e.g 0)")]
 		public int StopAtRoundCount;
-		[Tooltip("The position where the follower should be when the magazine is empty.")]
+		[Tooltip("The position where the follower should be when the magazine is full.")]
 		public GameObject StartPos;
 		[Tooltip("The position where the follower should be when the magazine has one round left.")]
 		public GameObject OneRoundPos;
-		[Tooltip("The position where the follower should be when the magazine is full.")]
+		[Tooltip("The position where the follower should be when the magazine is empty.")]
 		public GameObject StopPos;
 
 		[Header("Individual Point Mag Follower")]
