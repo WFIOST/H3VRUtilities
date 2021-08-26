@@ -111,6 +111,9 @@
     <Compile Include="src\FVRInteractiveObjects\lockToHead.cs" />
     <Compile Include="src\FVRInteractiveObjects\NadeCupLauncher.cs" />
     <Compile Include="src\FVRInteractiveObjects\OpenBoltBurstFire.cs" />
+    <Compile Include="src\FVRInteractiveObjects\SimpleControls\SimpleControls_ClosedBolt.cs" />
+    <Compile Include="src\FVRInteractiveObjects\SimpleControls\SimpleControls_ClosedBolt_BoltRelease.cs" />
+    <Compile Include="src\FVRInteractiveObjects\SimpleControls\SimpleControls_ClosedBolt_SelectorSwitch.cs" />
     <Compile Include="src\GetFireArmDeets.cs" />
     <Compile Include="src\Mapping\Audio\AudioCulling.cs" />
     <Compile Include="src\Mapping\Camera\CameraSetup.cs" />

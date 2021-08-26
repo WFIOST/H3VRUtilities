@@ -24,6 +24,7 @@ namespace H3VRUtils
 		public static ConfigEntry<bool> VehicleLockXRot;
 		public static ConfigEntry<bool> VehicleLockYRot;
 		public static ConfigEntry<bool> VehicleLockZRot;
+		public static ConfigEntry<bool> SimpleControls;
 		public static ConfigEntry<TouchpadDirTypePT> paddleMagReleaseDir;
 
 		public enum TouchpadDirTypePT
@@ -47,6 +48,7 @@ namespace H3VRUtils
 			VehicleLockXRot = Config.Bind("Vehicles", "Lock X Rotation", false, "Rotates your X rotation based on the vehicles rotation. Induces VR sickness.");
 			VehicleLockYRot = Config.Bind("Vehicles", "Lock Y Rotation", false, "Rotates your Y rotation based on the vehicles rotation. Induces VR sickness.");
 			VehicleLockZRot = Config.Bind("Vehicles", "Lock Z Rotation", false, "Rotates your Z rotation based on the vehicles rotation. Induces VR sickness.");
+			SimpleControls  = Config.Bind("General Settings", "Enable Simple Controls", false, "Allows simpler controls (e.g enables ModulAR bolt release via up press on touchpad)");
 			//Harmony.CreateAndPatchAll(typeof(MagReplacer));
 
 
@@ -84,6 +86,8 @@ namespace H3VRUtils
 		ButtonWidget VehicleLockXRotButton;
 		ButtonWidget VehicleLockYRotButton;
 		ButtonWidget VehicleLockZRotButton;
+
+		ButtonWidget SimpleControls;
 
 
 		public static string GetTerm(bool value)
@@ -177,9 +181,16 @@ namespace H3VRUtils
 					VehicleLockZRotButton = button;
 					button.RectTransform.localRotation = Quaternion.identity;
 				});*/
+				
+				//ROW FOUR (actually due to disabled buttons it'll appear row 2)
+				widget.AddChild((ButtonWidget button) => {
+					button.ButtonText.text = GetTerm(UtilsBepInExLoader.SimpleControls.Value) + " Simple Controls";
+					button.AddButtonListener(ToggleSimpleControls);
+					SimpleControls = button;
+					button.RectTransform.localRotation = Quaternion.identity;
+				});
 			});
 		}
-
 
 		private void TogglePaddleRelease() {
 			UtilsBepInExLoader.paddleMagRelease.Value = !UtilsBepInExLoader.paddleMagRelease.Value;
@@ -206,6 +217,11 @@ namespace H3VRUtils
 			VehicleLockZRotButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Vehicle Z Lock";
 		}
 
+		private void ToggleSimpleControls()
+		{
+			UtilsBepInExLoader.SimpleControls.Value = !UtilsBepInExLoader.SimpleControls.Value;
+		}
+		
 		private void ReloadVanillaMagRelease()
 		{
 			MagReplacerData.GetMagDropData(true);
