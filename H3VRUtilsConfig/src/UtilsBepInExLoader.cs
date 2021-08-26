@@ -220,6 +220,7 @@ namespace H3VRUtils
 		private void ToggleSimpleControls()
 		{
 			UtilsBepInExLoader.SimpleControls.Value = !UtilsBepInExLoader.SimpleControls.Value;
+			SimpleControls.ButtonText.text = GetTerm(UtilsBepInExLoader.SimpleControls.Value) + " Simple Controls";
 		}
 		
 		private void ReloadVanillaMagRelease()
