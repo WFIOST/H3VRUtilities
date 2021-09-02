@@ -90,9 +90,15 @@ namespace H3VRUtils.Vehicles
 			//handle acceleration
 			var accelamt = hand.Input.TriggerFloat;
 			//if breaking, switch to negative acceleration
-			if (isBraking) accelamt = -accelamt;
-			//set acceleration
-			vehicle.setAcceleration(accelamt);
+			if (isBraking)
+			{
+				vehicle.setBraking(accelamt);
+			}
+			else
+			{
+				//set acceleration
+				vehicle.setThrottle(accelamt);
+			}
 		}
 
 		void FixedUpdate()
@@ -107,7 +113,7 @@ namespace H3VRUtils.Vehicles
 					rotAmt += rLS;
 					transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,
 						transform.localEulerAngles.y + rLS, transform.localEulerAngles.z);
-					vehicle.setAcceleration(0);
+					vehicle.setThrottle(0);
 					vehicle.setBraking(0);
 					SetRot();
 				}
@@ -116,15 +122,16 @@ namespace H3VRUtils.Vehicles
 
 		void SetRot()
 		{
+			//TODO: remove the lerp calcs pretty sure they're useless now
 			if (rotAmt > 0)
 			{
 				inlerp = Mathf.InverseLerp(0, maxRot, rotAmt);
-				lerp = -Mathf.Lerp(0, vehicle.maxRotation, inlerp);
+				lerp = -Mathf.Lerp(0, 1, inlerp);
 			}
 			else //if rotAmt is negative
 			{
 				inlerp = Mathf.InverseLerp(0, -maxRot, rotAmt);
-				lerp = Mathf.Lerp(0, vehicle.maxRotation, inlerp);
+				lerp = Mathf.Lerp(0, 1, inlerp);
 			}
 
 			if (reverseRot) lerp = -lerp;

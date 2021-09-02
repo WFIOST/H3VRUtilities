@@ -143,6 +143,7 @@
     <Compile Include="src\UniqueCode\RevolverChargingHandle.cs" />
     <Compile Include="src\UniqueCode\SelbstladerUnlockSystem.cs" />
     <Compile Include="src\Vehicles\General\Core\Axle.cs" />
+    <Compile Include="src\Vehicles\General\Core\Engine.cs" />
     <Compile Include="src\Vehicles\General\Core\Vehicle.cs" />
     <Compile Include="src\Vehicles\General\Core\Wheel.cs" />
     <Compile Include="src\Vehicles\General\DriveShift.cs" />

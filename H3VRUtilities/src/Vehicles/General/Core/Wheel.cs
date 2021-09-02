@@ -15,21 +15,38 @@ namespace H3VRUtils.Vehicles
 		public AudioEvent PopSound;
 
 		public float wheelRadius;
+		public bool invertRotation;
+		public float defaultRotation;
+		public float minimumRotation;
+		public float maxRotation;
 
 		public float currentRollingResistance;
 
 		public float currentSuspensionTravel;
 		public bool isOnGround;
+		public float currentRotation;
 
 		public void Start()
 		{
 			_rigidbody = GetComponent<Rigidbody>();
 		}
 
+		public float CalcWheelRotation()
+		{
+			var rot = wheelAxle.vehicle.Rotation; //get rotation
+			float lerp;
+			//wrap rot to minimum to maximum rotation (probably a nicer way, but this works)
+			if (rot >= 0) lerp = Mathf.Lerp(defaultRotation, maxRotation, rot); //handler if rot is above 0
+			else lerp = Mathf.Lerp(defaultRotation, minimumRotation, -rot); //handler if rot is below 0
+			return lerp;
+		}
+
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
 			RaycastHit hit;
+			currentRotation = CalcWheelRotation();
+			transform.localRotation = Quaternion.Euler(0f, currentRotation, 0f);
 			isOnGround =
 				Physics.Raycast(
 					transform.position,
@@ -47,18 +64,17 @@ namespace H3VRUtils.Vehicles
 
 		private void ApplyBrakeForce()
 		{
-			Vector3 right = transform.TransformDirection(transform.localRotation * Vector3.right);
+			//TODO: if brakes are too strong it can actually cause the car to go backwards, pls prevent this
 			float torque = GetResistanceTorque();
-			_rigidbody.AddForce(torque * -right);
-			Debug.DrawRay(transform.position, torque * -right / 1000, Color.red);
+			_rigidbody.AddForce(torque * transform.forward);
+			Debug.DrawRay(transform.position, torque * transform.forward / 1000, Color.red);
 		}
 		private void ApplyForwardForce()
 		{
 			if (wheelAxle.affectedByAcceleration)
 			{
-				Vector3 right = transform.TransformDirection(transform.localRotation * Vector3.right);
-				_rigidbody.AddForce(right * wheelAxle.forwardThrust);
-				Debug.DrawRay(transform.position, (right * wheelAxle.forwardThrust / 1000f), Color.green);
+				_rigidbody.AddForce(-transform.forward * wheelAxle.forwardThrust);
+				Debug.DrawRay(transform.position, (-transform.forward * wheelAxle.forwardThrust / 1000f), Color.green);
 			}
 		}
 		private void ApplySuspensionForce(RaycastHit hit)
@@ -84,10 +100,9 @@ namespace H3VRUtils.Vehicles
 		}
 		private float GetResistanceTorque()
 		{
-			//TODO: REPLACE ACCELERATION WITH BRAKE
 			float torque = 0;
-			if (wheelAxle.vehicle.Acceleration < 0 && wheelAxle.affectedByBrake)
-				torque = wheelAxle.brakeTorque * Mathf.Abs(wheelAxle.vehicle.Acceleration);
+			if (wheelAxle.affectedByBrake)
+				torque = wheelAxle.brakeTorque * wheelAxle.vehicle.brakingForce;
 
 			if (wheelAxle.vehicle.isHandbrakeOn && wheelAxle.affectedByHandbrake)
 				torque += wheelAxle.handbrakeTorque;

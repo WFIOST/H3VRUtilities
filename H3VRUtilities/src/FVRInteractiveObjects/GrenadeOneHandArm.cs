@@ -36,8 +36,11 @@ namespace H3VRUtils.FVRInteractiveObjects
 
 		public static bool TestTouchpadDir(FVRViveHand hand, Vector2 dir, bool triggerpressed = false)
 		{
+			//trigger checks- check if has just been pressed
 			if (dir == Vector2.zero && hand.Input.TriggerDown && !triggerpressed) return true;
+			//trigger checks- check if is currently being pressed
 			if (dir == Vector2.zero && hand.Input.TriggerPressed && triggerpressed) return true;
+			//touchpad checks- just check the touchpad lol
 			if (Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown &&
 			    hand.Input.TouchpadAxes.magnitude > 0.2f) return true;
 			return false;

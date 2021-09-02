@@ -26,7 +26,7 @@ namespace H3VRUtils.Vehicles
 
 		public void Update()
 		{
-			forwardThrust = vehicle.transmissionTorque * vehicle.torqueToImpulse;
+			forwardThrust = vehicle.engine.currentTorque * vehicle.torqueToImpulse;
 		}
 	}
 }

@@ -73,7 +73,7 @@ namespace H3VRUtils.Vehicles
 			{
 				Instantiate(explosionPrefab, this.transform.position, this.transform.rotation);
 			}
-			vehicle.ToggleEngine(false);
+			//vehicle.ToggleEngine(false);
 		}
 
 		public override void whileDead()
@@ -99,7 +99,7 @@ namespace H3VRUtils.Vehicles
 		public override void onUndeath()
 		{
 			particleFire.Stop();
-			vehicle.ToggleEngine(true);
+			//vehicle.ToggleEngine(true);
 		}
 
 		public override void Damage(Damage dmg)

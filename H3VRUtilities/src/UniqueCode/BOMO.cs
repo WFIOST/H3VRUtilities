@@ -94,6 +94,7 @@ namespace H3VRUtils.UniqueCode
 						FVRInteractiveObject obj;
 						obj = itemsInTheBag[rand].GetComponent<FVRInteractiveObject>();
 						obj.gameObject.SetActive(true);
+						obj.transform.position = m_hand.transform.position;
 						m_hand.ForceSetInteractable(obj);
 						itemsInTheBag.Remove(itemsInTheBag[rand]);
 						SetText();
