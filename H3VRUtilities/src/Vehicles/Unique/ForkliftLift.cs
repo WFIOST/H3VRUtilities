@@ -10,9 +10,9 @@ namespace H3VRUtils.Vehicles
 {
 	class ForkliftLift : FVRInteractiveObject
 	{
-		public float minRot;
-		public float defRot;
-		public float maxRot;
+		public Vector3 rotUpwards;
+		public Vector3 rotRegular;
+		public Vector3 rotDownwards;
 
 		public GameObject lift;
 		public float liftSpeed;
@@ -22,20 +22,18 @@ namespace H3VRUtils.Vehicles
 		public override void UpdateInteraction(FVRViveHand hand)
 		{
 			base.UpdateInteraction(hand);
-			transform.LookAt(hand.transform);
-			var rot = transform.localEulerAngles.x;
-			if (rot > maxRot) rot = maxRot;
-			if (rot < minRot) rot = minRot;
-
-			transform.localEulerAngles = new Vector3(rot, 0, 0);
-			var pos = lift.transform.localPosition;
-			if (rot > defRot)
+			Vector3 pos = lift.transform.position;
+			transform.localEulerAngles = rotRegular;
+			if (Vector2.Angle(hand.Input.TouchpadAxes, Vector2.up) <= 45f && hand.Input.TouchpadPressed && hand.Input.TouchpadAxes.magnitude > 0.2f)
 			{
-				pos.y += liftSpeed;
+				pos.y += liftSpeed / 50;
+				transform.localEulerAngles = rotUpwards;
 			}
-			else
+			
+			if (Vector2.Angle(hand.Input.TouchpadAxes, Vector2.down) <= 45f && hand.Input.TouchpadPressed && hand.Input.TouchpadAxes.magnitude > 0.2f)
 			{
-				pos.y -= liftSpeed;
+				pos.y -= liftSpeed / 50;
+				transform.localEulerAngles = rotDownwards;
 			}
 
 			if (pos.y > maxLiftY)
@@ -46,12 +44,8 @@ namespace H3VRUtils.Vehicles
 			{
 				pos.y = minLiftY;
 			}
-		}
 
-		public override void EndInteraction(FVRViveHand hand)
-		{
-			base.EndInteraction(hand);
-			transform.localEulerAngles = new Vector3(defRot, 0, 0);
+			lift.transform.position = pos;
 		}
 	}
 }

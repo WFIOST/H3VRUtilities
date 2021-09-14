@@ -102,7 +102,8 @@
     <Compile Include="src\FVRInteractiveObjects\AutoRackOnMagLoad.cs" />
     <Compile Include="src\FVRInteractiveObjects\BetterMagReleaseLatch.cs" />
     <Compile Include="src\FVRInteractiveObjects\FVRFirearms\BreakOpenFlareGun.cs" />
-    <Compile Include="src\FVRInteractiveObjects\FVRFirearms\jungleMag.cs" />
+    <Compile Include="src\FVRInteractiveObjects\FVRFirearms\BreechBlockLever.cs" />
+    <Compile Include="src\FVRInteractiveObjects\FVRFirearms\FieldGunFiringLever.cs" />
     <Compile Include="src\FVRInteractiveObjects\GoToNearestSosig.cs" />
     <Compile Include="src\FVRInteractiveObjects\GrenadeOneHandArm.cs" />
     <Compile Include="src\FVRInteractiveObjects\H3VRUtilsMagRelease.cs" />
@@ -142,17 +143,18 @@
     <Compile Include="src\UniqueCode\OpenBoltLockOnSafe.cs" />
     <Compile Include="src\UniqueCode\RevolverChargingHandle.cs" />
     <Compile Include="src\UniqueCode\SelbstladerUnlockSystem.cs" />
-    <Compile Include="src\Vehicles\General\Core\Axle.cs" />
-    <Compile Include="src\Vehicles\General\Core\Engine.cs" />
-    <Compile Include="src\Vehicles\General\Core\Vehicle.cs" />
-    <Compile Include="src\Vehicles\General\Core\Wheel.cs" />
-    <Compile Include="src\Vehicles\General\DriveShift.cs" />
-    <Compile Include="src\Vehicles\General\EngineDamagable.cs" />
+    <Compile Include="src\Vehicles\General\Core\VehicleControl.cs" />
+    <Compile Include="src\Vehicles\General\Damagable\EngineDamagable.cs" />
+    <Compile Include="src\Vehicles\General\Damagable\FuelTank.cs" />
+    <Compile Include="src\Vehicles\General\Damagable\VehicleDamagable.cs" />
     <Compile Include="src\Vehicles\General\EnterVehicle.cs" />
-    <Compile Include="src\Vehicles\General\SteeringWheel.cs" />
+    <Compile Include="src\Vehicles\General\Peripherals\ButtonIgnition.cs" />
+    <Compile Include="src\Vehicles\General\Peripherals\DriveShift.cs" />
+    <Compile Include="src\Vehicles\General\Peripherals\FuelNeedle.cs" />
+    <Compile Include="src\Vehicles\General\Peripherals\ParkingBrakeClick.cs" />
+    <Compile Include="src\Vehicles\General\Peripherals\SpedometerNeedle.cs" />
+    <Compile Include="src\Vehicles\General\Peripherals\SteeringWheel.cs" />
     <Compile Include="src\Vehicles\General\VehicleAudioSet.cs" />
-    <Compile Include="src\Vehicles\General\VehicleDamagable.cs" />
-    <Compile Include="src\Vehicles\General\VehicleRepairTool.cs" />
     <Compile Include="src\Vehicles\General\VehicleSeat.cs" />
     <Compile Include="src\Vehicles\Unique\ForkliftLift.cs" />
   </ItemGroup>

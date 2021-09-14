@@ -1,24 +1,28 @@
 ﻿using System;
 using UnityEngine;
 using FistVR;
+using UnityEngine.UI;
 
 namespace H3VRUtils.Vehicles
 {
 	class SteeringWheel : FVRInteractiveObject
 	{
-		public Vehicle vehicle;
+		public VehicleControl vehicle;
 		public float resetLerpSpeed;
 		public float maxRot;
-		public bool isBraking;
+		//public bool isBraking;
 		public bool reverseRot;
 		
 		[Header("Debug Values")]
+		public Text rotText;
 		public float rot;
 		public float rh;
 		public float lr;
 		public float inlerp;
 		public float lerp;
 		public float rotAmt;
+
+		public VehicleAudioSet audioSet;
 
 		public override void BeginInteraction(FVRViveHand hand)
 		{
@@ -80,30 +84,27 @@ namespace H3VRUtils.Vehicles
 			lr = lastrot.y;
 			
 			SetRot();
-			
+
+			bool isBraking = Vector2.Angle(hand.Input.TouchpadAxes, -Vector2.up) <= 45f && hand.Input.TouchpadPressed && hand.Input.TouchpadAxes.magnitude > 0.3f;
 			//check if switch breaking
-			if(Vector2.Angle(hand.Input.TouchpadAxes, -Vector2.up) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.3f){
-				isBraking = !isBraking;
-				SM.PlayGenericSound(vehicle.AudioSet.PedalSwitchSound, transform.position);
-			}
-			
+
 			//handle acceleration
-			var accelamt = hand.Input.TriggerFloat;
+			var accelamt = (float)Math.Pow(hand.Input.TriggerFloat, 2);
 			//if breaking, switch to negative acceleration
 			if (isBraking)
 			{
-				vehicle.setBraking(accelamt);
+				vehicle.accel = -accelamt;
 			}
 			else
 			{
 				//set acceleration
-				vehicle.setThrottle(accelamt);
+				vehicle.accel = accelamt;
 			}
 		}
 
 		void FixedUpdate()
 		{
-			if (m_hand != null)
+			if (m_hand == null)
 			{
 				var rLS = resetLerpSpeed;
 				if (rotAmt > 0) rLS = -rLS;
@@ -112,9 +113,8 @@ namespace H3VRUtils.Vehicles
 				{
 					rotAmt += rLS;
 					transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,
-						transform.localEulerAngles.y + rLS, transform.localEulerAngles.z);
-					vehicle.setThrottle(0);
-					vehicle.setBraking(0);
+						transform.localEulerAngles.y - rLS, transform.localEulerAngles.z);
+					vehicle.accel = 0;
 					SetRot();
 				}
 			}
@@ -123,20 +123,15 @@ namespace H3VRUtils.Vehicles
 		void SetRot()
 		{
 			//TODO: remove the lerp calcs pretty sure they're useless now
-			if (rotAmt > 0)
-			{
-				inlerp = Mathf.InverseLerp(0, maxRot, rotAmt);
-				lerp = -Mathf.Lerp(0, 1, inlerp);
-			}
-			else //if rotAmt is negative
-			{
-				inlerp = Mathf.InverseLerp(0, -maxRot, rotAmt);
-				lerp = Mathf.Lerp(0, 1, inlerp);
-			}
+			bool isNeg = rotAmt <= 0;
+
+			lerp = Mathf.Abs(rotAmt) / maxRot;
+			lerp *= -1;
+			if (isNeg) lerp *= -1;
 
 			if (reverseRot) lerp = -lerp;
-
-			vehicle.setRotation(lerp);
+			if(rotText != null) rotText.text = lerp.ToString();
+			vehicle.steer = lerp;
 		}
 	}
 }

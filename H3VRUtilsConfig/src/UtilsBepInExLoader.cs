@@ -11,6 +11,7 @@ using Sodalite.UiWidgets;
 using Sodalite.Utilities;
 using HarmonyLib;
 using System.Reflection;
+using H3VRUtilsConfig.patchers;
 
 namespace H3VRUtils
 {
@@ -40,6 +41,8 @@ namespace H3VRUtils
 
 		void Start()
 		{
+			Harmony.CreateAndPatchAll(typeof(patch_ClosedBoltWeapon));
+			
 			paddleMagRelease = Config.Bind("General Settings", "Enable Paddle Release", false, "Allows custom guns to utilize the feature to require a direction press on the touchpad to release the mag, usually to simulate a paddle release.");
 			magDropRequiredRelease = Config.Bind("General Settings", "Enable Mandatory Mag Drop", false, "Allows custom guns to utilize the feature to require the mag to be dropped by your primary hand, even if your other hand is gripping the magazine.");
 
@@ -153,7 +156,7 @@ namespace H3VRUtils
 					button.RectTransform.localRotation = Quaternion.identity;
 				});
 
-				/*widget.AddChild((ButtonWidget button) => {
+				widget.AddChild((ButtonWidget button) => {
 					button.ButtonText.text = "Reload Magazine Release Cache";
 					button.AddButtonListener(ReloadVanillaMagRelease);
 					MagDropRequiredReleaseButton = button;
@@ -180,7 +183,7 @@ namespace H3VRUtils
 					button.AddButtonListener(lockZRot);
 					VehicleLockZRotButton = button;
 					button.RectTransform.localRotation = Quaternion.identity;
-				});*/
+				});
 				
 				//ROW FOUR (actually due to disabled buttons it'll appear row 2)
 				widget.AddChild((ButtonWidget button) => {

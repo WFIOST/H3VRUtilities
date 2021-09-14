@@ -20,6 +20,9 @@ namespace H3VRUtils.Vehicles
 				//this is NOT a good way to do it, pls find an alternative soon lol
 				hand.MovementManager.transform.position = SitPos.transform.position;
 				//hand.MovementManager.TeleportToPoint(SitPos.transform.position, false);
+				//hand.MovementManager.DelayGround(Time.fixedDeltaTime * 1.15f);
+				
+				
 
 				//rotation locks
 				var rot = hand.MovementManager.transform.rotation;
