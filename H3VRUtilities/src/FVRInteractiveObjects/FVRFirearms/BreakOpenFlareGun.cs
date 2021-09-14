@@ -136,7 +136,7 @@ namespace H3VRUtils
 			}
 		}
 
-		private void Fire()
+		public void Fire()
 		{
 			if (!this.m_isLatched)
 			{
@@ -200,7 +200,7 @@ namespace H3VRUtils
 			}
 		}
 
-		private void CockHammer()
+		public void CockHammer()
 		{
 			if (!this.m_isHammerCocked)
 			{
