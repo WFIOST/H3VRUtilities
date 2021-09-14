@@ -89,16 +89,27 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		private int rememberAttached;
 		private float lastDecision;
 
-		[Header("Move If Object Held")] public bool MoveIfObjectHeld;
+		[Header("Move If Object Held")]
+		public bool MoveIfObjectHeld;
 		public FVRPhysicalObject HeldObject;
 		private bool _isObservedObjectNotNull;
 
-		[Header("Move If Grenade Armed")] public bool MoveIfGrenadeArmed;
+		[Header("Move If Grenade Armed")]
+		public bool MoveIfGrenadeArmed;
 		public PinnedGrenade grenade;
-		
+
+		[Header("Move If Disabled")]
+		public bool MoveIfDisabled;
+
 		[Header("Special Affected Things")]
 		[Header("Move Attached Items")]
 		public bool MoveAttachedItems;
+
+		[Header("Disable If Moved")]
+		public bool DisableIfMoved;
+		[Tooltip("The percentage (from 0-1, not 0-100) at which point it disables")]
+		public float percentageCutoff;
+
 		[Tooltip("NOTE: THIS ONLY APPLIES TO THE FIRST ATTACHMENT IN THE MOUNT.")]
 		public FVRFireArmAttachmentMount MAImount;
 
@@ -290,13 +301,23 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 				else
 					invertlerp = 0;
 			}
+			
+			//Start Special Observations - Move If Disabled
+			if (MoveIfDisabled)
+			{
+				if (!ObservedObject.activeSelf)
+				{
+					invertlerp = 1;
+				}
+				else invertlerp = 0;
+			}
 
 			lerppoint = Mathf.Lerp(StartOfAffected, StopOfAffected, invertlerp);
 
 			Vector3 v3;
 
 			//make sure lerp isnt same
-			if (Math.Abs(rememberLerpPoint - lerppoint) < 0.00025) return;
+			if (Math.Abs(rememberLerpPoint - lerppoint) < float.Epsilon) return;
 			rememberLerpPoint = lerppoint;
 			
 			//StartSpecialAffected - MoveAttachedObject
@@ -312,6 +333,16 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 				}
 			}
 			//EndSpecialAffect - MoveAttachedObject
+			
+			//StartSpecialAffected - DisableOnMoved
+			if (DisableIfMoved)
+			{
+				if (invertlerp >= percentageCutoff)
+				{
+					AffectedObject.SetActive(false);
+				} else AffectedObject.SetActive(true);
+			}
+			//EndSpecialAffect - DisabledOnMoved
 
 			if (AffectedObject != null)
 			{
