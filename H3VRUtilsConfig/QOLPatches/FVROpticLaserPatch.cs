@@ -8,7 +8,7 @@ namespace H3VRUtilsConfig.QOLPatches
 	{
 		[HarmonyPatch(typeof(LaserPointer), "FVRUpdate")]
 		[HarmonyPostfix]
-		public void LaserPointerPatch_Update_FixScale(LaserPointer __instance)
+		public static void LaserPointerPatch_Update_FixScale(LaserPointer __instance)
 		{
 			//get dist between player head and laser
 			float num = Vector3.Distance(ManagerSingleton<GM>.Instance.m_currentPlayerBody.Head.transform.position, __instance.BeamHitPoint.transform.position);
