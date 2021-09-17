@@ -92,6 +92,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\AndrewContributions\ThermiteFire.cs" />
     <Compile Include="src\FVRInteractiveObjects\ActivateSeveralFVRInteractiveAtOnce.cs" />
     <Compile Include="src\FVRInteractiveObjects\AR15HandleFlipperSounds.cs" />
     <Compile Include="src\FVRInteractiveObjects\attachmentCode\AttachmentModifyFirearm.cs" />

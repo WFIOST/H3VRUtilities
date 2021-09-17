@@ -93,6 +93,9 @@
     <Compile Include="patchers\patch_ClosedBoltWeapon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QOLPatches\FVROpticLaserPatch.cs" />
+    <Compile Include="QOLPatches\OcclusionHandler.cs" />
+    <Compile Include="QOLPatches\OcclusionPatch.cs" />
+    <Compile Include="QOLPatches\StaticOcclusion.cs" />
     <Compile Include="src\H3VRUtilsMagRelease.cs" />
     <Compile Include="src\MagReplacer.cs" />
     <Compile Include="src\UtilsBepInExLoader.cs" />
