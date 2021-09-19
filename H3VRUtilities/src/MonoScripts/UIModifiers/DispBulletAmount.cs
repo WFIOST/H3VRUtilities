@@ -24,6 +24,10 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		public bool AddMinCharLength;
 		public int MinCharLength;
 
+		public bool enableDispLerp;
+		[Tooltip("From 0-1. The % amount moved towards its correct amount every 50th of a second.")]
+		public float DispLerpAmt;
+
 		[Header("Alternate Displays")]
 		[Tooltip("Enables enabling/disabling objects based on rounds left in mag.")]
 		public bool EnabledObjects;
@@ -36,6 +40,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		
 		private FVRFireArm _fa;
 		private FVRFireArmMagazine _mag;
+		private int bulletamts;
 
 		private void GetFirearmAndMag()
 		{
@@ -74,6 +79,10 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			if (_firearm != null)
 			{
 				count += (int)GetFireArmDeets.GetFireArmChamber(_firearm)?.Count(chamber => chamber.IsFull && !chamber.IsSpent);
+				if (GetFireArmDeets.GetFireArmProxy(firearm) != null)
+				{
+					count++;
+				}
 			}
 			return count;
 		}
@@ -98,6 +107,13 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		{
 			GetFirearmAndMag();
 			var amtAmmo = GetAmmoCount();
+
+			if (enableDispLerp)
+			{
+				amtAmmo = (int)Mathf.Lerp(bulletamts, amtAmmo, DispLerpAmt);
+			}
+			
+			bulletamts = amtAmmo;
 			string amtAmmoString = amtAmmo.ToString();
 			if (AddMinCharLength) { //most certainly a faster way but idc
 				int lengthneedtoadd = MinCharLength - amtAmmoString.Length;
@@ -114,13 +130,14 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 
 		private void SetEnabledObjects(int amt)
 		{ //yoinked from old bit. TODO: rewrite this plz
+			
 			for (int i = 0; i < Objects.Count; i++) //set all to false
 			{
 				Objects[i].SetActive(false);
 				ObjectWhenEmpty.SetActive(false);
 			}
-
-			if (firearm.Magazine == null && ObjectWhenEmpty != null) //turn on the no-mag object
+			
+			if (_mag == null && ObjectWhenEmpty != null) //turn on the no-mag object
 			{
 				ObjectWhenEmpty.SetActive(true);
 			}
