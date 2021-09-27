@@ -10,9 +10,9 @@ namespace H3VRUtils
 	public class MagFollower : MonoBehaviour
 	{
 		public FVRFireArmMagazine magazine;
-
+		
 		public GameObject follower;
-
+		
 		[Header("Translation Mag Follower")]
 		public bool UsesOneRoundPos;
 		[Tooltip("The round count where the follower starts moving (e.g 20)")]
@@ -25,21 +25,21 @@ namespace H3VRUtils
 		public GameObject OneRoundPos;
 		[Tooltip("The position where the follower should be when the magazine is empty.")]
 		public GameObject StopPos;
-
+		
 		[Header("Individual Point Mag Follower")]
 		public bool UsesIndivdualPointMagFollower;
 		[Tooltip("Top-to-bottom order, where the 0th position is when the magazine is empty. ")]
 		public List<GameObject> Positions;
-
+		
 		[Header("Individual Mesh Replacement")]
 		public bool UsesIndividualMeshReplacement;
 		[Tooltip("Top-to-bottom order, where the 0th position is when the magazine is empty. ")]
 		public List<Mesh> Meshes;
-
+		
 		private int magrounds;
-
+		
 		private MeshFilter followerFilter;
-
+		
 		public void Update()
 		{
 			if (magazine.m_numRounds != magrounds)
@@ -48,7 +48,7 @@ namespace H3VRUtils
 				UpdateDisp();
 			}
 		}
-
+		
 		public void Start()
 		{
 			followerFilter = follower.GetComponent<MeshFilter>();
@@ -60,7 +60,7 @@ namespace H3VRUtils
 				StartAtRoundCount = temp;
 			}
 		}
-
+		
 		public void UpdateDisp()
 		{
 

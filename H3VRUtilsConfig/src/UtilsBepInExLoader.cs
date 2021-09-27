@@ -28,7 +28,7 @@ namespace H3VRUtils
 		public static ConfigEntry<bool> VehicleLockZRot;
 		public static ConfigEntry<bool> SimpleControls;
 		public static ConfigEntry<TouchpadDirTypePT> paddleMagReleaseDir;
-
+		
 		public enum TouchpadDirTypePT
 		{
 			Up,
@@ -38,8 +38,8 @@ namespace H3VRUtils
 			Trigger,
 			BasedOnWeapon
 		}
-
-
+		
+		
 		void Start()
 		{
 			//Harmony.CreateAndPatchAll(typeof(patch_ClosedBoltWeapon));
@@ -55,8 +55,8 @@ namespace H3VRUtils
 			VehicleLockZRot = Config.Bind("Vehicles", "Lock Z Rotation", false, "Rotates your Z rotation based on the vehicles rotation. Induces VR sickness.");
 			SimpleControls  = Config.Bind("General Settings", "Enable Simple Controls", false, "Allows simpler controls (e.g enables ModulAR bolt release via up press on touchpad)");
 			//Harmony.CreateAndPatchAll(typeof(MagReplacer));
-
-
+			
+			
 			//sodalite check
 			try
 			{

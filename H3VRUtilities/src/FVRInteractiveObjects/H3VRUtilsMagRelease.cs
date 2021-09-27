@@ -140,22 +140,22 @@ namespace H3VRUtils
 		public override void UpdateInteraction(FVRViveHand hand)
 		{
 			base.UpdateInteraction(hand);
-
+			
 			bool flag = false;
 			FVRFireArmMagazine prevmag = null;
 			if (mag != null) { flag = true; prevmag = mag; } //check if mag was previously loaded
-
+			
 			if (WepType == 1) { mag = this.ClosedBoltReceiver.Magazine; }
 			if (WepType == 2) { mag = this.OpenBoltWeapon.Magazine; }
 			if (WepType == 3) { mag = this.HandgunReceiver.Magazine; }
 			if (WepType == 4) { mag = this.BoltActionWeapon.Magazine; }
-
+			
 			if (mag != null)
 			{
 				bool flag2 = false;
 				if (Vector2.Angle(hand.Input.TouchpadAxes, dir) <= 45f && hand.Input.TouchpadDown && hand.Input.TouchpadAxes.magnitude > 0.2f) flag2 = true;
-
-
+				
+				
 				if (
 					   !PressDownToRelease //if it's not a paddle release anyway
 					|| !UtilsBepInExLoader.paddleMagRelease.Value //if paddle release is disabled
