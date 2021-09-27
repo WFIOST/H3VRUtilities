@@ -26,6 +26,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 
 		public bool enableDispLerp;
 		[Tooltip("From 0-1. The % amount moved towards its correct amount every 50th of a second.")]
+		[Range(0f, 1f)]
 		public float DispLerpAmt;
 
 		[Header("Alternate Displays")]
@@ -79,7 +80,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			if (_firearm != null)
 			{
 				count += (int)GetFireArmDeets.GetFireArmChamber(_firearm)?.Count(chamber => chamber.IsFull && !chamber.IsSpent);
-				if (GetFireArmDeets.GetFireArmProxy(firearm) != null)
+				if (GetFireArmDeets.GetFireArmProxy(_firearm) != null)
 				{
 					count++;
 				}
@@ -107,10 +108,10 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		{
 			GetFirearmAndMag();
 			var amtAmmo = GetAmmoCount();
-
+			
 			if (enableDispLerp)
 			{
-				amtAmmo = (int)Mathf.Lerp(bulletamts, amtAmmo, DispLerpAmt);
+				amtAmmo = Mathf.CeilToInt(Mathf.Lerp(bulletamts, amtAmmo, DispLerpAmt));
 			}
 			
 			bulletamts = amtAmmo;

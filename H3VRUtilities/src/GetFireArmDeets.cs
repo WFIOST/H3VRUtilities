@@ -48,13 +48,14 @@ namespace H3VRUtils
 
 		public static FVRFirearmMovingProxyRound GetFireArmProxy(FVRFireArm firearm)
 		{
-			FVRFirearmMovingProxyRound ProxyRound = new FVRFirearmMovingProxyRound();
+			FVRFirearmMovingProxyRound ProxyRound = null;
 			
 			FieldInfo chamberField = firearm.GetType().GetField("m_proxy");
 			if (chamberField != null)
 			{
+				var obj = chamberField.GetValue(firearm);
 				//cast Chamber field to firearm as FVRFireArmChamber
-				ProxyRound = (FVRFirearmMovingProxyRound)chamberField.GetValue(firearm);
+				if (obj != null) ProxyRound = (FVRFirearmMovingProxyRound) obj;
 				return ProxyRound;
 			}
 			return null;
