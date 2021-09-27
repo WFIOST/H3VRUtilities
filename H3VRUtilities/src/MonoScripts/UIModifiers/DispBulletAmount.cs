@@ -109,7 +109,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			GetFirearmAndMag();
 			var amtAmmo = GetAmmoCount();
 			
-			if (enableDispLerp)
+			if (enableDispLerp && amtAmmo != 0) //!= 0 is there to prevent the ceiltoint returning 1 when there are no bullets left
 			{
 				amtAmmo = Mathf.CeilToInt(Mathf.Lerp(bulletamts, amtAmmo, DispLerpAmt));
 			}
