@@ -111,6 +111,7 @@
     <Compile Include="src\FVRInteractiveObjects\H3VRUtilsPhysBoltRelease.cs" />
     <Compile Include="src\FVRInteractiveObjects\HandgunSecondarySwitch.cs" />
     <Compile Include="src\FVRInteractiveObjects\lockToHead.cs" />
+    <Compile Include="src\FVRInteractiveObjects\MultipleChargingHandleClosedBolt.cs" />
     <Compile Include="src\FVRInteractiveObjects\NadeCupLauncher.cs" />
     <Compile Include="src\FVRInteractiveObjects\OpenBoltBurstFire.cs" />
     <Compile Include="src\FVRInteractiveObjects\SimpleControls\SimpleControls_ClosedBolt.cs" />
