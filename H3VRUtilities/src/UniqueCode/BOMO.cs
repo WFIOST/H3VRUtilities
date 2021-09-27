@@ -9,8 +9,10 @@ using Random = System.Random;
 namespace H3VRUtils.UniqueCode
 {
 	//Bag Of Many Objects
-	public class BOMO : FVRPhysicalObject
+	public class BOMO : MonoBehaviour
 	{
+		public bool isStatic;
+		public FVRPhysicalObject physobj;
 		public List<GameObject> itemsInTheBag;
 		public Text itemsInTheBagText;
 		public int maxItems;
@@ -29,8 +31,10 @@ namespace H3VRUtils.UniqueCode
 		{
 			//i can literally hear my cpu burning itself just reading this
 			//sorry, oh gods of optimization, for i have made a grave sin
-			if (other.gameObject.layer == gameObject.layer && deniedObjectTime >= 50)
+			deniedObjectTime++;
+			if (other.gameObject.layer == gameObject.layer && deniedObjectTime >= 5)
 			{
+				deniedObjectTime = 0;
 				var obj = other.gameObject.GetComponent<FVRPhysicalObject>();
 				bool deny = true;
 				if (obj.m_hand == null)
@@ -70,7 +74,6 @@ namespace H3VRUtils.UniqueCode
 						SetText();
 					}
 				}
-
 			}
 		}
 
@@ -84,9 +87,9 @@ namespace H3VRUtils.UniqueCode
 
 		private void Update()
 		{
-			if (m_isHardnessed)
+			if (physobj.m_isHardnessed)
 			{
-				if (m_hand != null)
+				if (physobj.m_hand != null)
 				{
 					if (itemsInTheBag.Count != 0)
 					{
@@ -94,13 +97,13 @@ namespace H3VRUtils.UniqueCode
 						FVRInteractiveObject obj;
 						obj = itemsInTheBag[rand].GetComponent<FVRInteractiveObject>();
 						obj.gameObject.SetActive(true);
-						obj.transform.position = m_hand.transform.position;
-						m_hand.ForceSetInteractable(obj);
+						obj.transform.position = physobj.m_hand.transform.position;
+						physobj.m_hand.ForceSetInteractable(obj);
 						itemsInTheBag.Remove(itemsInTheBag[rand]);
 						SetText();
 						deniedObjectTime = 0;
 					}
-					else m_hand.ForceSetInteractable(null);
+					else physobj.m_hand.ForceSetInteractable(null);
 				}
 			}
 		}
