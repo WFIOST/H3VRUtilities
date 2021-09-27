@@ -10,7 +10,7 @@ namespace H3VRUtils
 	class ActivateSeveralFVRInteractiveAtOnce : FVRInteractiveObject
 	{
 		public List<FVRInteractiveObject> InteractiveObjects;
-
+		
 		public override void BeginInteraction(FVRViveHand hand)
 		{
 			base.BeginInteraction(hand);
