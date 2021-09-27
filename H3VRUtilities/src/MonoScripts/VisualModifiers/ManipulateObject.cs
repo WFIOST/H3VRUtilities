@@ -91,7 +91,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 
 		[Header("Move If Object Held")]
 		public bool MoveIfObjectHeld;
-		public FVRPhysicalObject HeldObject;
+		public FVRInteractiveObject HeldObject;
 		private bool _isObservedObjectNotNull;
 
 		[Header("Move If Grenade Armed")]
