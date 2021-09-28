@@ -96,8 +96,6 @@
     <Compile Include="QOLPatches\OcclusionHandler.cs" />
     <Compile Include="QOLPatches\OcclusionPatch.cs" />
     <Compile Include="QOLPatches\StaticOcclusion.cs" />
-    <Compile Include="src\H3VRUtilsMagRelease.cs" />
-    <Compile Include="src\MagReplacer.cs" />
     <Compile Include="src\UtilsBepInExLoader.cs" />
   </ItemGroup>
   <ItemGroup>

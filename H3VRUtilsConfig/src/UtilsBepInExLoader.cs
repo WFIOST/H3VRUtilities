@@ -38,6 +38,12 @@ namespace H3VRUtils
 			Trigger,
 			BasedOnWeapon
 		}
+
+		public static void EnablePaddleMagRelease()
+		{
+			paddleMagRelease.Value = true;
+			magDropRequiredRelease.Value = true;
+		}
 		
 		
 		void Start()
@@ -228,11 +234,11 @@ namespace H3VRUtils
 			SimpleControls.ButtonText.text = GetTerm(UtilsBepInExLoader.SimpleControls.Value) + " Simple Controls";
 		}
 		
-		private void ReloadVanillaMagRelease()
+		/*private void ReloadVanillaMagRelease()
 		{
 			MagReplacerData.GetMagDropData(true);
 			MagReplacerData.GetPaddleData(true);
-		}
+		}*/
 
 		private void SpawnUtilsPanel()
 		{
