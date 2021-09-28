@@ -104,16 +104,15 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		[Header("Special Affected Things")]
 		[Header("Move Attached Items")]
 		public bool MoveAttachedItems;
+		[Tooltip("NOTE: THIS ONLY APPLIES TO THE FIRST ATTACHMENT IN THE MOUNT.")]
+		public FVRFireArmAttachmentMount MAImount;
 
-		[Header("Disable If Moved")]
+		[Header("Disable If Observed Object Moved")]
 		public bool DisableIfMoved;
 		[Tooltip("The percentage (from 0-1, not 0-100) at which point it disables")]
 		public float percentageCutoff;
 
-		[Tooltip("NOTE: THIS ONLY APPLIES TO THE FIRST ATTACHMENT IN THE MOUNT.")]
-		public FVRFireArmAttachmentMount MAImount;
-
-			private void Start()
+		private void Start()
 		{
 			_isObservedObjectNotNull = ObservedObject != null;
 		}
