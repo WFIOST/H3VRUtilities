@@ -81,9 +81,7 @@ namespace H3VRUtils
 
 		public UtilsOptionsPanel()
 		{
-			WristMenuAPI.Buttons.Add(new WristMenuButton("Spawn Utils Panel", () => {
-				SpawnUtilsPanel();
-			}));
+			WristMenuAPI.Buttons.Add(new WristMenuButton("Spawn Utils Panel", int.MaxValue, SpawnUtilsPanel));
 
 			//setup panel
 			_UtilsPanel = new LockablePanel();
@@ -203,32 +201,32 @@ namespace H3VRUtils
 			});
 		}
 
-		private void TogglePaddleRelease() {
+		private void TogglePaddleRelease(object sender, ButtonClickEventArgs args) {
 			UtilsBepInExLoader.paddleMagRelease.Value = !UtilsBepInExLoader.paddleMagRelease.Value;
 			paddleMagReleaseButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Paddle Release";
 		}
-		private void ToggleMagRelease() {
+		private void ToggleMagRelease(object sender, ButtonClickEventArgs args) {
 			UtilsBepInExLoader.magDropRequiredRelease.Value = !UtilsBepInExLoader.magDropRequiredRelease.Value;
 			MagDropRequiredReleaseButton.ButtonText.text = GetTerm(UtilsBepInExLoader.magDropRequiredRelease.Value) + " Mag Drop Required Release";
 		}
 
-		private void lockXRot()
+		private void lockXRot(object sender, ButtonClickEventArgs args)
 		{
 			UtilsBepInExLoader.VehicleLockXRot.Value = !UtilsBepInExLoader.paddleMagRelease.Value;
 			VehicleLockXRotButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Vehicle X Lock";
 		}
-		private void lockYRot()
+		private void lockYRot(object sender, ButtonClickEventArgs args)
 		{
 			UtilsBepInExLoader.VehicleLockYRot.Value = !UtilsBepInExLoader.paddleMagRelease.Value;
 			VehicleLockYRotButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Vehicle Y Lock";
 		}
-		private void lockZRot()
+		private void lockZRot(object sender, ButtonClickEventArgs args)
 		{
 			UtilsBepInExLoader.VehicleLockZRot.Value = !UtilsBepInExLoader.paddleMagRelease.Value;
 			VehicleLockZRotButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Vehicle Z Lock";
 		}
 
-		private void ToggleSimpleControls()
+		private void ToggleSimpleControls(object sender, ButtonClickEventArgs args)
 		{
 			UtilsBepInExLoader.SimpleControls.Value = !UtilsBepInExLoader.SimpleControls.Value;
 			SimpleControls.ButtonText.text = GetTerm(UtilsBepInExLoader.SimpleControls.Value) + " Simple Controls";
@@ -240,7 +238,7 @@ namespace H3VRUtils
 			MagReplacerData.GetPaddleData(true);
 		}*/
 
-		private void SpawnUtilsPanel()
+		private void SpawnUtilsPanel(object sender, ButtonClickEventArgs args)
 		{
 			FVRWristMenu wristMenu = WristMenuAPI.Instance;
 			if (wristMenu is null || !wristMenu) return;
