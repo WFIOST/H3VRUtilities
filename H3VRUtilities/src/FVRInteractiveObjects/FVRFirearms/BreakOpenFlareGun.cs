@@ -97,6 +97,12 @@ namespace H3VRUtils
 				{
 					this.CockHammer();
 				}
+
+				if (hand.IsInStreamlinedMode && hand.Input.BYButtonDown && CanCockHammer)
+				{
+					this.CockHammer();
+				}
+				
 				else if (touchpadAxes.magnitude > 0.2f && (Vector2.Angle(touchpadAxes, Vector2.left) < 45f || Vector2.Angle(touchpadAxes, Vector2.right) < 45f) && this.CanUnlatch)
 				{
 					this.ToggleLatchState();
