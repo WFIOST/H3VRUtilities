@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using FistVR;
-using HarmonyLib;
 
 namespace H3VRUtils
 {
