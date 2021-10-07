@@ -140,6 +140,8 @@
     <Compile Include="src\NonAddedScripts\GetTransformPosition.cs" />
     <Compile Include="src\NonAddedScripts\RecoilModificationSystem.cs" />
     <Compile Include="src\QOL\ItemCaller.cs" />
+    <Compile Include="src\QOL\RotateTowardsPlayer.cs" />
+    <Compile Include="src\QOL\SouthpawSupporter.cs" />
     <Compile Include="src\UniqueCode\AssignMagIfNull.cs" />
     <Compile Include="src\UniqueCode\BOMO.cs" />
     <Compile Include="src\UniqueCode\LebelCutoff.cs" />
