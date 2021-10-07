@@ -11,14 +11,21 @@ namespace H3VRUtils.UniqueCode
 	//Bag Of Many Objects
 	public class BOMO : MonoBehaviour
 	{
+		[Tooltip("If true, will not un-harness when there are no items.")]
 		public bool isStatic;
+		[Tooltip("For usage as a static object. Puts itself into quickbelt and harnesses.")]
+		public FVRQuickBeltSlot qbSlotForStatic;
+		[Tooltip("Physical object the BOMO is connected to.")]
 		public FVRPhysicalObject physobj;
+		[Tooltip("List of all the items in the BOMO.")]
 		public List<GameObject> itemsInTheBag;
+		[Tooltip("Text that displays the amount of items in the bag. Not necessary.")]
 		public Text itemsInTheBagText;
-		public int maxItems;
+		[Tooltip("Maximum amount of items that can be stored in the BOMO.")]
+		public int maxItems = 5;
+		[Tooltip("If true, will just nuke any item put into it.")]
 		public bool thevoid;
 		
-		private Random _rnd = new Random();
 		private bool _isitemsInTheBagTextNotNull;
 		private int deniedObjectTime;
 
@@ -93,7 +100,7 @@ namespace H3VRUtils.UniqueCode
 				{
 					if (itemsInTheBag.Count != 0)
 					{
-						int rand = _rnd.Next(0, itemsInTheBag.Count);
+						int rand = UnityEngine.Random.Range(0, itemsInTheBag.Count);
 						FVRInteractiveObject obj;
 						obj = itemsInTheBag[rand].GetComponent<FVRInteractiveObject>();
 						obj.gameObject.SetActive(true);
@@ -103,7 +110,10 @@ namespace H3VRUtils.UniqueCode
 						SetText();
 						deniedObjectTime = 0;
 					}
-					else physobj.m_hand.ForceSetInteractable(null);
+					else
+					{
+						if(isStatic) physobj.m_hand.ForceSetInteractable(null);
+					}
 				}
 			}
 		}
