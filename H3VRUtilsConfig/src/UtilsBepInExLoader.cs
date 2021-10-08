@@ -152,14 +152,14 @@ namespace H3VRUtils
 					button.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Paddle Release";
 					button.AddButtonListener(TogglePaddleRelease);
 					paddleMagReleaseButton = button;
-					button.RectTransform.localRotation = Quaternion.identity;
+					button.ButtonText.transform.localRotation = Quaternion.identity;
 					});
 				
 				widget.AddChild((ButtonWidget button) => {
 					button.ButtonText.text = GetTerm(UtilsBepInExLoader.magDropRequiredRelease.Value) + " Mag Drop Required Release";
 					button.AddButtonListener(ToggleMagRelease);
 					MagDropRequiredReleaseButton = button;
-					button.RectTransform.localRotation = Quaternion.identity;
+					button.ButtonText.transform.localRotation = Quaternion.identity;
 				});
 				
 				/*widget.AddChild((ButtonWidget button) => {
@@ -196,7 +196,7 @@ namespace H3VRUtils
 					button.ButtonText.text = GetTerm(UtilsBepInExLoader.SimpleControls.Value) + " Simple Controls";
 					button.AddButtonListener(ToggleSimpleControls);
 					SimpleControls = button;
-					button.RectTransform.localRotation = Quaternion.identity;
+					button.ButtonText.transform.localRotation = Quaternion.identity;
 				});
 			});
 		}
