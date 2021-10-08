@@ -73,7 +73,7 @@ namespace H3VRUtils
 			}
 		}
 	}
-
+	
 	
 	public class UtilsOptionsPanel : MonoBehaviour
 	{
@@ -82,29 +82,29 @@ namespace H3VRUtils
 		public UtilsOptionsPanel()
 		{
 			WristMenuAPI.Buttons.Add(new WristMenuButton("Spawn Utils Panel", int.MaxValue, SpawnUtilsPanel));
-
+            
 			//setup panel
 			_UtilsPanel = new LockablePanel();
 			_UtilsPanel.Configure += ConfigureUtilsPanel;
 			_UtilsPanel.TextureOverride = SodaliteUtils.LoadTextureFromBytes(Assembly.GetExecutingAssembly().GetResource("UtilsPanel.png"));
 		}
-
+        
 		ButtonWidget paddleMagReleaseButton;
 		ButtonWidget MagDropRequiredReleaseButton;
-
+        
 		ButtonWidget VehicleLockXRotButton;
 		ButtonWidget VehicleLockYRotButton;
 		ButtonWidget VehicleLockZRotButton;
-
+		
 		ButtonWidget SimpleControls;
-
-
+		
+		
 		public static string GetTerm(bool value)
 		{
 			//what the fuck do this do i'm not smart
 			return value ? "Disable" : "Enable";
 		}
-
+		
 		private void ConfigureUtilsPanel(GameObject panel)
 		{
 			//there's gotta be a fucking better way man there's no way
@@ -126,49 +126,49 @@ namespace H3VRUtils
 				widget.LayoutGroup.childAlignment = TextAnchor.UpperCenter;
 				widget.LayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
 				widget.LayoutGroup.constraintCount = 3;
-
+				
 				//ROW ONE
-
+				
 				widget.AddChild((TextWidget text) => {
 					text.Text.text = "";
 					text.RectTransform.localRotation = Quaternion.identity;
 				});
-
+				
 				widget.AddChild((TextWidget text) => {
 					text.Text.text = "H3VR Utilities Settings";
 					text.Text.alignment = TextAnchor.MiddleCenter;
 					text.Text.fontSize += 5;
 					text.RectTransform.localRotation = Quaternion.identity;
 				});
-
+				
 				widget.AddChild((TextWidget text) => {
 					text.Text.text = "";
 					text.RectTransform.localRotation = Quaternion.identity;
 				});
-
+				
 				//ROW TWO
-
+				
 				widget.AddChild((ButtonWidget button) => {
 					button.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Paddle Release";
 					button.AddButtonListener(TogglePaddleRelease);
 					paddleMagReleaseButton = button;
 					button.RectTransform.localRotation = Quaternion.identity;
 					});
-
+				
 				widget.AddChild((ButtonWidget button) => {
 					button.ButtonText.text = GetTerm(UtilsBepInExLoader.magDropRequiredRelease.Value) + " Mag Drop Required Release";
 					button.AddButtonListener(ToggleMagRelease);
 					MagDropRequiredReleaseButton = button;
 					button.RectTransform.localRotation = Quaternion.identity;
 				});
-
+				
 				/*widget.AddChild((ButtonWidget button) => {
 					button.ButtonText.text = "Reload Magazine Release Cache";
 					button.AddButtonListener(ReloadVanillaMagRelease);
 					MagDropRequiredReleaseButton = button;
 					button.RectTransform.localRotation = Quaternion.identity;
 				});
-
+				
 				//ROW THREE
 				widget.AddChild((ButtonWidget button) => {
 					button.ButtonText.text = GetTerm(UtilsBepInExLoader.VehicleLockXRot.Value) + " Vehicle X Lock";
@@ -176,14 +176,14 @@ namespace H3VRUtils
 					VehicleLockXRotButton = button;
 					button.RectTransform.localRotation = Quaternion.identity;
 				});
-
+				
 				widget.AddChild((ButtonWidget button) => {
 					button.ButtonText.text = GetTerm(UtilsBepInExLoader.VehicleLockYRot.Value) + " Vehicle Y Lock";
 					button.AddButtonListener(lockYRot);
 					VehicleLockYRotButton = button;
 					button.RectTransform.localRotation = Quaternion.identity;
 				});
-
+				
 				widget.AddChild((ButtonWidget button) => {
 					button.ButtonText.text = GetTerm(UtilsBepInExLoader.VehicleLockZRot.Value) + " Vehicle Z Lock";
 					button.AddButtonListener(lockZRot);
@@ -209,7 +209,7 @@ namespace H3VRUtils
 			UtilsBepInExLoader.magDropRequiredRelease.Value = !UtilsBepInExLoader.magDropRequiredRelease.Value;
 			MagDropRequiredReleaseButton.ButtonText.text = GetTerm(UtilsBepInExLoader.magDropRequiredRelease.Value) + " Mag Drop Required Release";
 		}
-
+		
 		private void lockXRot(object sender, ButtonClickEventArgs args)
 		{
 			UtilsBepInExLoader.VehicleLockXRot.Value = !UtilsBepInExLoader.paddleMagRelease.Value;
