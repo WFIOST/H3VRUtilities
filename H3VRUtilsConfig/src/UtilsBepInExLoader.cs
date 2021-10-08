@@ -16,7 +16,7 @@ using H3VRUtilsConfig.QOLPatches;
 
 namespace H3VRUtils
 {
-	[BepInPlugin("dll.wfiost.h3vrutilities", "H3VR Utilities", "8.2.2")]
+	[BepInPlugin("dll.wfiost.h3vrutilities", "H3VR Utilities", "8.6.0")]
 	[BepInDependency("nrgill28.Sodalite", BepInDependency.DependencyFlags.SoftDependency)]
 	[BepInProcess("h3vr.exe")]
 	public class UtilsBepInExLoader : BaseUnityPlugin
