@@ -11,7 +11,9 @@ namespace H3VRUtils.UniqueCode
 	//Bag Of Many Objects
 	public class BOMO : MonoBehaviour
 	{
-		[Tooltip("If true, will not un-harness when there are no items.")]
+		[Tooltip("If there are no objects in the BOMO, it will act like a regular harnessed object " +
+		         "(grab, move it about, let go and it returns to the slot.)" +
+		         " If enabled, it will simply force you to let it go, and not let you unharness the object.")]
 		public bool isStatic;
 		[Tooltip("For usage as a static object. Puts itself into quickbelt and harnesses.")]
 		public FVRQuickBeltSlot qbSlotForStatic;
@@ -25,13 +27,28 @@ namespace H3VRUtils.UniqueCode
 		public int maxItems = 5;
 		[Tooltip("If true, will just nuke any item put into it.")]
 		public bool thevoid;
+
+		public AudioEvent dropInToSound;
+		public AudioEvent takeOutOfSound;
 		
 		private bool _isitemsInTheBagTextNotNull;
 		private int deniedObjectTime;
+		public List<GameObject> notPhysObjects = new List<GameObject>(); //oh this is one HELL of a fucking bodge
 
 		private void Start()
 		{
 			_isitemsInTheBagTextNotNull = itemsInTheBagText != null;
+			if (isStatic)
+			{
+				HarnessBOMO();
+			}
+		}
+
+		public void HarnessBOMO()
+		{
+			physobj.SetQuickBeltSlot(qbSlotForStatic);
+			physobj.Harnessable = false;
+			physobj.m_isHardnessed = true;
 		}
 
 		private void OnTriggerStay(Collider other)
@@ -39,11 +56,16 @@ namespace H3VRUtils.UniqueCode
 			//i can literally hear my cpu burning itself just reading this
 			//sorry, oh gods of optimization, for i have made a grave sin
 			deniedObjectTime++;
-			if (other.gameObject.layer == gameObject.layer && deniedObjectTime >= 5)
+			if (other.gameObject.layer == gameObject.layer && deniedObjectTime >= 3)
 			{
-				deniedObjectTime = 0;
+				//saves objects that isn't a physobject in a list so it doesn't waste time getcomponenting them
+				if (notPhysObjects.Contains(other.gameObject)) { return; }
 				var obj = other.gameObject.GetComponent<FVRPhysicalObject>();
+				if(obj == null) { notPhysObjects.Add(other.gameObject); return; }
+				//resets denied object time; only does so if the object is a physobject
+				deniedObjectTime = 0;
 				bool deny = true;
+				//ensure its a script we want to BOMO
 				if (obj.m_hand == null)
 				{
 					if (obj is FVRFireArmMagazine)
@@ -57,7 +79,7 @@ namespace H3VRUtils.UniqueCode
 					}
 					else if (obj is FVRFireArmClip)
 					{
-						deny = false;
+						if ((obj as FVRFireArmClip).FireArm == null) deny = false;
 					}
 				}
 
@@ -79,6 +101,7 @@ namespace H3VRUtils.UniqueCode
 							other.gameObject.SetActive(false);
 						}
 						SetText();
+						if(dropInToSound.Clips.Count != 0) SM.PlayGenericSound(dropInToSound, transform.position);
 					}
 				}
 			}
@@ -109,12 +132,17 @@ namespace H3VRUtils.UniqueCode
 						itemsInTheBag.Remove(itemsInTheBag[rand]);
 						SetText();
 						deniedObjectTime = 0;
+						if(takeOutOfSound.Clips.Count != 0) SM.PlayGenericSound(takeOutOfSound, transform.position);
 					}
 					else
 					{
 						if(isStatic) physobj.m_hand.ForceSetInteractable(null);
 					}
 				}
+			}
+			else
+			{
+				if(isStatic) { HarnessBOMO(); }
 			}
 		}
 
