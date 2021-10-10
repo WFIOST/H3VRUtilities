@@ -28,6 +28,8 @@ namespace H3VRUtils
 		public static ConfigEntry<bool> VehicleLockZRot;
 		public static ConfigEntry<bool> SimpleControls;
 		public static ConfigEntry<TouchpadDirTypePT> paddleMagReleaseDir;
+
+		public static bool setToEnablePaddleMagRelease;
 		
 		public enum TouchpadDirTypePT
 		{
@@ -41,8 +43,15 @@ namespace H3VRUtils
 
 		public static void EnablePaddleMagRelease()
 		{
-			paddleMagRelease.Value = true;
-			magDropRequiredRelease.Value = true;
+			try
+			{
+				paddleMagRelease.Value = true;
+				magDropRequiredRelease.Value = true;
+			}
+			catch
+			{
+				setToEnablePaddleMagRelease = true;
+			}
 		}
 		
 		
@@ -61,7 +70,13 @@ namespace H3VRUtils
 			VehicleLockZRot = Config.Bind("Vehicles", "Lock Z Rotation", false, "Rotates your Z rotation based on the vehicles rotation. Induces VR sickness.");
 			SimpleControls  = Config.Bind("General Settings", "Enable Simple Controls", false, "Allows simpler controls (e.g enables ModulAR bolt release via up press on touchpad)");
 			//Harmony.CreateAndPatchAll(typeof(MagReplacer));
-			
+
+			if (setToEnablePaddleMagRelease)
+			{
+				setToEnablePaddleMagRelease = false;
+				paddleMagRelease.Value = true;
+				magDropRequiredRelease.Value = true;
+			}
 			
 			//sodalite check
 			try
