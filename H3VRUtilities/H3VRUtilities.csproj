@@ -94,6 +94,9 @@
     <Compile Include="src\NonAddedScripts\GetTransformPosition.cs" />
     <Compile Include="src\NonAddedScripts\RecoilModificationSystem.cs" />
     <Compile Include="src\ObjectModifiers\ActivateSeveralFVRInteractiveAtOnce.cs" />
+    <Compile Include="src\ObjectModifiers\AlternatingMag\AlternatingMagMount.cs" />
+    <Compile Include="src\ObjectModifiers\AlternatingMag\AlternatingMagsHandler.cs" />
+    <Compile Include="src\ObjectModifiers\AlternatingMag\AlternatingMagSingleSwitch.cs" />
     <Compile Include="src\ObjectModifiers\AttachmentModifiers\AttachmentModifyFirearm.cs" />
     <Compile Include="src\ObjectModifiers\AttachmentModifiers\DisplayOnAttached.cs" />
     <Compile Include="src\ObjectModifiers\FirearmModifiers\AutoRackOnMagLoad.cs" />
