@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3VRUtilities", "H3VRUtilit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3VRUtilsConfig", "H3VRUtilsConfig\H3VRUtilsConfig.csproj", "{83438CCE-0CED-4ED4-A2F8-E1468B5BC01B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3VRUtilitiesVehicles", "H3VRUtilitiesVehicles\H3VRUtilitiesVehicles.csproj", "{D3911CEF-9C19-474C-8ED3-271399D2B892}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{83438CCE-0CED-4ED4-A2F8-E1468B5BC01B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83438CCE-0CED-4ED4-A2F8-E1468B5BC01B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83438CCE-0CED-4ED4-A2F8-E1468B5BC01B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3911CEF-9C19-474C-8ED3-271399D2B892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3911CEF-9C19-474C-8ED3-271399D2B892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3911CEF-9C19-474C-8ED3-271399D2B892}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3911CEF-9C19-474C-8ED3-271399D2B892}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

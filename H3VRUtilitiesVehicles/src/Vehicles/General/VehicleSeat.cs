@@ -23,7 +23,6 @@ namespace H3VRUtils.Vehicles
 				//hand.MovementManager.DelayGround(Time.fixedDeltaTime * 1.15f);
 				
 				
-
 				//rotation locks
 				var rot = hand.MovementManager.transform.rotation;
 				if (UtilsBepInExLoader.VehicleLockXRot.Value) rot.x = SitPos.transform.rotation.x;
