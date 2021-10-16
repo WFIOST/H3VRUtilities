@@ -90,23 +90,41 @@ namespace H3VRUtils
 			{
 				this.Latch();
 			}
-			if (hand.Input.TouchpadDown && !this.IsAltHeld)
+			bool flag = false;
+			bool flag2 = false;
+			if (!IsAltHeld)
 			{
-				Vector2 touchpadAxes = hand.Input.TouchpadAxes;
-				if (touchpadAxes.magnitude > 0.2f && Vector2.Angle(touchpadAxes, Vector2.down) < 45f && this.CanCockHammer)
+				if (hand.IsInStreamlinedMode)
 				{
-					this.CockHammer();
+					if (hand.Input.BYButtonDown && this.CanUnlatch)
+					{
+						flag2 = true;
+					}
+					if (hand.Input.AXButtonDown)
+					{
+						flag = true;
+					}
 				}
-
-				if (hand.IsInStreamlinedMode && hand.Input.BYButtonDown && CanCockHammer)
+				else if (hand.Input.TouchpadDown)
 				{
-					this.CockHammer();
+					Vector2 touchpadAxes = hand.Input.TouchpadAxes;
+					if (touchpadAxes.magnitude > 0.2f && Vector2.Angle(touchpadAxes, Vector2.down) < 45f && this.CanCockHammer)
+					{
+						this.CockHammer();
+					}
+					else if (touchpadAxes.magnitude > 0.2f && (Vector2.Angle(touchpadAxes, Vector2.left) < 45f || Vector2.Angle(touchpadAxes, Vector2.right) < 45f) && this.CanUnlatch)
+					{
+						this.ToggleLatchState();
+					}
 				}
-				
-				else if (touchpadAxes.magnitude > 0.2f && (Vector2.Angle(touchpadAxes, Vector2.left) < 45f || Vector2.Angle(touchpadAxes, Vector2.right) < 45f) && this.CanUnlatch)
-				{
-					this.ToggleLatchState();
-				}
+			}
+			if (flag)
+			{
+				this.CockHammer();
+			}
+			if (flag2)
+			{
+				this.ToggleLatchState();
 			}
 			if (this.m_isDestroyed)
 			{
