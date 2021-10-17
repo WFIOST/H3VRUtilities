@@ -83,13 +83,13 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		private int GetAmmoCount()
 		{
 			int count = 0;
-
+			
 			FVRFireArm _firearm = _fa;
 			FVRFireArmMagazine mag = _mag;
-
+			
 			if (mag == null) return count;
 			count += mag.m_numRounds;
-
+			
 			if (_firearm != null)
 			{
 				count += (int)GetFireArmDeets.GetFireArmChamber(_firearm)?.Count(chamber => chamber.IsFull && !chamber.IsSpent);
