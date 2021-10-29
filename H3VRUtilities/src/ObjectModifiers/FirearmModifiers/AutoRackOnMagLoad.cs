@@ -25,7 +25,7 @@ namespace H3VRUtils.FVRInteractiveObjects
 			{
 				cbw = weapon as ClosedBoltWeapon;
 			}
-			if (weapon is Handgun)
+			if (weapon is OpenBoltReceiver)
 			{
 				obr = weapon as OpenBoltReceiver;
 			}
