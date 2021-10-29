@@ -7,6 +7,10 @@ namespace H3VRUtils
 {
 	public class attachmentYFoldingStock : FVRInteractiveObject
 	{
+		[Header("Audio - AudioClose/Open only work if UseFirearmHoldingSounds is false!")]
+		public bool UseFirearmFoldingSounds = true;
+		public AudioEvent AudioClose;
+		public AudioEvent AudioOpen;
 		public enum UpRightForward
 		{
 			Up,
@@ -77,6 +81,30 @@ namespace H3VRUtils
 						this.mCurPos = FVRFoldingStockYAxis.StockPos.Mid;
 						if (!isNotAttachment)
 							this.fireArm.HasActiveShoulderStock = false;
+					}
+					//audio bits
+					if (this.mCurPos == FVRFoldingStockYAxis.StockPos.Open && this.mLastPos != FVRFoldingStockYAxis.StockPos.Open && !forBreakOpenFlareGun)
+					{
+						if(UseFirearmFoldingSounds) if(fireArm != null) this.fireArm.PlayAudioEvent(FirearmAudioEventType.StockOpen, 1f);
+						if(!UseFirearmFoldingSounds) SM.PlayGenericSound(AudioOpen, transform.position);
+					}
+					if (this.mCurPos == FVRFoldingStockYAxis.StockPos.Closed && this.mLastPos != FVRFoldingStockYAxis.StockPos.Closed)
+					{
+						if(UseFirearmFoldingSounds) if(fireArm != null) this.fireArm.PlayAudioEvent(FirearmAudioEventType.StockClosed, 1f);
+						if(!UseFirearmFoldingSounds) SM.PlayGenericSound(AudioClose, transform.position);
+						if (forBreakOpenFlareGun)
+						{
+							flareGun.Latch();
+						}
+					}
+					if (this.mCurPos != FVRFoldingStockYAxis.StockPos.Closed && this.mLastPos == FVRFoldingStockYAxis.StockPos.Closed && forBreakOpenFlareGun)
+					{
+						if(UseFirearmFoldingSounds) if(fireArm != null) this.fireArm.PlayAudioEvent(FirearmAudioEventType.StockOpen, 1f);
+						if(!UseFirearmFoldingSounds) SM.PlayGenericSound(AudioOpen, transform.position);
+						if (forBreakOpenFlareGun)
+						{
+							flareGun.Unlatch();
+						}
 					}
 					this.mLastPos = this.mCurPos;
 				}
