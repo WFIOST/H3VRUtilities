@@ -10,27 +10,16 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 {
 	public class ManipulateObject : MonoBehaviour
 	{
-		public enum dirtype
-		{
-			x = 0,
-			y = 1,
-			z = 2,
-			w = 3
-		}
-		public enum transformtype
-		{
-			position,
-			rotation,
-			scale,
-			quaternion,
-			quaternionPresentedEuler
-		}
+		public enum dirtype { x = 0, y = 1, z = 2, w = 3 }
+		public enum transformtype { position, rotation, scale, quaternion, quaternionPresentedEuler }
+		public enum dir { both, towardsStop, towardsStart }
 		[Header("Object Being Observed")]
 		public GameObject ObservedObject;
 		public dirtype DirectionOfObservation;
 		public transformtype TransformationTypeOfObservedObject;
 		public float StartOfObservation;
 		public float StopOfObservation;
+		public dir ObservationDirection;
 
 		[Header("Object Being Affected")]
 		public GameObject AffectedObject;
@@ -47,7 +36,6 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		[HideInInspector]
 		public float lerppoint;
 		[HideInInspector]
-		public float wiggleroom = 0.05f;
 		private float rememberLerpPoint = -999f;
 
 		[Header("Special Observations")]
@@ -145,6 +133,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 				invertlerp = Mathf.InverseLerp(StartOfObservation, StopOfObservation, observationpoint);
 			}
 
+			#region Snap back on reaching max
 			if (SnapForwardsOnMax)
 			{
 				if (observationpoint <= Math.Min(StopOfObservation, Math.Min(StartOfObservation, SnapBackAt)) || observationpoint >= Math.Max(StopOfObservation, Math.Max(StartOfObservation, SnapBackAt)))
@@ -167,8 +156,10 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 					if (LockForward) invertlerp = 1;
 				}
 			}
+			#endregion
 
-			//SpecialFX - TouchpadDir
+			#region Observation Modifications / Replacements
+			#region Observe Touchpad Direction
 			if (ReadHandTouchpadMovement)
 			{
 				Vector2 dir = Vector2.up;
@@ -222,9 +213,9 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 					}
 				}
 			}
-			//EndSpecialFX - TouchpadDir
+			#endregion
 
-			//SpecialFX - GunLoaded
+			#region Observe If Gun Loaded
 			if (ReadIfGunIsLoaded)
 			{
 				if (FirearmToReadFrom.Magazine != null)
@@ -236,12 +227,12 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 					invertlerp = 0;
 				}
 			}
-			//EndSpecialFX - GunLoaded
+			#endregion
 
-			//SpecialFX - BoltLocked
+			#region Observe If Bolt Locked
 			if (ReadIfBoltIsLocked)
 			{
-				if (BoltToReadFrom.CurPos == ClosedBolt.BoltPos.Locked)
+				if (BoltToReadFrom.CurPos == ClosedBolt.BoltPos.Locked && BoltToReadFrom.LastPos == ClosedBolt.BoltPos.Locked)
 				{
 					invertlerp = 1;
 				}
@@ -250,9 +241,9 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 					invertlerp = 0;
 				}
 			}
-			//EndSpecialFX - BoltLocked
+			#endregion
 
-			//SpecialFX - MoveIfSpecificAttachmentAttached
+			#region Observe If Specific Attachment Is Attached
 			if (MoveIfSpecificAttachmentAttached)
 			{
 				//is this slow af? yes. do i give a shit? not really. i cant make it fucking work because i'm incompetent
@@ -280,9 +271,9 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 
 				//rememberAttached = AttachmentMount.AttachmentsList.Count;
 			}
-			//EndSpecialFX - MoveIfSpecificAttachmentAttached
-			
-			//StartSpecialObservations - MoveIfHeld
+			#endregion
+
+			#region Observe If Object Held
 			if (MoveIfObjectHeld)
 			{
 				if (HeldObject.m_hand != null)
@@ -290,9 +281,9 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 				else
 					invertlerp = 0;
 			}
-			//EndSpecialObservations - MoveIfHeld
-			
-			//StartSpecialObservations - MoveIfGrenadeArmed
+			#endregion
+
+			#region Observe If Grenade Armed
 			if (MoveIfGrenadeArmed)
 			{
 				if (grenade.m_isLeverReleased)
@@ -300,8 +291,9 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 				else
 					invertlerp = 0;
 			}
-			
-			//Start Special Observations - Move If Disabled
+			#endregion
+
+			#region Observe If Object Disabled
 			if (MoveIfDisabled)
 			{
 				if (!ObservedObject.activeSelf)
@@ -310,6 +302,8 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 				}
 				else invertlerp = 0;
 			}
+			#endregion
+			#endregion
 
 			lerppoint = Mathf.Lerp(StartOfAffected, StopOfAffected, invertlerp);
 
@@ -317,9 +311,12 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 
 			//make sure lerp isnt same
 			if (Math.Abs(rememberLerpPoint - lerppoint) < float.Epsilon) return;
+			//if lerppoint decreased and it wants it going towards start stop and vice versa
+			if (lerppoint - rememberLerpPoint < 0 && ObservationDirection == dir.towardsStop) return;
+			if (lerppoint - rememberLerpPoint > 0 && ObservationDirection == dir.towardsStart) return;
 			rememberLerpPoint = lerppoint;
-			
-			//StartSpecialAffected - MoveAttachedObject
+
+			#region Move Attached Item
 			if (MoveAttachedItems)
 			{
 				if (MAImount.HasAttachmentsOnIt())
@@ -331,9 +328,9 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 					AffectedObject = null;
 				}
 			}
-			//EndSpecialAffect - MoveAttachedObject
-			
-			//StartSpecialAffected - DisableOnMoved
+			#endregion
+
+			#region Disable If Moved
 			if (DisableIfMoved)
 			{
 				if (invertlerp >= percentageCutoff)
@@ -341,7 +338,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 					AffectedObject.SetActive(false);
 				} else AffectedObject.SetActive(true);
 			}
-			//EndSpecialAffect - DisabledOnMoved
+			#endregion
 
 			if (AffectedObject != null)
 			{
