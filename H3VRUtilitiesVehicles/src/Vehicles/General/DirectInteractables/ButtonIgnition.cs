@@ -20,14 +20,7 @@ namespace H3VRUtils.Vehicles
 		public override void BeginInteraction(FVRViveHand hand)
 		{
 			m_it = ignitionTime;
-			if (!vehicle.isOn)
-			{
-				if (!vehicle.isForciblyOff)
-				{
-					SM.PlayGenericSound(audioSet.VehicleStart, transform.position);
-				}
-			}
-			else
+			if (vehicle.isOn) //instant turn off
 			{
 				SM.PlayGenericSound(audioSet.VehicleStop, transform.position);
 				m_it = 999999f; //takes 11 days to restart. if you manage to turn it off then turn it back on again you win
@@ -38,13 +31,19 @@ namespace H3VRUtils.Vehicles
 		public override void UpdateInteraction(FVRViveHand hand)
 		{
 			base.UpdateInteraction(hand);
-			m_it -= Time.fixedDeltaTime;
-			if (m_it <= 0)
+			m_it -= Time.fixedDeltaTime; //update time to ignition
+			if (m_it <= 0) //on ignition
 			{
 				float fchance = rand.Next(0, 10000) / 100f;
 				if (!(fchance <= failChance)) //fuck you, my code my logic
 				{
+					//in the case where chance is in your favour
 					vehicle.TurnOnEngine(false);
+					SM.PlayGenericSound(audioSet.VehicleStart, transform.position);
+				}
+				else
+				{
+					Debug.Log("Failed to turn on engine!");
 				}
 			}
 		}
