@@ -119,14 +119,18 @@ namespace H3VRUtils
 			if (ActType == actionType.attach)
 			{
 				oldPoseOverride = weapon.PoseOverride;
-				weapon.PoseOverride = NewPoseOverride;
+				weapon.PoseOverride.position = NewPoseOverride.position;
+				weapon.PoseOverride.rotation = NewPoseOverride.rotation;
 				oldPoseOverrideTouch = weapon.PoseOverride_Touch;
-				weapon.PoseOverride_Touch = NewPoseOverrideTouch;
+				weapon.PoseOverride_Touch.position = NewPoseOverrideTouch.position;
+				weapon.PoseOverride_Touch.rotation = NewPoseOverrideTouch.rotation;
 			}
 			if (ActType == actionType.detach)
 			{
-				weapon.PoseOverride = oldPoseOverride;
-				weapon.PoseOverride_Touch = oldPoseOverrideTouch;
+				weapon.PoseOverride.position = oldPoseOverride.position;
+				weapon.PoseOverride.rotation = oldPoseOverride.rotation;
+				weapon.PoseOverride_Touch.position = oldPoseOverrideTouch.position;
+				weapon.PoseOverride_Touch.rotation = oldPoseOverrideTouch.rotation;
 			}
 		}
 
