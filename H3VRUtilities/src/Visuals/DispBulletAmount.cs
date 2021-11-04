@@ -52,6 +52,8 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		
 		private FVRFireArm _fa;
 		private FVRFireArmMagazine _mag;
+		private FVRFirearmMovingProxyRound[] proxies;
+		private FVRFireArmChamber[] chambers;
 		private int lastAmountOfBullets;
 		private int lastAmountOfMaxBullets;
 		private int lastAmountOfBulletsForEnableObjects; //this is now a game to get the longest var name
@@ -78,6 +80,17 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 				else _fa = null; //if not attached to a mount, there is no firearm
 				if (_fa != null) _mag = _fa.Magazine;
 			}
+			//get proxy/chamber deets
+			if (_fa == null)
+			{
+				chambers = null;
+				proxies = null;
+			}
+			else
+			{
+				if (chambers == null) chambers = GetFireArmDeets.GetFireArmChamber(_fa);
+				if (proxies == null) proxies = GetFireArmDeets.GetFireArmProxy(_fa);
+			}
 		}
 
 		private int GetAmmoCount()
@@ -92,11 +105,8 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			
 			if (_firearm != null)
 			{
-				count += (int)GetFireArmDeets.GetFireArmChamber(_firearm)?.Count(chamber => chamber.IsFull && !chamber.IsSpent);
-				if (GetFireArmDeets.GetFireArmProxy(_firearm) != null)
-				{
-					count++;
-				}
+				count += (int)chambers?.Count(chamber => chamber.IsFull && !chamber.IsSpent);
+				foreach (var proxy in proxies) if (proxy != null) count++; //if non-null proxy
 			}
 			return count;
 		}
