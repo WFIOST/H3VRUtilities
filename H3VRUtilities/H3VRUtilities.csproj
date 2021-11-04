@@ -88,8 +88,9 @@
     <Compile Include="src\Mapping\Components\ComponentCulling.cs" />
     <Compile Include="src\Mapping\Editor\ShowHiddenObjects.cs" />
     <Compile Include="src\NewScripts\BreakOpenFlareGun.cs" />
-    <Compile Include="src\NewScripts\BreechBlockLever.cs" />
-    <Compile Include="src\NewScripts\FieldGunFiringLever.cs" />
+    <Compile Include="src\NewScripts\FieldGun\FieldGun.cs" />
+    <Compile Include="src\NewScripts\FieldGun\FieldGunRotatingLever.cs" />
+    <Compile Include="src\NewScripts\FieldGun\RotatingObject.cs" />
     <Compile Include="src\NewScripts\NadeCupLauncher.cs" />
     <Compile Include="src\NonAddedScripts\GetTransformPosition.cs" />
     <Compile Include="src\NonAddedScripts\RecoilModificationSystem.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="src\ObjectModifiers\GrenadeOneHandArm.cs" />
     <Compile Include="src\ObjectModifiers\InvisibleMagOnLoad.cs" />
     <Compile Include="src\ObjectModifiers\SouthpawSupporter.cs" />
+    <Compile Include="src\ObjectModifiers\Stick.cs" />
     <Compile Include="src\ObjectModifiers\YFoldingStockEndPiece.cs" />
     <Compile Include="src\StartScripts\GoToNearestSosig.cs" />
     <Compile Include="src\StartScripts\ItemCaller.cs" />
