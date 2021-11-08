@@ -17,7 +17,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		public FVRFireArm firearm;
 		public FVRFireArmMagazine magazine;
 		public FVRFireArmAttachment attachment;
-
+		
 		[Header("Ammo Counter Settings")]
 		[Tooltip("Text to display ammo left in the gun.")]
 		public Text UItext;
@@ -39,7 +39,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		[Tooltip("From 0-1. The % amount moved towards its correct amount every 50th of a second.")]
 		[Range(0f, 1f)]
 		public float DispLerpAmt;
-
+		
 		[Header("Alternate Displays")]
 		[Tooltip("Enables enabling/disabling objects based on rounds left in mag.")]
 		public bool EnabledObjects;
@@ -57,7 +57,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		private int lastAmountOfBullets;
 		private int lastAmountOfMaxBullets;
 		private int lastAmountOfBulletsForEnableObjects; //this is now a game to get the longest var name
-
+		
 		private void GetFirearmAndMag()
 		{
 			if (_isFireArmNotNull) {
@@ -89,10 +89,10 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			else
 			{
 				if (chambers == null) chambers = GetFireArmDeets.GetFireArmChamber(_fa);
-				if (proxies == null) proxies = GetFireArmDeets.GetFireArmProxy(_fa);
 			}
+			proxies = GetFireArmDeets.GetFireArmProxy(_fa);
 		}
-
+		
 		private int GetAmmoCount()
 		{
 			int count = 0;
@@ -117,7 +117,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			return 0;
 		}
 		//private string Time => DateTime.Now.ToString("HH:mm");
-
+		
 		private string GetAmmoType()
 		{
 			if (_fa != null) {
@@ -125,7 +125,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			}
 			return String.Empty;
 		}
-
+		
 		private void Update()
 		{
 			GetFirearmAndMag(); //update firearm and mag if needed
@@ -138,7 +138,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			}
 			if (_isMaxAmmoTextNotNull) //set max ammo text
 			{
-				string amountOfAmmoString = CalculateAmmoCounterAmount(GetAmmoCount(), ref lastAmountOfMaxBullets,
+				string amountOfAmmoString = CalculateAmmoCounterAmount(GetMaxAmmoCount(), ref lastAmountOfMaxBullets,
 					enableLerpForMaxAmmo, DispLerpAmt, AddMinCharLength, MinCharLength);
 				MaxAmmoText.text = amountOfAmmoString; //set maxammo
 			}

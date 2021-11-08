@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Reflection;
 using FistVR;
+using UnityEngine;
+using Valve.VR.InteractionSystem;
 
 namespace H3VRUtils
 {
@@ -48,7 +50,45 @@ namespace H3VRUtils
 
 		public static FVRFirearmMovingProxyRound[] GetFireArmProxy(FVRFireArm firearm)
 		{
-			List<FVRFirearmMovingProxyRound> ProxyRound = null;
+			List<FVRFirearmMovingProxyRound> ProxyRound = new List<FVRFirearmMovingProxyRound>();
+
+			switch (firearm)
+			{
+				case Handgun f:
+					ProxyRound.Add(f.m_proxy);
+					break;
+				case ClosedBoltWeapon f:
+					ProxyRound.Add(f.m_proxy);
+					break;
+				case OpenBoltReceiver f:
+					ProxyRound.Add(f.m_proxy);
+					break;
+				case LeverActionFirearm f:
+					ProxyRound.Add(f.m_proxy);
+					ProxyRound.Add(f.m_proxy2);
+					break;
+				case BoltActionRifle f:
+					ProxyRound.Add(f.m_proxy);
+					break;
+				case TubeFedShotgun f:
+					ProxyRound.Add(f.m_proxy);
+					break;
+			}
+
+			return ProxyRound.ToArray();
+		}
+		
+		//This was supposed to return the bullet proxy. Unfortunately, because i cannot return a ref, i can't
+		//fucking save this. i.e, afaik, this has to be called every time i wanna check.
+		//180+ reflections a fuckign second is not acceptable, i dont think.
+		/*public static FVRFirearmMovingProxyRound[] GetFireArmProxy(FVRFireArm firearm)
+		{
+			if (firearm == null)
+			{
+				Debug.Log("GetFirearmDeets.GetFireArmProxy: Firearm is null!");
+				return null;
+			}
+			List<FVRFirearmMovingProxyRound> ProxyRound = new List<FVRFirearmMovingProxyRound>();
 			
 			FieldInfo chamberField = firearm.GetType().GetField("m_proxy");
 			FieldInfo chamberField2 = firearm.GetType().GetField("m_proxy2");
@@ -66,6 +106,6 @@ namespace H3VRUtils
 			}
 			
 			return ProxyRound.ToArray();
-		}
+		}*/
 	}
 }
