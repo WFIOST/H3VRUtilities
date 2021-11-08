@@ -79,6 +79,7 @@ namespace H3VRUtils
 					break;
 			}
 			
+			ProxyRound.RemoveAll(item => item == null);
 			return ProxyRound.ToArray();
 		}
 		
