@@ -58,9 +58,11 @@ namespace H3VRUtils
 		[Header("GrabPos Modifier")]
 		public bool ChangesGrabPos;
 		public Transform NewPoseOverride;
-		private Transform oldPoseOverride;
+		private Vector3 oldPoseOverridePos;
+		private Quaternion oldPoseOverrideRot;
 		public Transform NewPoseOverrideTouch;
-		private Transform oldPoseOverrideTouch;
+		private Vector3 oldPoseOverrideTouchPos;
+		private Quaternion oldPoseOverrideTouchRot;
 		/*[Header("Weapon Fire Selector Modifier")]
 		public bool ChangesFireSelector;
 		public CapType FireSelectorModiferType;
@@ -87,11 +89,7 @@ namespace H3VRUtils
 
 		void Update()
 		{
-			if (ChangesGrabPos) {
-				if (attachment.curMount != null) {
-					ChangeGrabPos(actionType.attach);
-				}
-			}
+			
 		}
 
 		public void OnAttach()
@@ -118,19 +116,27 @@ namespace H3VRUtils
 		{
 			if (ActType == actionType.attach)
 			{
-				oldPoseOverride = weapon.PoseOverride;
+				//Set Old Override transform
+				oldPoseOverridePos = weapon.PoseOverride.localPosition;
+				oldPoseOverrideRot = weapon.PoseOverride.localRotation;
+				//Set new Override transform
 				weapon.PoseOverride.position = NewPoseOverride.position;
 				weapon.PoseOverride.rotation = NewPoseOverride.rotation;
-				oldPoseOverrideTouch = weapon.PoseOverride_Touch;
+				//Set Old OverrideTouch transform
+				oldPoseOverrideTouchPos = weapon.PoseOverride_Touch.localPosition;
+				oldPoseOverrideTouchRot = weapon.PoseOverride_Touch.localRotation;
+				//Set new OverrideTouch transform
 				weapon.PoseOverride_Touch.position = NewPoseOverrideTouch.position;
 				weapon.PoseOverride_Touch.rotation = NewPoseOverrideTouch.rotation;
 			}
 			if (ActType == actionType.detach)
 			{
-				weapon.PoseOverride.position = oldPoseOverride.position;
-				weapon.PoseOverride.rotation = oldPoseOverride.rotation;
-				weapon.PoseOverride_Touch.position = oldPoseOverrideTouch.position;
-				weapon.PoseOverride_Touch.rotation = oldPoseOverrideTouch.rotation;
+				//Set old Override back
+				weapon.PoseOverride.localPosition = oldPoseOverridePos;
+				weapon.PoseOverride.localRotation = oldPoseOverrideRot;
+				//Set old OverrideTouch back
+				weapon.PoseOverride_Touch.localPosition = oldPoseOverrideTouchPos;
+				weapon.PoseOverride_Touch.localRotation = oldPoseOverrideTouchRot;
 			}
 		}
 
