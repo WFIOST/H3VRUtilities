@@ -48,7 +48,7 @@ namespace H3VRUtils
 			return null;
 		}
 
-		public static FVRFirearmMovingProxyRound[] GetFireArmProxy(FVRFireArm firearm)
+		public static FVRFirearmMovingProxyRound[] GetFireArmProxySwitch(FVRFireArm firearm)
 		{
 			List<FVRFirearmMovingProxyRound> ProxyRound = new List<FVRFirearmMovingProxyRound>();
 
@@ -73,15 +73,17 @@ namespace H3VRUtils
 				case TubeFedShotgun f:
 					ProxyRound.Add(f.m_proxy);
 					break;
+				default:
+					Debug.Log("Cannot get m_proxy of " + nameof(firearm) + " on " + firearm.ObjectWrapper.ItemID + "! Relying on reflection!");
+					ProxyRound = GetFireArmProxyReflection(firearm).ToList();
+					break;
 			}
-
+			
 			return ProxyRound.ToArray();
 		}
 		
-		//This was supposed to return the bullet proxy. Unfortunately, because i cannot return a ref, i can't
-		//fucking save this. i.e, afaik, this has to be called every time i wanna check.
-		//180+ reflections a fuckign second is not acceptable, i dont think.
-		/*public static FVRFirearmMovingProxyRound[] GetFireArmProxy(FVRFireArm firearm)
+		//don't call this. reflection is rather expensive; use switch. if switch doesnt work itll auto reflect
+		public static FVRFirearmMovingProxyRound[] GetFireArmProxyReflection(FVRFireArm firearm)
 		{
 			if (firearm == null)
 			{
@@ -106,6 +108,6 @@ namespace H3VRUtils
 			}
 			
 			return ProxyRound.ToArray();
-		}*/
+		}
 	}
 }

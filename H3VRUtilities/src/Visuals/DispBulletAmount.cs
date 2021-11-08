@@ -92,8 +92,9 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			else
 			{
 				if (chambers == null) chambers = GetFireArmDeets.GetFireArmChamber(_fa);
+				proxies = GetFireArmDeets.GetFireArmProxySwitch(_fa);
 			}
-			proxies = GetFireArmDeets.GetFireArmProxy(_fa);
+			
 		}
 		
 		private int GetAmmoCount()
@@ -109,7 +110,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			if (_firearm != null)
 			{
 				count += (int)chambers?.Count(chamber => chamber.IsFull && !chamber.IsSpent);
-				foreach (var proxy in proxies) if (proxy != null) count++; //if non-null proxy
+				foreach (var proxy in proxies) if (proxy.IsFull) count++; //if proxy aint empty
 			}
 			return count;
 		}
