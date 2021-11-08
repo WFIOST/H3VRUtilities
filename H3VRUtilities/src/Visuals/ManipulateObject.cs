@@ -136,7 +136,9 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			#region Snap back on reaching max
 			if (SnapForwardsOnMax)
 			{
-				if (observationpoint <= Math.Min(StopOfObservation, Math.Min(StartOfObservation, SnapBackAt)) || observationpoint >= Math.Max(StopOfObservation, Math.Max(StartOfObservation, SnapBackAt)))
+				bool isLower  = observationpoint <= Math.Min(StopOfObservation, Math.Min(StartOfObservation, SnapBackAt));
+				bool isHigher = observationpoint >= Math.Max(StopOfObservation, Math.Max(StartOfObservation, SnapBackAt));
+				if (isLower || isHigher)
 				{
 					SnappedForwards = true;
 				}
@@ -146,8 +148,8 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 					invertlerp = 0;
 				}
 
-				if ((observationpoint <= Math.Min(StopOfObservation, Math.Min(StartOfObservation, SnapBackAt)) && !ResetIfOverBounds) ||
-					(observationpoint >= Math.Max(StopOfObservation, Math.Max(StartOfObservation, SnapBackAt)) && ResetIfOverBounds))
+				if ((!isLower && !ResetIfOverBounds) ||
+				    (!isHigher && ResetIfOverBounds))
 				{
 					SnappedForwards = false;
 				}
@@ -308,13 +310,18 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			lerppoint = Mathf.Lerp(StartOfAffected, StopOfAffected, invertlerp);
 
 			Vector3 v3;
-
+			
+			bool doReturn = false;
 			//make sure lerp isnt same
-			if (Math.Abs(rememberLerpPoint - lerppoint) < float.Epsilon) return;
+			if (Math.Abs(rememberLerpPoint - lerppoint) < float.Epsilon) doReturn = true;
 			//if lerppoint decreased and it wants it going towards start stop and vice versa
-			if (lerppoint - rememberLerpPoint < 0 && ObservationDirection == dir.towardsStop) return;
-			if (lerppoint - rememberLerpPoint > 0 && ObservationDirection == dir.towardsStart) return;
+			if (!SnappedForwards)
+			{
+				if (lerppoint - rememberLerpPoint < 0 && ObservationDirection == dir.towardsStop) doReturn = true;
+				if (lerppoint - rememberLerpPoint > 0 && ObservationDirection == dir.towardsStart) doReturn = true;
+			}
 			rememberLerpPoint = lerppoint;
+			if(doReturn) return;
 
 			#region Move Attached Item
 			if (MoveAttachedItems)
