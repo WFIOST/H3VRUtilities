@@ -49,6 +49,9 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		public List<GameObject> Objects;
 		[Tooltip("Enables all objects under the round count. Enables the 0th, 1st, 2nd, 3rd objects if there are 3 rounds left, and so on.")]
 		public bool EnableAllUnderAmount;
+		[Tooltip("Overrides Objects. #0 means Objects' #0 displays from 0% to #0%, #1 means Objects' #1 displays from #0% to #1%, etc- written normally, not mathmatically (e.g 57.32)")]
+		public bool EnableBasedOnPercentage;
+		public List<float> ObjectPercentages;
 		
 		private FVRFireArm _fa;
 		private FVRFireArmMagazine _mag;
@@ -147,7 +150,8 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			{
 				int amountOfAmmo = int.Parse(CalculateAmmoCounterAmount(GetAmmoCount(), ref lastAmountOfBulletsForEnableObjects,
 					enableLerpForEnabledObjects, DispLerpAmt));
-				SetEnabledObjects(amountOfAmmo); //set uitext
+				if(EnableBasedOnPercentage) SetEnabledObjectsPercentage(amountOfAmmo);
+				else SetEnabledObjects(amountOfAmmo);
 			}
 		}
 
@@ -217,6 +221,37 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 				}
 		}
 
+		private void SetEnabledObjectsPercentage(int amt)
+		{ //yoinked from old bit. TODO: rewrite this plz
+			
+			amt = Mathf.Clamp(amt, 0, Objects.Count - 1);
+			int maxamt = GetMaxAmmoCount();
+			float per = (float)amt / (float)maxamt;
+			
+			for (int i = 0; i < Objects.Count; i++) //set all to false
+			{
+				Objects[i].SetActive(false);
+				ObjectWhenEmpty.SetActive(false);
+			}
+			
+			if (_mag == null && ObjectWhenEmpty != null) //turn on the no-mag object
+			{
+				ObjectWhenEmpty.SetActive(true);
+			}
+			else for (int i = 0; i < Objects.Count; i++)
+			{
+				//if anyone complains abt var names im naming em a/b/c. you've been warned.
+				float peropp = ObjectPercentages[i] / 100;
+				float peropb = 0;
+				if(i > 0){ peropb = ObjectPercentages[i - 1] / 100; }
+
+				if (per > peropp)
+					if (per > peropb)
+					{
+						if (EnableAllUnderAmount) Objects[i].SetActive(true);
+					} else Objects[i].SetActive(true);
+			}
+		}
 		#region Start stuff
 		private void Start()
 		{
