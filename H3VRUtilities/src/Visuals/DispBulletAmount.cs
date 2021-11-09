@@ -37,7 +37,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		[Tooltip("EnabledObjects will also lerp according to the DispLerpAmt")]
 		public bool enableLerpForEnabledObjects;
 		[Tooltip("From 0-1. The % amount moved towards its correct amount every 50th of a second.")]
-		[Range(0f, 1f)]
+		[Range(0f, 0.2f)]
 		public float DispLerpAmt;
 		
 		[Header("Alternate Displays")]
@@ -111,6 +111,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			{
 				count += (int)chambers?.Count(chamber => chamber.IsFull && !chamber.IsSpent);
 				foreach (var proxy in proxies) if (proxy.IsFull) count++; //if proxy aint empty
+				count += _firearm.BeltDD.m_roundsOnBelt;
 			}
 			return count;
 		}
