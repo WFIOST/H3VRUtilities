@@ -89,6 +89,10 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		[Header("Move If Disabled")]
 		public bool MoveIfDisabled;
 
+		[Header("Move If Chamber Full")]
+		public bool MoveIfChamberFull;
+		public FVRFireArmChamber Chamber;
+
 		[Header("Special Affected Things")]
 		[Header("Move Attached Items")]
 		public bool MoveAttachedItems;
@@ -305,6 +309,15 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 				else invertlerp = 0;
 			}
 			#endregion
+
+			#region Observe If Chamber Full
+			if (MoveIfChamberFull)
+			{
+				if (Chamber.IsFull) invertlerp = 1;
+				else invertlerp = 0;
+			}
+			#endregion
+
 			#endregion
 
 			lerppoint = Mathf.Lerp(StartOfAffected, StopOfAffected, invertlerp);
