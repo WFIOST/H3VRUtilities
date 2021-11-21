@@ -9,7 +9,9 @@ namespace H3VRUtils
 {
 	public class MagFollower : MonoBehaviour
 	{
+		[Header("Only fill out one of the ones below.")]
 		public FVRFireArmMagazine magazine;
+		public FVRFireArmClip clip;
 		
 		public GameObject follower;
 		
@@ -39,20 +41,32 @@ namespace H3VRUtils
 		private int magrounds;
 		
 		private MeshFilter followerFilter;
+
+		public bool isClip;
 		
 		public void Update()
 		{
-			if (magazine.m_numRounds != magrounds)
+			//i know this can use ternary. i'm not going to, because i dont like ternary.
+			int rounds = 0;
+			if (isClip) rounds = clip.m_numRounds;
+			else rounds = magazine.m_numRounds;
+			
+			if (rounds != magrounds)
 			{
-				magrounds = magazine.m_numRounds;
+				magrounds = rounds;
 				UpdateDisp();
 			}
 		}
 		
 		public void Start()
 		{
+			if (clip != null)
+			{
+				if (magazine != null) { Debug.LogError("H3VR Utilities Follower has both a clip and mag inserted! What?"); }
+				isClip = true;
+			}
 			followerFilter = follower.GetComponent<MeshFilter>();
-			//fix if modder reverses vars
+			//fix if modder reverses vars by accident
 			if (StopAtRoundCount > StartAtRoundCount)
 			{
 				var temp = StopAtRoundCount;
