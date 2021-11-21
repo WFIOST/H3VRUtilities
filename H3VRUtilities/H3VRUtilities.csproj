@@ -122,6 +122,7 @@
     <Compile Include="src\SimpleControls\SimpleControls_ClosedBolt_SelectorSwitch.cs" />
     <Compile Include="src\UniqueCode\AssignMagIfNull.cs" />
     <Compile Include="src\UniqueCode\BOMO.cs" />
+    <Compile Include="src\UniqueCode\DumpInternalMag.cs" />
     <Compile Include="src\UniqueCode\LebelCutoff.cs" />
     <Compile Include="src\UniqueCode\lockToHead.cs" />
     <Compile Include="src\UniqueCode\OpenBoltLockOnSafe.cs" />
