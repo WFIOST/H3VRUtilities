@@ -110,9 +110,9 @@ namespace H3VRUtils
 				int _c = StopAtRoundCount;
 				if (UsesOneRoundPos) { _b = OneRoundPos.transform; _c++; }
 
-				follower.transform.position = Vector3.Lerp(StartPos.transform.position, _b.position, Mathf.InverseLerp((float)StartAtRoundCount, (float)_c, magazine.m_numRounds));
+				follower.transform.position = Vector3.Lerp(StartPos.transform.position, _b.position, Mathf.InverseLerp((float)StartAtRoundCount, (float)_c, magrounds));
 
-				if (magazine.m_numRounds == 0)
+				if (magrounds == 0)
 				{
 					follower.transform.position = StopPos.transform.position;
 				}
