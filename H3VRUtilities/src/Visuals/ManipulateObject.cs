@@ -92,6 +92,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		[Header("Move If Chamber Full")]
 		public bool MoveIfChamberFull;
 		public FVRFireArmChamber Chamber;
+		public bool considerFullEvenIfRoundFired;
 
 		[Header("Special Affected Things")]
 		[Header("Move Attached Items")]
@@ -313,7 +314,9 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			#region Observe If Chamber Full
 			if (MoveIfChamberFull)
 			{
-				if (Chamber.IsFull) invertlerp = 1;
+				if (considerFullEvenIfRoundFired) {
+					if (Chamber.IsFull) invertlerp = 1;
+				} else if (Chamber.IsFull && !Chamber.IsSpent) invertlerp = 1;
 				else invertlerp = 0;
 			}
 			#endregion
