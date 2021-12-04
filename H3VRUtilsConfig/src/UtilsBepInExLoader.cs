@@ -11,11 +11,10 @@ using Sodalite.UiWidgets;
 using Sodalite.Utilities;
 using HarmonyLib;
 using System.Reflection;
-using H3VRUtilsConfig.patchers;
 
 namespace H3VRUtils
 {
-	[BepInPlugin("dll.wfiost.h3vrutilities", "H3VR Utilities", "8.7.0")]
+	[BepInPlugin("dll.wfiost.h3vrutilities", "H3VR Utilities", "8.8.0")]
 	[BepInDependency("nrgill28.Sodalite", BepInDependency.DependencyFlags.SoftDependency)]
 	[BepInProcess("h3vr.exe")]
 	public class UtilsBepInExLoader : BaseUnityPlugin
@@ -237,7 +236,7 @@ namespace H3VRUtils
 			UtilsBepInExLoader.VehicleLockZRot.Value = !UtilsBepInExLoader.paddleMagRelease.Value;
 			VehicleLockZRotButton.ButtonText.text = GetTerm(UtilsBepInExLoader.paddleMagRelease.Value) + " Vehicle Z Lock";
 		}
-
+		
 		private void ToggleSimpleControls(object sender, ButtonClickEventArgs args)
 		{
 			UtilsBepInExLoader.SimpleControls.Value = !UtilsBepInExLoader.SimpleControls.Value;
