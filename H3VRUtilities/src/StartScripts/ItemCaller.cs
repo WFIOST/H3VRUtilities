@@ -14,8 +14,13 @@ namespace H3VRUtils.QOL
 		{
 			foreach (var set in sets)
 			{
-				//i don't really get it, but this converts the localposition to a world position
-				Vector3 wPos = transform.TransformPoint(transform.localPosition += set.offset);
+				GameObject go = new GameObject();
+				go.transform.parent = transform;
+				go.transform.position = transform.position;
+				go.transform.localRotation = Quaternion.identity;
+				go.transform.localPosition += set.offset;
+				Vector3 wPos = go.transform.position;
+				Destroy(go);
 				FVRObject obj = null;
 				try
 				{

@@ -111,7 +111,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			{
 				count += (int)chambers?.Count(chamber => chamber.IsFull && !chamber.IsSpent);
 				foreach (var proxy in proxies) if (proxy.IsFull) count++; //if proxy aint empty
-				count += _firearm.BeltDD.m_roundsOnBelt;
+				if(_firearm.BeltDD) count += _firearm.BeltDD.m_roundsOnBelt;
 			}
 			return count;
 		}
