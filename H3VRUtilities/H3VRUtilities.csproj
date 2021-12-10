@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\AndrewContributions\ThermiteFire.cs" />
+    <Compile Include="src\BepInExLoader.cs" />
     <Compile Include="src\GetFireArmDeets.cs" />
     <Compile Include="src\Interactables\AR15HandleFlipperSounds.cs" />
     <Compile Include="src\Interactables\AttachableChargingHandle.cs" />
