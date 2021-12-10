@@ -68,9 +68,7 @@ namespace H3VRUtils
 
 			//config override
 			if (UtilsBepInExLoader.paddleMagReleaseDir.Value != UtilsBepInExLoader.TouchpadDirTypePT.BasedOnWeapon)
-			{
-				TouchpadDir = (TouchpadDirType)(int)UtilsBepInExLoader.paddleMagReleaseDir.Value;
-			}
+					TouchpadDir = (TouchpadDirType) (int) UtilsBepInExLoader.paddleMagReleaseDir.Value;
 
 			dir = TouchpadDirTypeToVector2(TouchpadDir);
 			if (dir == Vector2.zero) this.IsSimpleInteract = true; else this.IsSimpleInteract = false;
