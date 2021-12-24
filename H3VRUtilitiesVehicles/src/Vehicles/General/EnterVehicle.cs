@@ -14,16 +14,16 @@ namespace H3VRUtils.Vehicles
 		public override void SimpleInteraction(FVRViveHand hand)
 		{
 			base.SimpleInteraction(hand);
-			if (hand.IsThisTheRightHand)
-			{
-				hand = hand.OtherHand;
-			}
+			if (hand.IsThisTheRightHand) hand = hand.OtherHand;
 			if (vehicleSeat.hand == null)
 			{
+				//kick hand's old spot if still there
+				if (VehicleSeat.currentSeat.ContainsKey(hand)) { VehicleSeat.currentSeat[hand].RemoveHand(); }
+				VehicleSeat.currentSeat.Add(hand, vehicleSeat);
+				//only sit at one loc!
 				vehicleSeat.hand = hand;
-
 				hand.MovementManager.TeleportToPoint(vehicleSeat.SitPos.transform.position, false, vehicleSeat.SitPos.transform.localEulerAngles);
-
+				
 				//var rot = hand.Head.transform.rotation;
 				
 				//rot.y = vehicleSeat.SitPos.transform.rotation.y;
@@ -34,11 +34,9 @@ namespace H3VRUtils.Vehicles
 				//so someone can't just eject someone else
 				if (hand == vehicleSeat.hand)
 				{
-					vehicleSeat.hand = null;
+					vehicleSeat.RemoveHand();
 					if (vehicleSeat.EjectPos != null)
-					{
 						hand.MovementManager.transform.position = vehicleSeat.EjectPos.transform.position;
-					}
 				}
 			}
 		}

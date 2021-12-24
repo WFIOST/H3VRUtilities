@@ -34,17 +34,18 @@ namespace H3VRUtils.Vehicles
 			m_it -= Time.fixedDeltaTime; //update time to ignition
 			if (m_it <= 0) //on ignition
 			{
-				float fchance = rand.Next(0, 10000) / 100f;
-				if (!(fchance <= failChance)) //fuck you, my code my logic
-				{
+				//float fchance = rand.Next(0, 10000) / 100f;
+				//if (!(fchance <= failChance)) //fuck you, my code my logic
+				//{
 					//in the case where chance is in your favour
 					vehicle.TurnOnEngine(false);
 					SM.PlayGenericSound(audioSet.VehicleStart, transform.position);
-				}
-				else
-				{
-					Debug.Log("Failed to turn on engine!");
-				}
+					m_it = 999999f; //takes 11 days to restart. if you manage to turn it off then turn it back on again you win
+				//}
+				//else
+				//{
+				//	Debug.Log("Failed to turn on engine!");
+				//}
 			}
 		}
 	}

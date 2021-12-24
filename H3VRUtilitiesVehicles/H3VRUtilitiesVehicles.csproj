@@ -99,6 +99,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="src\Vehicles\General\Core\DamagingArea.cs" />
         <Compile Include="src\Vehicles\General\Core\VehicleControl.cs" />
         <Compile Include="src\Vehicles\General\Damagable\EngineDamagable.cs" />
         <Compile Include="src\Vehicles\General\Damagable\FuelTank.cs" />

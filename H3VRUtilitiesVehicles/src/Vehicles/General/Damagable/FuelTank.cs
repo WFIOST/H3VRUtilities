@@ -22,20 +22,9 @@ namespace H3VRUtils.Vehicles
 			//TODO: Fix math
 			float inlerp = Mathf.InverseLerp(maxHealth * 0.5f, 0, health);
 			currentFuel -= (inlerp * leakMult / 50);
-			if (leakSound != null)
-			{
-				leakSound.volume = inlerp;
-			}
-
-			if (currentFuel < 0)
-			{
-				currentFuel = 0;
-			}
-
-			if (currentFuel == 0)
-			{
-				vehicle.TurnOffEngine(false);
-			}
+			if (leakSound != null) leakSound.volume = inlerp;
+			if (currentFuel < 0) currentFuel = 0;
+			if (currentFuel == 0) vehicle.TurnOffEngine(false);
 		}
 
 		public override void whileDead()

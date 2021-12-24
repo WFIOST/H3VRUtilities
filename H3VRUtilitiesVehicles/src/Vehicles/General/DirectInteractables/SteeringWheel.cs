@@ -85,20 +85,21 @@ namespace H3VRUtils.Vehicles
 			
 			SetRot();
 
-			bool isBraking = Vector2.Angle(hand.Input.TouchpadAxes, -Vector2.up) <= 45f && hand.Input.TouchpadPressed && hand.Input.TouchpadAxes.magnitude > 0.3f;
+			bool isBraking = false;
+			if (hand.Input.TouchpadPressed && hand.Input.TouchpadAxes.magnitude > 0.25f) isBraking = true;
+			//if(isBraking) Debug.Log("BRAKING");
 			//check if switch breaking
-
-			//handle acceleration
-			var accelamt = (float)Math.Pow(hand.Input.TriggerFloat, 2);
+			
 			//if breaking, switch to negative acceleration
-			if (isBraking)
-			{
-				vehicle.accel = -accelamt;
+			if (isBraking) {
+				vehicle.accel = -(float)Math.Pow(hand.Input.TouchpadAxes.magnitude, 2);
+				vehicle.brake = true;
 			}
 			else
 			{
 				//set acceleration
-				vehicle.accel = accelamt;
+				vehicle.accel = (float)Math.Pow(hand.Input.TriggerFloat, 2);
+				vehicle.brake = false;
 			}
 		}
 

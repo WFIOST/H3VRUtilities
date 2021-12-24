@@ -25,7 +25,6 @@ public class VehicleControl : MonoBehaviour
         //public WheelSetting setting;
     }
 
-
     [System.Serializable]
     public class ConnectWheel
     {
@@ -237,10 +236,7 @@ public class VehicleControl : MonoBehaviour
     public bool isOn = true;
     public bool isForciblyOff = false;
 
-    public Rigidbody GetRigidbody()
-    {
-        return myRigidbody;
-    }
+    public Rigidbody GetRigidbody() { return myRigidbody; }
 
     private WheelComponent SetWheelComponent(Transform wheel, float maxSteer, bool drive, float pos_y, WheelSetting setting)
     {
