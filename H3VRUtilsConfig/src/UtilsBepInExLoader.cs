@@ -14,7 +14,7 @@ using System.Reflection;
 
 namespace H3VRUtils
 {
-	[BepInPlugin("dll.wfiost.h3vrutilities", "H3VR Utilities", "8.8.3")]
+	[BepInPlugin("dll.wfiost.h3vrutilities", "H3VR Utilities", "8.9.0")]
 	[BepInDependency("nrgill28.Sodalite", BepInDependency.DependencyFlags.SoftDependency)]
 	[BepInProcess("h3vr.exe")]
 	public class UtilsBepInExLoader : BaseUnityPlugin
