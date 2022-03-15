@@ -53,7 +53,7 @@ namespace H3VRUtils
 		}
 		
 		
-		void Start()
+		void Awake()
 		{
 			
 			paddleMagRelease = Config.Bind("General Settings", "Enable Paddle Release", false, "Allows custom guns to utilize the feature to require a direction press on the touchpad to release the mag, usually to simulate a paddle release.");
