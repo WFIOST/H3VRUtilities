@@ -4,7 +4,7 @@ H3VR Utilities is a collection of scripts which allows for extension of your H3V
 
 ## Usage
 
-To use the scripts in this repository, first [download this UnityPackage from the Releases](potatoes.do.this.or.your.fired/pls.UnityPackage), and open your Unity Project. Make sure you have all of the stubbed H3VR scripts, and then open the UnityPackage. There should be a new window in Unity, asking you to import in all of the scripts from the H3VR Utilities UnityPackage, press import all. <!--TODO: Add the latest release> 
+To use the scripts in this repository, first [download the latest unitypackage you can find on the releases](https://github.com/WFIOST/H3VRUtilities/releases), and open your Unity Project. Make sure you have all of the stubbed H3VR scripts, and then open the UnityPackage. There should be a new window in Unity, asking you to import in all of the scripts from the H3VR Utilities UnityPackage, press import all. <!--TODO: Add the latest release> 
 
 Now just select an object, and press add component and search for [one of the H3VR Utilities scripts](tbd.TODO) to make your custom items better than before! <!--TODO: Add the utils sript list thing> 
 
