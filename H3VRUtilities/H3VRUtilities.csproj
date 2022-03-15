@@ -34,11 +34,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\H3VR.GameLibs.0.100.10-r.0\lib\net35\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\packages\H3VR.GameLibs.0.102.0.1-r.0\lib\net35\Assembly-CSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\H3VR.GameLibs.0.100.10-r.0\lib\net35\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>..\packages\H3VR.GameLibs.0.102.0.1-r.0\lib\net35\Assembly-CSharp-firstpass.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="BepInEx, Version=5.4.15.0, Culture=neutral, PublicKeyToken=null">
@@ -60,11 +60,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\H3VR.GameLibs.0.100.10-r.0\lib\net35\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\packages\H3VR.GameLibs.0.102.0.1-r.0\lib\net35\UnityEngine.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Valve.Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\H3VR.GameLibs.0.100.10-r.0\lib\net35\Valve.Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\H3VR.GameLibs.0.102.0.1-r.0\lib\net35\Valve.Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
