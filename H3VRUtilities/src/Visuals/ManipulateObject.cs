@@ -29,8 +29,8 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		public float StopOfAffected;
 		
 		[Header("General Modifiers")]
-		[Tooltip("Affected object will move itself over time to the expected position, instead of immediately. Is a percentage from 0-1. Moves that percentage of the distance between where it is, and where it should be, every second (smooth).")]
-		public float LerpAmount = 1;
+		[Tooltip("Affected object will move itself over time to the expected position, instead of immediately. Recommended from 5-40. Defaults to 100 for effectively instant movement.")]
+		public float LerpAmount = 100;
 
 		public bool           usesCurve;
 		[Tooltip("X/Y axis must be 0 to 1.")]
@@ -46,6 +46,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		[HideInInspector]
 		public float previousObservationDistancePc;
 		[HideInInspector]
+		public float previousFinalPoint;
 		private float rememberLerpPoint = -999f;
 
 		[Header("Special Observations")]
@@ -334,13 +335,15 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			#endregion
 
 			#endregion
-
+			//this does fuck all. fix this sometime pls
 			float finalLerpAmt = Mathf.Lerp(previousObservationDistancePc, observationDistancePc, LerpAmount * Time.deltaTime);
 
 			if (usesCurve)
 				finalLerpAmt = Curve.Evaluate(finalLerpAmt);
 			
+			previousFinalPoint = finalPoint;
 			finalPoint = Mathf.Lerp(StartOfAffected, StopOfAffected, finalLerpAmt);
+			finalPoint = Mathf.Lerp(previousFinalPoint, finalPoint, LerpAmount * Time.deltaTime);
 			
 			
 			
