@@ -27,14 +27,24 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 		public transformtype TransformationTypeOfAffectedObject;
 		public float StartOfAffected;
 		public float StopOfAffected;
+		
+		[Header("General Modifiers")]
+		[Tooltip("Affected object will move itself over time to the expected position, instead of immediately. Is a percentage from 0-1. Moves that percentage of the distance between where it is, and where it should be, every second (smooth).")]
+		public float LerpAmount = 1;
+
+		public bool           usesCurve;
+		[Tooltip("X/Y axis must be 0 to 1.")]
+		public AnimationCurve Curve;
 
 		//[Header("Debug Values")]
 		[HideInInspector]
 		public float observationpoint;
 		[HideInInspector]
-		public float invertlerp;
+		public float observationDistancePc;
 		[HideInInspector]
-		public float lerppoint;
+		public float finalPoint;
+		[HideInInspector]
+		public float previousObservationDistancePc;
 		[HideInInspector]
 		private float rememberLerpPoint = -999f;
 
@@ -52,7 +62,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 
 		[Header("Move On Touch Pad")]
 		public bool ReadHandTouchpadMovement;
-		public FVRPhysicalObject ItemToReadFrom;
+		public FVRInteractiveObject ItemToReadFrom;
 		public H3VRUtilsMagRelease.TouchpadDirType DirToRead;
 		public enum StreamlinedDirType
 		{
@@ -112,7 +122,8 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 
 		public void Update()
 		{
-			invertlerp = 0;
+			previousObservationDistancePc = observationDistancePc;
+			observationDistancePc = 0;
 			//define which is farther from the centre
 			if (_isObservedObjectNotNull)
 			{
@@ -135,7 +146,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 						break;
 				}
 
-				invertlerp = Mathf.InverseLerp(StartOfObservation, StopOfObservation, observationpoint);
+				observationDistancePc = Mathf.InverseLerp(StartOfObservation, StopOfObservation, observationpoint);
 			}
 
 			#region Snap back on reaching max
@@ -150,7 +161,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 
 				if (SnappedForwards)
 				{
-					invertlerp = 0;
+					observationDistancePc = 0;
 				}
 
 				if ((!isLower && !ResetIfOverBounds) ||
@@ -160,15 +171,16 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 				}
 				if (SnappedForwards)
 				{
-					if (LockForward) invertlerp = 1;
+					if (LockForward) observationDistancePc = 1;
 				}
 			}
 			#endregion
 
 			#region Observation Modifications / Replacements
-			#region Observe Touchpad Direction
+			#region Observe Touchpad Direction & MOGMTM
 			if (ReadHandTouchpadMovement)
 			{
+				
 				Vector2 dir = Vector2.up;
 				bool isTrigger = false;
 				if (DirToRead == H3VRUtilsMagRelease.TouchpadDirType.Up) dir = Vector2.up;
@@ -184,13 +196,13 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 
 						if ((Vector2.Angle(ItemToReadFrom.m_hand.Input.TouchpadAxes, dir) <= 45f && ItemToReadFrom.m_hand.Input.TouchpadAxes.magnitude > 0.4f && ItemToReadFrom.m_hand.Input.TouchpadPressed))
 						{
-							invertlerp = 1;
+							observationDistancePc = 1;
 						}
 						if (isTrigger)
 						{
 							if (ItemToReadFrom.m_hand.Input.TriggerDown)
 							{
-								invertlerp = 1;
+								observationDistancePc = 1;
 							}
 						}
 					}
@@ -201,7 +213,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 							case StreamlinedDirType.AX_Button:
 								if (ItemToReadFrom.m_hand.Input.AXButtonPressed)
 								{
-									invertlerp = 1;
+									observationDistancePc = 1;
 								}
 								break;
 							case StreamlinedDirType.BY_Button:
@@ -213,7 +225,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 							case StreamlinedDirType.Trigger:
 								if (ItemToReadFrom.m_hand.Input.TriggerDown)
 								{
-									invertlerp = 1;
+									observationDistancePc = 1;
 								}
 								break;
 						}
@@ -221,17 +233,17 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 				}
 			}
 			#endregion
-
+			
 			#region Observe If Gun Loaded
 			if (ReadIfGunIsLoaded)
 			{
 				if (FirearmToReadFrom.Magazine != null)
 				{
-					invertlerp = 1;
+					observationDistancePc = 1;
 				}
 				else
 				{
-					invertlerp = 0;
+					observationDistancePc = 0;
 				}
 			}
 			#endregion
@@ -241,11 +253,11 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			{
 				if (BoltToReadFrom.CurPos == ClosedBolt.BoltPos.Locked && BoltToReadFrom.LastPos == ClosedBolt.BoltPos.Locked)
 				{
-					invertlerp = 1;
+					observationDistancePc = 1;
 				}
 				else
 				{
-					invertlerp = 0;
+					observationDistancePc = 0;
 				}
 			}
 			#endregion
@@ -263,7 +275,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 						{
 							if (attachment.ObjectWrapper.ItemID == attachmentID)
 							{
-								invertlerp = 1;
+								observationDistancePc = 1;
 								//found = true;
 								break;
 							}
@@ -284,9 +296,9 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			if (MoveIfObjectHeld)
 			{
 				if (HeldObject.m_hand != null)
-					invertlerp = 1;
+					observationDistancePc = 1;
 				else
-					invertlerp = 0;
+					observationDistancePc = 0;
 			}
 			#endregion
 
@@ -294,9 +306,9 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			if (MoveIfGrenadeArmed)
 			{
 				if (grenade.m_isLeverReleased)
-					invertlerp = 1;
+					observationDistancePc = 1;
 				else
-					invertlerp = 0;
+					observationDistancePc = 0;
 			}
 			#endregion
 
@@ -305,9 +317,9 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			{
 				if (!ObservedObject.activeSelf)
 				{
-					invertlerp = 1;
+					observationDistancePc = 1;
 				}
-				else invertlerp = 0;
+				else observationDistancePc = 0;
 			}
 			#endregion
 
@@ -315,28 +327,36 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			if (MoveIfChamberFull)
 			{
 				if (considerFullEvenIfRoundFired) {
-					if (Chamber.IsFull) invertlerp = 1;
-				} else if (Chamber.IsFull && !Chamber.IsSpent) invertlerp = 1;
-				else invertlerp = 0;
+					if (Chamber.IsFull) observationDistancePc = 1;
+				} else if (Chamber.IsFull && !Chamber.IsSpent) observationDistancePc = 1;
+				else observationDistancePc = 0;
 			}
 			#endregion
 
 			#endregion
 
-			lerppoint = Mathf.Lerp(StartOfAffected, StopOfAffected, invertlerp);
+			float finalLerpAmt = Mathf.Lerp(previousObservationDistancePc, observationDistancePc, LerpAmount * Time.deltaTime);
+
+			if (usesCurve)
+				finalLerpAmt = Curve.Evaluate(finalLerpAmt);
+			
+			finalPoint = Mathf.Lerp(StartOfAffected, StopOfAffected, finalLerpAmt);
+			
+			
+			
 
 			Vector3 v3;
 			
 			bool doReturn = false;
 			//make sure lerp isnt same
-			if (Math.Abs(rememberLerpPoint - lerppoint) < float.Epsilon) doReturn = true;
+			if (Math.Abs(rememberLerpPoint - finalPoint) < float.Epsilon) doReturn = true;
 			//if lerppoint decreased and it wants it going towards start stop and vice versa
 			if (!SnappedForwards)
 			{
-				if (lerppoint - rememberLerpPoint < 0 && ObservationDirection == dir.towardsStop) doReturn = true;
-				if (lerppoint - rememberLerpPoint > 0 && ObservationDirection == dir.towardsStart) doReturn = true;
+				if (finalPoint - rememberLerpPoint < 0 && ObservationDirection == dir.towardsStop) doReturn = true;
+				if (finalPoint - rememberLerpPoint > 0 && ObservationDirection == dir.towardsStart) doReturn = true;
 			}
-			rememberLerpPoint = lerppoint;
+			rememberLerpPoint = finalPoint;
 			if(doReturn) return;
 
 			#region Move Attached Item
@@ -356,7 +376,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			#region Disable If Moved
 			if (DisableIfMoved)
 			{
-				if (invertlerp >= percentageCutoff)
+				if (observationDistancePc >= percentageCutoff)
 				{
 					AffectedObject.SetActive(false);
 				} else AffectedObject.SetActive(true);
@@ -369,27 +389,27 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 				{
 					case transformtype.position:
 						v3 = AffectedObject.transform.localPosition;
-						v3[(int) DirectionOfAffection] = lerppoint;
+						v3[(int) DirectionOfAffection] = finalPoint;
 						AffectedObject.transform.localPosition = v3;
 						break;
 					case transformtype.rotation:
 						v3 = AffectedObject.transform.localEulerAngles;
-						v3[(int) DirectionOfAffection] = lerppoint;
+						v3[(int) DirectionOfAffection] = finalPoint;
 						AffectedObject.transform.localEulerAngles = v3;
 						break;
 					case transformtype.scale:
 						v3 = AffectedObject.transform.localScale;
-						v3[(int) DirectionOfAffection] = lerppoint;
+						v3[(int) DirectionOfAffection] = finalPoint;
 						AffectedObject.transform.localScale = v3;
 						break;
 					case transformtype.quaternion:
 						Quaternion qt = AffectedObject.transform.rotation;
-						qt[(int) DirectionOfAffection] = lerppoint;
+						qt[(int) DirectionOfAffection] = finalPoint;
 						AffectedObject.transform.localRotation = qt;
 						break;
 					case transformtype.quaternionPresentedEuler:
 						v3 = AffectedObject.transform.localEulerAngles;
-						v3[(int) DirectionOfAffection] = lerppoint;
+						v3[(int) DirectionOfAffection] = finalPoint;
 						AffectedObject.transform.localEulerAngles = v3;
 						break;
 				}
