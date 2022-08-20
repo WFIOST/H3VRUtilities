@@ -14,11 +14,18 @@ using System.Reflection;
 
 namespace H3VRUtils
 {
-	[BepInPlugin("dll.wfiost.h3vrutilities", "H3VR Utilities", "8.9.3")]
+	public static class UtilsPluginInfo
+	{
+		public const string VERSION = "8.10.0";
+	}
+
+	[BepInPlugin("dll.wfiost.h3vrutilities", "H3VR Utilities", UtilsPluginInfo.VERSION)]
 	[BepInDependency("nrgill28.Sodalite", BepInDependency.DependencyFlags.SoftDependency)]
 	[BepInProcess("h3vr.exe")]
 	public class UtilsBepInExLoader : BaseUnityPlugin
 	{
+		
+		
 		public static ConfigEntry<bool> paddleMagRelease;
 		public static ConfigEntry<bool> magDropRequiredRelease;
 		public static ConfigEntry<bool> VehicleLockXRot;
