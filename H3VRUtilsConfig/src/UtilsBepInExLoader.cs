@@ -16,7 +16,7 @@ namespace H3VRUtils
 {
 	public static class UtilsPluginInfo
 	{
-		public const string VERSION = "8.10.0";
+		public const string VERSION = "8.11.0";
 	}
 
 	[BepInPlugin("dll.wfiost.h3vrutilities", "H3VR Utilities", UtilsPluginInfo.VERSION)]
