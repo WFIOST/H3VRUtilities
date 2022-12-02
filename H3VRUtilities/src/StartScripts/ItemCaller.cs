@@ -9,6 +9,7 @@ namespace H3VRUtils.QOL
 	{
 		[Tooltip("This deletes the gameobject this script is on after death.")]
 		public bool deleteGameObjectAfterSpawn;
+		public bool spawnKinematicLocked;
 		public List<ItemCallerSet> sets = new List<ItemCallerSet>() { new ItemCallerSet() {primaryItemID = "MyItemId", backupID = "My Backup ID if Primary ID fails to spawn"}};
 		public void Start()
 		{
@@ -25,8 +26,9 @@ namespace H3VRUtils.QOL
 				try
 				{
 					obj = IM.OD[set.primaryItemID];
-					
-					Instantiate(obj.GetGameObject(), wPos, transform.rotation);
+					var res = Instantiate(obj.GetGameObject(), wPos, transform.rotation);
+					if (spawnKinematicLocked)
+						res.GetComponent<Rigidbody>().isKinematic = true;
 				}
 				catch //if it fails to spawn the primary ID
 				{
