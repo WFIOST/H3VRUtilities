@@ -68,6 +68,9 @@ public class VehicleControl : MonoBehaviour
     {
         public AudioSource IdleEngine, LowEngine, HighEngine;
 
+        public float minPitch = 1f;
+        public float maxPitch = 10f;
+
         public AudioSource nitro;
         public AudioSource switchGear;
     }
@@ -820,7 +823,7 @@ public class VehicleControl : MonoBehaviour
         }
 
         // calculate pitch (keep it within reasonable bounds)
-        Pitch = Mathf.Clamp(1.2f + ((motorRPM - carSetting.idleRPM) / (carSetting.shiftUpRPM - carSetting.idleRPM)), 1.0f, 10.0f);
+        Pitch = Mathf.Clamp(1.2f + ((motorRPM - carSetting.idleRPM) / (carSetting.shiftUpRPM - carSetting.idleRPM)), carSounds.minPitch, carSounds.maxPitch);
 
         shiftTime = Mathf.MoveTowards(shiftTime, 0.0f, 0.1f);
 
