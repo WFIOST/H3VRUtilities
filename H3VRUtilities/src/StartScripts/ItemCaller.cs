@@ -32,7 +32,7 @@ namespace H3VRUtils.QOL
 				}
 				catch //if it fails to spawn the primary ID
 				{
-					Debug.Log($"Item ID {set.primaryItemID} not found; attempting to spawn backupID");
+					//Debug.Log($"Item ID {set.primaryItemID} not found; attempting to spawn backupID");
 					obj = IM.OD[set.backupID];
 					Instantiate(obj.GetGameObject(), wPos, transform.rotation);
 				}
