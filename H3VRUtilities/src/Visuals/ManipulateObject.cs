@@ -325,11 +325,11 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			#endregion
 
 			#region Observe If Chamber Full
-			if (MoveIfChamberFull)
-			{
+			if (MoveIfChamberFull) {
+				var proxy = GetFireArmDeets.GetFireArmProxySwitch(Chamber.Firearm, false)[0];
 				if (considerFullEvenIfRoundFired) {
-					if (Chamber.IsFull) observationDistancePc = 1;
-				} else if (Chamber.IsFull && !Chamber.IsSpent) observationDistancePc = 1;
+					if (Chamber.IsFull || proxy.IsFull) observationDistancePc = 1;
+				} else if ((Chamber.IsFull && !Chamber.IsSpent) || proxy.IsFull) observationDistancePc = 1;
 				else observationDistancePc = 0;
 			}
 			#endregion

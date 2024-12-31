@@ -48,7 +48,7 @@ namespace H3VRUtils
 			return null;
 		}
 
-		public static FVRFirearmMovingProxyRound[] GetFireArmProxySwitch(FVRFireArm firearm)
+		public static FVRFirearmMovingProxyRound[] GetFireArmProxySwitch(FVRFireArm firearm, bool tryReflection = true)
 		{
 			List<FVRFirearmMovingProxyRound> ProxyRound = new List<FVRFirearmMovingProxyRound>();
 
@@ -74,8 +74,8 @@ namespace H3VRUtils
 					ProxyRound.Add(f.m_proxy);
 					break;
 				default:
-					Debug.Log("Cannot get m_proxy of " + nameof(firearm) + " on " + firearm.ObjectWrapper.ItemID + "! Relying on reflection!");
-					ProxyRound = GetFireArmProxyReflection(firearm).ToList();
+					if(tryReflection)
+						ProxyRound = GetFireArmProxyReflection(firearm).ToList();
 					break;
 			}
 			
