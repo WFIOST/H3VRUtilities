@@ -25,9 +25,12 @@ namespace H3VRUtils
 					return Chambers.ToArray();
 				//get SAR chambers
 				case SingleActionRevolver revolver:
-					return revolver.Cylinder.Chambers.ToArray();
+					return revolver.Cylinder.Chambers;
+				case Revolver  revolver:
+					return revolver.Chambers;
 			}
 
+			//reflection time!!!!
 			//get field named Chamber
 			FieldInfo chamberField = firearm.GetType().GetField("Chamber");
 			if (chamberField != null)
@@ -72,6 +75,8 @@ namespace H3VRUtils
 					break;
 				case TubeFedShotgun f:
 					ProxyRound.Add(f.m_proxy);
+					break;
+				case Airgun f:
 					break;
 				default:
 					if(tryReflection)

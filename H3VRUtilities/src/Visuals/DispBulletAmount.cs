@@ -104,8 +104,8 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			FVRFireArm _firearm = _fa;
 			FVRFireArmMagazine mag = _mag;
 			
-			if (mag == null) return count;
-			count += mag.m_numRounds;
+			if (mag != null)
+				count += mag.m_numRounds;
 			
 			if (_firearm != null)
 			{
@@ -119,13 +119,17 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 		{
 			if (_mag != null)
 				return _mag.m_capacity;
+			if (_fa != null && !_fa.UsesMagazines)
+				return chambers?.Length ?? 0;
 			return 0;
 		}
 		//private string Time => DateTime.Now.ToString("HH:mm");
 		
 		private string GetAmmoType() {
-			var cs = _fa.GetChamberRoundList();
-			if (_fa != null && cs != null) {
+			
+			if (_fa != null) {
+				var cs = _fa.GetChamberRoundList();
+				if(cs != null)
 					return AM.GetFullRoundName(_fa.RoundType, cs[0]);
 				if(_fa.BeltDD != null && _fa.BeltDD.m_roundsOnBelt > 0)
 					return AM.GetFullRoundName(_fa.RoundType, _fa.BeltDD.BeltRounds[0].LR_Class);
