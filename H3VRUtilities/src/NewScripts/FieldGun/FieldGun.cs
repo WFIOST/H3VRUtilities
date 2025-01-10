@@ -300,16 +300,7 @@ namespace H3VRUtils
 				this.Chamber.Autochamber(rounds[0]);
 			}
 		}
-
-		public override List<string> GetFlagList()
-		{
-			return null;
-		}
-
-		public override void SetFromFlagList(List<string> flags)
-		{
-		}
-
+		
 		[Header("Flaregun Params")]
 		public Renderer[] GunUndamaged;
 

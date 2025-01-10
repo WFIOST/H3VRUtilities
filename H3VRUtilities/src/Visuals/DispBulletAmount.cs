@@ -94,7 +94,7 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 				if (chambers == null) chambers = GetFireArmDeets.GetFireArmChamber(_fa);
 				proxies = GetFireArmDeets.GetFireArmProxySwitch(_fa, false);
 			}
-			
+
 		}
 		
 		private int GetAmmoCount()
@@ -127,6 +127,8 @@ namespace H3VRUtils.MonoScripts.UIModifiers
 			var cs = _fa.GetChamberRoundList();
 			if (_fa != null && cs != null) {
 					return AM.GetFullRoundName(_fa.RoundType, cs[0]);
+				if(_fa.BeltDD != null && _fa.BeltDD.m_roundsOnBelt > 0)
+					return AM.GetFullRoundName(_fa.RoundType, _fa.BeltDD.BeltRounds[0].LR_Class);
 			} 
 			if(_mag != null && _mag.m_numRounds > 0) {
 				return AM.GetFullRoundName(_mag.RoundType, _mag.LoadedRounds[0].LR_Class);
