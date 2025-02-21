@@ -24,21 +24,26 @@ namespace H3VRUtils.AlternatingMags
 		{
 			if (OverrideMagToChange == -1)
 			{
-				OverrideMagToChange = activeMagMount += 1;
-				if(activeMagMount > MagMounts.Count)
+				activeMagMount += 1;
+				if (activeMagMount >= MagMounts.Count)
 				{
 					activeMagMount = 0;
 				}
 			}
-			activeMagMount = OverrideMagToChange;
+			else
+			{
+				activeMagMount = OverrideMagToChange;
+			}
 			for (int i = 0; i < MagMounts.Count; i++)
 			{
-				if (i == OverrideMagToChange)
+				if (i == activeMagMount)
 				{
 					MagMounts[i].SetActivity(true);
 				}
 				else
+				{
 					MagMounts[i].SetActivity(false);
+				}
 			}
 		}
 
