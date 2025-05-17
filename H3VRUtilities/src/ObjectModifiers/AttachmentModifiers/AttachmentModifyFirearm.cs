@@ -251,8 +251,8 @@ namespace H3VRUtils
 					_boltSpringStiffness = _ClosedBoltWep.Bolt.SpringStiffness;
 					break;
 				case 3:
-					_boltSpeedBack = _HandgunWep.Slide.Speed_Forward;
-					_boltSpeedForward = _HandgunWep.Slide.Speed_Rearward;
+					_boltSpeedBack = _HandgunWep.Slide.Speed_Rearward;
+					_boltSpeedForward = _HandgunWep.Slide.Speed_Forward;
 					_boltSpringStiffness = _HandgunWep.Slide.SpringStiffness;
 					break;
 			}
@@ -292,7 +292,7 @@ namespace H3VRUtils
 					_ClosedBoltWep.Bolt.Speed_Rearward = _boltSpeedBack;
 					break;
 				case 3:
-					_HandgunWep.Slide.Speed_Forward = _boltSpeedBack;
+					_HandgunWep.Slide.Speed_Rearward = _boltSpeedBack;
 					break;
 			}
 			if (ChangesBoltSpeedForward) switch (wepType)
@@ -304,7 +304,7 @@ namespace H3VRUtils
 					_ClosedBoltWep.Bolt.Speed_Forward = _boltSpeedForward;
 					break;
 				case 3:
-					_HandgunWep.Slide.Speed_Rearward = _boltSpeedForward;
+					_HandgunWep.Slide.Speed_Forward = _boltSpeedForward;
 					break;
 			}
 			if (ChangesBoltSpeedStiffness) switch (wepType)
@@ -319,108 +319,6 @@ namespace H3VRUtils
 					_HandgunWep.Slide.SpringStiffness = _boltSpringStiffness;
 					break;
 			}
-
 		}
-
-/*		public void FireSelectorModifier(actionType ActType)
-		{
-			int wepType = 0;
-			OpenBoltReceiver _OpenBoltWep = null;
-			ClosedBoltWeapon _ClosedBoltWep = null;
-			Handgun _HandgunWep = null;
-			var OpenBoltModes = new List<OpenBoltReceiver.FireSelectorMode>();
-			var ClosedBoltModes = new List<ClosedBoltWeapon.FireSelectorMode>();
-			var HandgunModes = new List<Handgun.FireSelectorMode>();
-			OpenBoltReceiver.FireSelectorMode[] prevOpenBoltModes;
-			ClosedBoltWeapon.FireSelectorMode[] prevClosedBoltModes;
-			Handgun.FireSelectorMode[] prevHandgunModes;
-
-			if (weapon is OpenBoltReceiver)
-			{
-				_OpenBoltWep = weapon.GetComponent<OpenBoltReceiver>();
-				OpenBoltModes = new List<OpenBoltReceiver.FireSelectorMode>(_OpenBoltWep.FireSelector_Modes);
-				prevOpenBoltModes = _OpenBoltWep.FireSelector_Modes;
-				wepType = 1;
-			}
-			if (weapon is ClosedBoltWeapon)
-			{
-				_ClosedBoltWep = weapon.GetComponent<ClosedBoltWeapon>();
-				ClosedBoltModes = new List<ClosedBoltWeapon.FireSelectorMode>(_ClosedBoltWep.FireSelector_Modes);
-				prevClosedBoltModes = _ClosedBoltWep.FireSelector_Modes;
-				wepType = 2;
-			}
-			if (weapon is Handgun)
-			{
-				_HandgunWep = weapon.GetComponent<Handgun>();
-				HandgunModes = new List<Handgun.FireSelectorMode>(_HandgunWep.FireSelectorModes);
-				prevHandgunModes = _HandgunWep.FireSelectorModes;
-				wepType = 3;
-			}
-
-			if (ActType == actionType.attach)
-			{
-				if (FireSelectorModiferType == CapType.AddTo)
-				{
-					if (wepType == 1)
-					{
-						int convertedModeType = (int)AddedModeType;
-						switch (AddedModeType)
-						{
-							case ClosedBoltWeapon.FireSelectorModeType.Burst:
-								return;
-							case ClosedBoltWeapon.FireSelectorModeType.FullAuto:
-								convertedModeType = (int)OpenBoltReceiver.FireSelectorModeType.FullAuto;
-								break;
-							case ClosedBoltWeapon.FireSelectorModeType.SuperFastBurst:
-								convertedModeType = (int)OpenBoltReceiver.FireSelectorModeType.SuperFastBurst;
-								break;
-						}
-
-						var addMode = new OpenBoltReceiver.FireSelectorMode
-						{
-							ModeType = (OpenBoltReceiver.FireSelectorModeType)convertedModeType
-						};
-					}
-					if (wepType == 2)
-					{
-
-					}
-					if (wepType == 3)
-					{
-
-					}
-				}
-				if (FireSelectorModiferType == CapType.SetTo)
-				{
-					if (wepType == 1)
-					{
-
-					}
-					if (wepType == 2)
-					{
-
-					}
-					if (wepType == 3)
-					{
-
-					}
-				}
-			}
-			if (ActType == actionType.detach)
-			{
-				if (wepType == 1)
-				{
-
-				}
-				if (wepType == 2)
-				{
-
-				}
-				if (wepType == 3)
-				{
-
-				}
-			}
-		}
-	*/}
+	}
 }
