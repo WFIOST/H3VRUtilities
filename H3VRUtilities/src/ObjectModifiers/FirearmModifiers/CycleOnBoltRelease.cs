@@ -21,7 +21,7 @@ namespace H3VRUtils.MonoScripts.VisualModifiers
 			if(wasFull && !chamber.IsFull)
 			{
 				pointer++;
-				if (pointer > Locs.Count) pointer = 0;
+				if (pointer >= Locs.Count) pointer = 0;
 				muzzle.transform.position = Locs[pointer].position;
 				muzzle.transform.rotation = Locs[pointer].rotation;
 			}

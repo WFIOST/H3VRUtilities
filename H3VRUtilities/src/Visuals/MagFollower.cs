@@ -80,7 +80,7 @@ namespace H3VRUtils
 
 			if (UsesIndivdualPointMagFollower)
 			{
-				if (Positions.Count < magazine.m_numRounds)
+				if (Positions.Count <= magazine.m_numRounds)
 				{
 					return;
 				}
@@ -93,7 +93,7 @@ namespace H3VRUtils
 			}
 			else if (UsesIndividualMeshReplacement)
 			{
-				if (Meshes.Count < magazine.m_numRounds)
+				if (Meshes.Count <= magazine.m_numRounds)
 				{
 					return;
 				}
